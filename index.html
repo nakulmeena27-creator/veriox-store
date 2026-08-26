@@ -70,7 +70,7 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 <button class="place" onclick="placeOrder()">PLACE ORDER</button></div></div>
 
 <script>
-const SETTINGS={upi:"6367938093",whatsapp:"91+6367938093"};let cart=[];
+const SETTINGS={upi:"8875021302@fam",whatsapp:"916367938093"};let cart=[];
 function addToCart(name,price,id){const size=document.getElementById(id).value;if(size==="Select Size"){alert("Please select a size.");return}cart.push({name,price,size});renderCart();alert("Added to cart!")}
 function renderCart(){document.getElementById("count").textContent=cart.length;document.getElementById("items").innerHTML=cart.length?cart.map((x,i)=>`<p>${i+1}. ${x.name} — Size ${x.size} — ₹${x.price}</p>`).join(""):"<p class='empty'>Your cart is empty.</p>";document.getElementById("total").textContent=cart.reduce((s,x)=>s+x.price,0)}
 function openCart(){if(!cart.length){alert("Please add a product first.");return}document.getElementById("cartModal").style.display="flex";renderCart()}

@@ -1,162 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VERIOX — Wear Your Style</title>
-<style>
-:root{--black:#0d0d0d;--light:#f7f7f7}
-*{box-sizing:border-box}html{scroll-behavior:smooth}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;color:#111;background:var(--light)}
-a{text-decoration:none;color:inherit}
-header{height:72px;background:#0d0d0d;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 6%;position:sticky;top:0;z-index:50}
-.logo{font-size:28px;font-weight:900;letter-spacing:5px}
-.nav{display:flex;gap:24px;align-items:center;font-size:14px}.nav a:hover{opacity:.75}
-.cart-btn{border:0;background:#fff;color:#111;border-radius:9px;padding:11px 16px;font-weight:800;cursor:pointer}
-.hero{min-height:445px;background:linear-gradient(120deg,#101010,#3b3b3b);display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;padding:70px 20px}
-.hero h1{font-size:64px;letter-spacing:7px;margin:0 0 12px}.hero p{font-size:21px;margin:0 0 28px;color:#eee}
-.shop-btn{display:inline-block;background:#fff;color:#111;padding:14px 26px;border-radius:9px;font-weight:900}
-section{padding:58px 6%}.section-title{text-align:center;font-size:31px;margin:0 0 35px;letter-spacing:1px}
-.products{max-width:1100px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.card{background:#fff;border-radius:15px;overflow:hidden;box-shadow:0 5px 22px #0001}
-.product-photo{height:320px;background:#eee;display:flex;align-items:center;justify-content:center;color:#777;font-weight:800;letter-spacing:1px;text-align:center}.product-photo img{width:100%;height:100%;object-fit:cover}
-.info{padding:20px}.info h3{font-size:18px;margin:0 0 10px}.price{font-size:20px;font-weight:900;margin-bottom:13px}
-select{width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;background:#fff;margin-bottom:10px}
-.add{width:100%;padding:12px;border:0;border-radius:8px;background:#111;color:#fff;font-weight:900;cursor:pointer}
-.about{max-width:850px;margin:auto;text-align:center;line-height:1.7;color:#444}
-.contact{background:#111;color:#fff;text-align:center}.contact p{margin:8px 0;color:#ddd}
-footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13px}
-.modal{display:none;position:fixed;inset:0;background:#000b;z-index:100;align-items:center;justify-content:center;padding:15px}
-.modal-box{background:#fff;width:min(94%,520px);max-height:90vh;overflow:auto;border-radius:16px;padding:24px}
-.close{float:right;border:0;background:none;font-size:28px;cursor:pointer}.modal h2{margin-top:0}
-.field{width:100%;padding:12px;margin:6px 0 12px;border:1px solid #ddd;border-radius:8px}
-.payment{border:1px solid #ddd;border-radius:9px;padding:12px;margin:8px 0}
-.place{width:100%;padding:13px;background:#111;color:#fff;border:0;border-radius:8px;font-weight:900;cursor:pointer;margin-top:8px}
-.small{font-size:12px;color:#777;line-height:1.5}.empty{color:#777}
-@media(max-width:800px){.nav a{display:none}.hero h1{font-size:43px}.products{grid-template-columns:1fr}.product-photo{height:280px}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VERIOX — Wear Your Style</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f9f9f9; }
+    header { background: #000; color: #fff; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+    header h1 { margin: 0; font-size: 22px; letter-spacing: 2px; }
+    nav a { color: #fff; margin-left: 15px; text-decoration: none; font-size: 14px; }
+    .container { max-width: 1000px; margin: 30px auto; padding: 0 15px; }
+    .product-grid { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+    .product-card { background: #fff; border-radius: 8px; padding: 15px; width: 280px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: center; }
+    .product-card img { width: 100%; height: 280px; object-fit: cover; border-radius: 6px; }
+    .btn { background: #000; color: #fff; border: none; padding: 10px 15px; width: 100%; border-radius: 4px; cursor: pointer; margin-top: 10px; font-weight: bold; }
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 1000; }
+    .modal-content { background: #fff; padding: 20px; border-radius: 8px; width: 90%; max-width: 400px; position: relative; }
+    .close-btn { position: absolute; right: 15px; top: 10px; font-size: 20px; cursor: pointer; }
+    input, textarea { width: 100%; padding: 8px; margin: 6px 0 12px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+    .radio-group { text-align: left; margin: 10px 0; }
+  </style>
 </head>
 <body>
-<header>
-<div class="logo">VERIOX</div>
-<nav class="nav">
-<a href="#home">HOME</a><a href="#shop">SHOP</a><a href="#about">ABOUT</a><a href="#contact">CONTACT</a>
-<button class="cart-btn" onclick="openCart()">🛒 Cart (<span id="count">0</span>)</button>
-</nav>
-</header>
 
-<main id="home">
-<section class="hero"><div><h1>VERIOX</h1><p>Wear Your Style.</p><a class="shop-btn" href="#shop">SHOP NOW</a></div></section>
+  <header>
+    <h1>VERIOX</h1>
+    <nav>
+      <a href="#">HOME</a>
+      <a href="#">SHOP</a>
+      <a href="#">ABOUT</a>
+      <a href="#">CONTACT</a>
+    </nav>
+  </header>
 
-<section id="shop">
-<h2 class="section-title">VERIOX COLLECTION</h2>
-<div class="products">
-<article class="card"><div class="product-photo"><img src="product-1.jpeg" alt="VERIOX Essential T-Shirt"></div><div class="info"><h3>VERIOX Graphic Long-Sleeve</h3><div class="price">₹799</div><select id="size1"><option>Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select><button class="add" onclick="addToCart('Essential T-Shirt',799,'size1')">ADD TO CART</button></div></article>
-<article class="card"><div class="product-photo">YOUR<br>PRODUCT PHOTO</div><div class="info"><h3>Oversized T-Shirt</h3><div class="price">₹999</div><select id="size2"><option>Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><button class="add" onclick="addToCart('Oversized T-Shirt',999,'size2')">ADD TO CART</button></div></article>
-<article class="card"><div class="product-photo">YOUR<br>PRODUCT PHOTO</div><div class="info"><h3>Classic Shirt</h3><div class="price">₹1,299</div><select id="size3"><option>Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select><button class="add" onclick="addToCart('Classic Shirt',1299,'size3')">ADD TO CART</button></div></article>
-</div>
-</section>
-
-<section id="about"><div class="about"><h2 class="section-title">ABOUT VERIOX</h2><p>VERIOX is a modern clothing brand focused on clean style, comfort and everyday confidence.</p></div></section>
-<section id="contact" class="contact"><h2 class="section-title">CONTACT</h2><p>Instagram: @veriox</p><p>Email: your@email.com</p><p>UPI + Cash on Delivery available</p></section>
-</main>
-<footer>© 2026 VERIOX — Wear Your Style.</footer>
-
-<div class="modal" id="cartModal"><div class="modal-box"><button class="close" onclick="closeCart()">×</button><h2>CHECKOUT</h2><div id="items"></div><h3>Total: ₹<span id="total">0</span></h3>
-<input class="field" id="name" placeholder="Full Name"><input class="field" id="phone" placeholder="Mobile Number"><textarea class="field" id="address" rows="3" placeholder="Full Delivery Address"></textarea>
-<div class="payment"><label><input type="radio" name="payment" value="UPI" checked> UPI</label></div>
-<div class="payment"><label><input type="radio" name="payment" value="COD"> Cash on Delivery</label></div>
-<p class="small">UPI and WhatsApp are placeholders until your real details are added.</p>
-<button class="place" onclick="placeOrder()">PLACE ORDER</button></div></div>
-
-<script>
-const SETTINGS={upi:"8875021302@fam",whatsapp:"916367938093"};let cart=[];
-function addToCart(name,price,id){const size=document.getElementById(id).value;if(size==="Select Size"){alert("Please select a size.");return}cart.push({name,price,size});renderCart();alert("Added to cart!")}
-function renderCart(){document.getElementById("count").textContent=cart.length;document.getElementById("items").innerHTML=cart.length?cart.map((x,i)=>`<p>${i+1}. ${x.name} — Size ${x.size} — ₹${x.price}</p>`).join(""):"<p class='empty'>Your cart is empty.</p>";document.getElementById("total").textContent=cart.reduce((s,x)=>s+x.price,0)}
-function openCart(){if(!cart.length){alert("Please add a product first.");return}document.getElementById("cartModal").style.display="flex";renderCart()}
-function closeCart(){document.getElementById("cartModal").style.display="none"}
-function placeOrder(){const n=document.getElementById("name").value.trim(),p=document.getElementById("phone").value.trim(),a=document.getElementById("address").value.trim(),pay=document.querySelector('input[name="payment"]:checked').value,total=cart.reduce((s,x)=>s+x.price,0);if(!n||!p||!a){alert("Please fill name, mobile number and address.");return}const products=cart.map(x=>`${x.name} | Size: ${x.size} | ₹${x.price}`).join("\n");const msg=`VERIOX Order\nName: ${n}\nPhone: ${p}\nAddress: ${a}\nPayment: ${pay}\n${products}\nTotal: ₹${total}`;if(pay==="UPI"){if(SETTINGS.upi==="YOURUPI@upi"){alert("UPI is not connected yet. Replace SETTINGS.upi with your real UPI ID.");return}location.href=`upi://pay?pa=${encodeURIComponent(SETTINGS.upi)}&pn=VERIOX&am=${total}&cu=INR&tn=VERIOX%20Order`}else{if(SETTINGS.whatsapp==="91XXXXXXXXXX"){alert("COD is not connected yet. Replace SETTINGS.whatsapp with your WhatsApp number.");return}window.open(`https://wa.me/${SETTINGS.whatsapp}?text=${encodeURIComponent(msg)}`,"_blank")}}
-renderCart();
-</script>
-<!-- Buy Now Button -->
-<button onclick="openForm()" style="padding: 12px 24px; background-color: #25D366; color: white; border: none; font-size: 16px; cursor: pointer; border-radius: 5px;">
-  Buy Now (Order Karein)
-</button>
-
-<!-- Order Form (Shuru mein hidden rahega) -->
-<div id="orderModal" 
-<!-- Complete Order Form Modal with UPI & WhatsApp -->
-<div id="orderModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000;">
-  <div style="background: white; width: 90%; max-width: 400px; margin: 50px auto; padding: 20px; border-radius: 8px; position: relative; font-family: sans-serif;">
-    
-    <span onclick="closeForm()" style="position: absolute; right: 15px; top: 10px; cursor: pointer; font-size: 24px; font-weight: bold;">&times;</span>
-
-    <form onsubmit="sendToWhatsApp(event)">
-      <h3 style="margin-top:0; text-align: center;">VERIOX Checkout</h3>
+  <div class="container">
+    <h2 style="text-align:center;">VERIOX COLLECTION</h2>
+    <div class="product-grid">
       
-      <label style="font-size:14px; font-weight:bold;">Naam:</label><br>
-      <input type="text" id="name" required style="width:100%; padding: 8px; margin-bottom:10px; box-sizing: border-box;"><br>
-
-      <label style="font-size:14px; font-weight:bold;">Mobile Number:</label><br>
-      <input type="tel" id="phone" required style="width:100%; padding: 8px; margin-bottom:10px; box-sizing: border-box;"><br>
-
-      <label style="font-size:14px; font-weight:bold;">Delivery Address:</label><br>
-      <textarea id="address" required style="width:100%; padding: 8px; margin-bottom:10px; box-sizing: border-box;"></textarea><br>
-
-      <label style="font-size:14px; font-weight:bold;">Payment Mode:</label><br>
-      <select id="payment" onchange="toggleUPIInfo()" style="width:100%; padding: 8px; margin-bottom:15px; box-sizing: border-box;">
-        <option value="COD">Cash on Delivery (COD)</option>
-        <option value="UPI">UPI (GPay / PhonePe / Paytm)</option>
-      </select><br>
-
-      <!-- UPI Details Box -->
-      <div id="upiDetail" style="display: none; background: #f9f9f9; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 15px; text-align: center;">
-        <p style="margin: 5px 0; font-weight: bold; font-size:14px;">UPI ID par payment karein:</p>
-        <p style="margin: 5px 0; color: #007bff; font-size: 16px; font-weight: bold;">8875021302@fam</p>
-        <small style="color: #666; font-size:12px;">Payment karke WhatsApp par screenshot bhejien.</small>
+      <!-- Product Card 1 -->
+      <div class="product-card">
+        <img id="mainImg1" src="product-1.jpeg" alt="Essential T-Shirt">
+        <h3>Essential T-Shirt</h3>
+        <p>₹599</p>
+        <button class="btn" onclick="openCheckout('Essential T-Shirt', 599)">BUY NOW</button>
       </div>
 
-      <button type="submit" style="width:100%; background:#25D366; color:white; padding:12px; border:none; font-size:16px; font-weight:bold; cursor:pointer; border-radius: 5px;">
-        WhatsApp par Order Bhejen
-      </button>
-    </form>
+    </div>
   </div>
-</div>
 
-<script>
-function openForm() {
-  document.getElementById('orderModal').style.display = 'block';
-}
+  <!-- CHECKOUT MODAL -->
+  <div id="checkoutModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeCheckout()">&times;</span>
+      <h3>CHECKOUT</h3>
+      <p id="itemDetail" style="font-weight: bold;"></p>
 
-function closeForm() {
-  document.getElementById('orderModal').style.display = 'none';
-}
+      <form onsubmit="handleOrder(event)">
+        <label>Full Name</label>
+        <input type="text" id="custName" required placeholder="Aapka Naam">
 
-function toggleUPIInfo() {
-  let paymentMethod = document.getElementById('payment').value;
-  let upiBox = document.getElementById('upiDetail');
-  upiBox.style.display = (paymentMethod === 'UPI') ? 'block' : 'none';
-}
+        <label>Mobile Number</label>
+        <input type="tel" id="custPhone" required placeholder="WhatsApp Number">
 
-function sendToWhatsApp(event) {
-  event.preventDefault();
-  
-  // Aapka WhatsApp number
-  let myNumber = "916367938093"; 
+        <label>Delivery Address</label>
+        <textarea id="custAddress" required placeholder="Poora Pata"></textarea>
 
-  let name = document.getElementById('name').value;
-  let phone = document.getElementById('phone').value;
-  let address = document.getElementById('address').value;
-  let payment = document.getElementById('payment').value;
+        <label>Payment Method</label>
+        <div class="radio-group">
+          <label><input type="radio" name="payMethod" value="UPI" onclick="togglePaymentUI()" id="payUPI"> UPI (GPay / PhonePe / Paytm)</label><br>
+          <label><input type="radio" name="payMethod" value="COD" onclick="togglePaymentUI()" id="payCOD" checked> Cash on Delivery (COD)</label>
+        </div>
 
-  let message = `*VERIOX - Naya Order Aaya Hai!*%0A%0A*Naam:* ${name}%0A*Phone:* ${phone}%0A*Address:* ${address}%0A*Payment Mode:* ${payment}`;
+        <!-- UPI ID BOX -->
+        <div id="upiBox" style="display:none; background:#f0f7ff; padding:10px; border:1px solid #b6d4fe; border-radius:5px; margin-bottom:12px; text-align:center;">
+          <small>Niche di gayi UPI ID par payment karein:</small>
+          <p style="margin:5px 0; color:#0d6efd; font-weight:bold;">8875021302@fam</p>
+          <small style="color:#555;">(Payment karke WhatsApp par screenshot bhej dena)</small>
+        </div>
 
-  if(payment === 'UPI') {
-    message += `%0A%0A_(Note: UPI select kiya hai. Payment screenshot ka wait karein.)_`;
-  }
+        <button type="submit" class="btn" style="background:#25D366;">PLACE ORDER</button>
+      </form>
+    </div>
+  </div>
 
-  window.open(`https://wa.me/${myNumber}?text=${message}`, '_blank');
-}
-</script>
-  </body>
+  <script>
+    let selectedProduct = "";
+    let selectedPrice = 0;
+    const MY_WHATSAPP = "916367938093"; // Aapka WhatsApp Number
+
+    function openCheckout(name, price) {
+      selectedProduct = name;
+      selectedPrice = price;
+      document.getElementById('itemDetail').innerText = `${name} — ₹${price}`;
+      document.getElementById('checkoutModal').style.display = 'flex';
+    }
+
+    function closeCheckout() {
+      document.getElementById('checkoutModal').style.display = 'none';
+    }
+
+    function togglePaymentUI() {
+      let isUPI = document.getElementById('payUPI').checked;
+      document.getElementById('upiBox').style.display = isUPI ? 'block' : 'none';
+    }
+
+    function handleOrder(event) {
+      event.preventDefault();
+      let name = document.getElementById('custName').value;
+      let phone = document.getElementById('custPhone').value;
+      let address = document.getElementById('custAddress').value;
+      let payment = document.querySelector('input[name="payMethod"]:checked').value;
+
+      let msg = `*VERIOX - Naya Order*%0A%0A*Item:* ${selectedProduct}%0A*Price:* ₹${selectedPrice}%0A*Naam:* ${name}%0A*Phone:* ${phone}%0A*Address:* ${address}%0A*Payment:* ${payment}`;
+      
+      if(payment === 'UPI') {
+        msg += `%0A%0A_(Customer UPI se payment karke screenshot bhejega)_`;
+      }
+
+      window.open(`https://wa.me/${MY_WHATSAPP}?text=${msg}`, '_blank');
+    }
+  </script>
+</body>
 </html>

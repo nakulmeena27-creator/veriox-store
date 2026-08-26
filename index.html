@@ -82,43 +82,52 @@
       </form>
     </div>
   </div>
+<script>
+  let selectedProduct = "VERIOX Item";
+  let selectedPrice = 599;
+  const MY_WHATSAPP = "916367938093";
 
-  <script>
-    let selectedProduct = "";
-    let selectedPrice = 0;
-    const MY_WHATSAPP = "916367938093"; // Aapka WhatsApp Number
+  function openCheckout(name, price) {
+    selectedProduct = name || "VERIOX T-Shirt";
+    selectedPrice = price || 599;
+    let detailElem = document.getElementById('itemDetail');
+    if(detailElem) detailElem.innerText = selectedProduct + " — ₹" + selectedPrice;
+    document.getElementById('checkoutModal').style.display = 'flex';
+  }
 
-    function openCheckout(name, price) {
-      selectedProduct = name;
-      selectedPrice = price;
-      document.getElementById('itemDetail').innerText = `${name} — ₹${price}`;
-      document.getElementById('checkoutModal').style.display = 'flex';
+  function closeCheckout() {
+    document.getElementById('checkoutModal').style.display = 'none';
+  }
+
+  function togglePaymentUI() {
+    let upiRadio = document.getElementById('payUPI');
+    let upiBox = document.getElementById('upiBox');
+    if (upiRadio && upiBox) {
+      upiBox.style.display = upiRadio.checked ? 'block' : 'none';
+    }
+  }
+
+  function handleOrder(event) {
+    event.preventDefault();
+
+    let name = document.getElementById('custName') ? document.getElementById('custName').value : '';
+    let phone = document.getElementById('custPhone') ? document.getElementById('custPhone').value : '';
+    let address = document.getElementById('custAddress') ? document.getElementById('custAddress').value : '';
+    
+    let payOption = document.querySelector('input[name="payMethod"]:checked');
+    let payment = payOption ? payOption.value : 'COD';
+
+    let msg = `*VERIOX - Naya Order*%0A%0A*Item:* ${selectedProduct}%0A*Price:* ₹${selectedPrice}%0A*Naam:* ${name}%0A*Phone:* ${phone}%0A*Address:* ${address}%0A*Payment:* ${payment}`;
+
+    if (payment === 'UPI') {
+      msg += `%0A%0A_(Note: Customer UPI se payment karke screenshot bhejega)_`;
     }
 
-    function closeCheckout() {
-      document.getElementById('checkoutModal').style.display = 'none';
-    }
-
-    function togglePaymentUI() {
-      let isUPI = document.getElementById('payUPI').checked;
-      document.getElementById('upiBox').style.display = isUPI ? 'block' : 'none';
-    }
-
-    function handleOrder(event) {
-      event.preventDefault();
-      let name = document.getElementById('custName').value;
-      let phone = document.getElementById('custPhone').value;
-      let address = document.getElementById('custAddress').value;
-      let payment = document.querySelector('input[name="payMethod"]:checked').value;
-
-      let msg = `*VERIOX - Naya Order*%0A%0A*Item:* ${selectedProduct}%0A*Price:* ₹${selectedPrice}%0A*Naam:* ${name}%0A*Phone:* ${phone}%0A*Address:* ${address}%0A*Payment:* ${payment}`;
-      
-      if(payment === 'UPI') {
-        msg += `%0A%0A_(Customer UPI se payment karke screenshot bhejega)_`;
-      }
-
-      window.open(`https://wa.me/${MY_WHATSAPP}?text=${msg}`, '_blank');
-    }
-  </script>
+    // Direct WhatsApp redirect
+    let waUrl = `https://api.whatsapp.com/send?phone=${MY_WHATSAPP}&text=${msg}`;
+    window.location.href = waUrl;
+  }
+</script>
+  
 </body>
 </html>

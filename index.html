@@ -84,30 +84,39 @@ renderCart();
 </button>
 
 <!-- Order Form (Shuru mein hidden rahega) -->
+<div id="orderModal" 
+<!-- Complete Order Form Modal with UPI & WhatsApp -->
 <div id="orderModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000;">
-  <div style="background: white; width: 90%; max-width: 400px; margin: 50px auto; padding: 20px; border-radius: 8px; position: relative;">
+  <div style="background: white; width: 90%; max-width: 400px; margin: 50px auto; padding: 20px; border-radius: 8px; position: relative; font-family: sans-serif;">
     
-    <span onclick="closeForm()" style="position: absolute; right: 15px; top: 10px; cursor: pointer; font-size: 20px; font-weight: bold;">&times;</span>
+    <span onclick="closeForm()" style="position: absolute; right: 15px; top: 10px; cursor: pointer; font-size: 24px; font-weight: bold;">&times;</span>
 
     <form onsubmit="sendToWhatsApp(event)">
-      <h3 style="margin-top:0;">Order Detail Fill Karein:</h3>
+      <h3 style="margin-top:0; text-align: center;">VERIOX Checkout</h3>
       
-      <label>Naam:</label><br>
-      <input type="text" id="name" required style="width:100%; margin-bottom:10px;"><br>
+      <label style="font-size:14px; font-weight:bold;">Naam:</label><br>
+      <input type="text" id="name" required style="width:100%; padding: 8px; margin-bottom:10px; box-sizing: border-box;"><br>
 
-      <label>Mobile Number:</label><br>
-      <input type="tel" id="phone" required style="width:100%; margin-bottom:10px;"><br>
+      <label style="font-size:14px; font-weight:bold;">Mobile Number:</label><br>
+      <input type="tel" id="phone" required style="width:100%; padding: 8px; margin-bottom:10px; box-sizing: border-box;"><br>
 
-      <label>Delivery Address:</label><br>
-      <textarea id="address" required style="width:100%; margin-bottom:10px;"></textarea><br>
+      <label style="font-size:14px; font-weight:bold;">Delivery Address:</label><br>
+      <textarea id="address" required style="width:100%; padding: 8px; margin-bottom:10px; box-sizing: border-box;"></textarea><br>
 
-      <label>Payment Mode:</label><br>
-      <select id="payment" style="width:100%; margin-bottom:15px;">
+      <label style="font-size:14px; font-weight:bold;">Payment Mode:</label><br>
+      <select id="payment" onchange="toggleUPIInfo()" style="width:100%; padding: 8px; margin-bottom:15px; box-sizing: border-box;">
         <option value="COD">Cash on Delivery (COD)</option>
-        <option value="UPI">UPI (GPay / PhonePe)</option>
+        <option value="UPI">UPI (GPay / PhonePe / Paytm)</option>
       </select><br>
 
-      <button type="submit" style="width:100%; background:#25D366; color:white; padding:10px; border:none; cursor:pointer;">
+      <!-- UPI Details Box -->
+      <div id="upiDetail" style="display: none; background: #f9f9f9; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 15px; text-align: center;">
+        <p style="margin: 5px 0; font-weight: bold; font-size:14px;">UPI ID par payment karein:</p>
+        <p style="margin: 5px 0; color: #007bff; font-size: 16px; font-weight: bold;">8875021302@fam</p>
+        <small style="color: #666; font-size:12px;">Payment karke WhatsApp par screenshot bhejien.</small>
+      </div>
+
+      <button type="submit" style="width:100%; background:#25D366; color:white; padding:12px; border:none; font-size:16px; font-weight:bold; cursor:pointer; border-radius: 5px;">
         WhatsApp par Order Bhejen
       </button>
     </form>
@@ -123,10 +132,16 @@ function closeForm() {
   document.getElementById('orderModal').style.display = 'none';
 }
 
+function toggleUPIInfo() {
+  let paymentMethod = document.getElementById('payment').value;
+  let upiBox = document.getElementById('upiDetail');
+  upiBox.style.display = (paymentMethod === 'UPI') ? 'block' : 'none';
+}
+
 function sendToWhatsApp(event) {
   event.preventDefault();
   
-  // Yahan apna WhatsApp number daalein (91 ke sath)
+  // Aapka WhatsApp number
   let myNumber = "916367938093"; 
 
   let name = document.getElementById('name').value;
@@ -134,10 +149,14 @@ function sendToWhatsApp(event) {
   let address = document.getElementById('address').value;
   let payment = document.getElementById('payment').value;
 
-  let message = `Naya Order Aaya Hai!%0A*Naam:* ${name}%0A*Phone:* ${phone}%0A*Address:* ${address}%0A*Payment:* ${payment}`;
+  let message = `*VERIOX - Naya Order Aaya Hai!*%0A%0A*Naam:* ${name}%0A*Phone:* ${phone}%0A*Address:* ${address}%0A*Payment Mode:* ${payment}`;
+
+  if(payment === 'UPI') {
+    message += `%0A%0A_(Note: UPI select kiya hai. Payment screenshot ka wait karein.)_`;
+  }
 
   window.open(`https://wa.me/${myNumber}?text=${message}`, '_blank');
 }
 </script>
-</body>
+  </body>
 </html>

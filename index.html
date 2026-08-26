@@ -78,5 +78,66 @@ function closeCart(){document.getElementById("cartModal").style.display="none"}
 function placeOrder(){const n=document.getElementById("name").value.trim(),p=document.getElementById("phone").value.trim(),a=document.getElementById("address").value.trim(),pay=document.querySelector('input[name="payment"]:checked').value,total=cart.reduce((s,x)=>s+x.price,0);if(!n||!p||!a){alert("Please fill name, mobile number and address.");return}const products=cart.map(x=>`${x.name} | Size: ${x.size} | ₹${x.price}`).join("\n");const msg=`VERIOX Order\nName: ${n}\nPhone: ${p}\nAddress: ${a}\nPayment: ${pay}\n${products}\nTotal: ₹${total}`;if(pay==="UPI"){if(SETTINGS.upi==="YOURUPI@upi"){alert("UPI is not connected yet. Replace SETTINGS.upi with your real UPI ID.");return}location.href=`upi://pay?pa=${encodeURIComponent(SETTINGS.upi)}&pn=VERIOX&am=${total}&cu=INR&tn=VERIOX%20Order`}else{if(SETTINGS.whatsapp==="91XXXXXXXXXX"){alert("COD is not connected yet. Replace SETTINGS.whatsapp with your WhatsApp number.");return}window.open(`https://wa.me/${SETTINGS.whatsapp}?text=${encodeURIComponent(msg)}`,"_blank")}}
 renderCart();
 </script>
+<!-- Buy Now Button -->
+<button onclick="openForm()" style="padding: 12px 24px; background-color: #25D366; color: white; border: none; font-size: 16px; cursor: pointer; border-radius: 5px;">
+  Buy Now (Order Karein)
+</button>
+
+<!-- Order Form (Shuru mein hidden rahega) -->
+<div id="orderModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000;">
+  <div style="background: white; width: 90%; max-width: 400px; margin: 50px auto; padding: 20px; border-radius: 8px; position: relative;">
+    
+    <span onclick="closeForm()" style="position: absolute; right: 15px; top: 10px; cursor: pointer; font-size: 20px; font-weight: bold;">&times;</span>
+
+    <form onsubmit="sendToWhatsApp(event)">
+      <h3 style="margin-top:0;">Order Detail Fill Karein:</h3>
+      
+      <label>Naam:</label><br>
+      <input type="text" id="name" required style="width:100%; margin-bottom:10px;"><br>
+
+      <label>Mobile Number:</label><br>
+      <input type="tel" id="phone" required style="width:100%; margin-bottom:10px;"><br>
+
+      <label>Delivery Address:</label><br>
+      <textarea id="address" required style="width:100%; margin-bottom:10px;"></textarea><br>
+
+      <label>Payment Mode:</label><br>
+      <select id="payment" style="width:100%; margin-bottom:15px;">
+        <option value="COD">Cash on Delivery (COD)</option>
+        <option value="UPI">UPI (GPay / PhonePe)</option>
+      </select><br>
+
+      <button type="submit" style="width:100%; background:#25D366; color:white; padding:10px; border:none; cursor:pointer;">
+        WhatsApp par Order Bhejen
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+function openForm() {
+  document.getElementById('orderModal').style.display = 'block';
+}
+
+function closeForm() {
+  document.getElementById('orderModal').style.display = 'none';
+}
+
+function sendToWhatsApp(event) {
+  event.preventDefault();
+  
+  // Yahan apna WhatsApp number daalein (91 ke sath)
+  let myNumber = "919876543210"; 
+
+  let name = document.getElementById('name').value;
+  let phone = document.getElementById('phone').value;
+  let address = document.getElementById('address').value;
+  let payment = document.getElementById('payment').value;
+
+  let message = `Naya Order Aaya Hai!%0A*Naam:* ${name}%0A*Phone:* ${phone}%0A*Address:* ${address}%0A*Payment:* ${payment}`;
+
+  window.open(`https://wa.me/${myNumber}?text=${message}`, '_blank');
+}
+</script>
 </body>
 </html>

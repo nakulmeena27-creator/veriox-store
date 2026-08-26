@@ -51,12 +51,26 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 <section id="shop">
 <h2 class="section-title">VERIOX COLLECTION</h2>
 <div class="products">
-<article class="card"><div class="product-photo"><!-- Main Product Image -->
-<img src="product-1.jpeg" alt="Front View" style="width: 100%; max-width: 300px;">
+<article class="card"><div class="product-photo"><!-- Product Gallery Section -->
+<div style="max-width: 400px; margin: auto; text-align: center;">
+  
+  <!-- Badi Main Photo -->
+  <img id="mainImage" src="product-1.jpeg" alt="Product Main Image" style="width: 100%; border-radius: 8px; border: 1px solid #ddd;">
 
-<!-- Extra Product Images -->
-<img src="product-2.jpeg" alt="Back View" style="width: 100%; max-width: 300px;">
-<img src="product-3.jpeg" alt="Side View" style="width: 100%; max-width: 300px;"> alt="VERIOX Essential T-Shirt"></div><div class="info"><h3>VERIOX Acid Washed Wide Leg </h3><div class="price">₹799</div><select id="size1"><option>Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select><button class="add" onclick="addToCart('Essential T-Shirt',799,'size1')">ADD TO CART</button></div></article>
+  <!-- Choti Thumbnails (Baki Photos) -->
+  <div style="display: flex; gap: 10px; justify-content: center; margin-top: 10px;">
+    <img src="product-1.jpg" onclick="changeImage(this.src)" style="width: 70px; height: 70px; cursor: pointer; border: 2px solid #ccc; border-radius: 4px; object-fit: cover;">
+    <img src="product-2.jpg" onclick="changeImage(this.src)" style="width: 70px; height: 70px; cursor: pointer; border: 2px solid #ccc; border-radius: 4px; object-fit: cover;">
+    <img src="product-3.jpg" onclick="changeImage(this.src)" style="width: 70px; height: 70px; cursor: pointer; border: 2px solid #ccc; border-radius: 4px; object-fit: cover;">
+  </div>
+
+</div>
+
+<script>
+function changeImage(src) {
+  document.getElementById('mainImage').src = src;
+}
+</script> alt="VERIOX Essential T-Shirt"></div><div class="info"><h3>VERIOX Acid Washed Wide Leg </h3><div class="price">₹799</div><select id="size1"><option>Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select><button class="add" onclick="addToCart('Essential T-Shirt',799,'size1')">ADD TO CART</button></div></article>
 <article class="card"><div class="product-photo">YOUR<br>PRODUCT PHOTO</div><div class="info"><h3>Oversized T-Shirt</h3><div class="price">₹999</div><select id="size2"><option>Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><button class="add" onclick="addToCart('Oversized T-Shirt',999,'size2')">ADD TO CART</button></div></article>
 <article class="card"><div class="product-photo">YOUR<br>PRODUCT PHOTO</div><div class="info"><h3>Classic Shirt</h3><div class="price">₹1,299</div><select id="size3"><option>Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select><button class="add" onclick="addToCart('Classic Shirt',1299,'size3')">ADD TO CART</button></div></article>
 </div>

@@ -68,7 +68,26 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 <div class="payment"><label><input type="radio" name="payment" value="COD"> Cash on Delivery</label></div>
 <p class="small">UPI and WhatsApp are placeholders until your real details are added.</p>
 <button class="place" onclick="placeOrder()">PLACE ORDER</button></div></div>
+<form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+  <h3>Order Detail Fill Karein:</h3>
+  
+  <label>Naam:</label><br>
+  <input type="text" name="name" required><br><br>
 
+  <label>Mobile Number:</label><br>
+  <input type="tel" name="phone" required><br><br>
+
+  <label>Delivery Address:</label><br>
+  <textarea name="address" required></textarea><br><br>
+
+  <label>Payment Mode Choose Karein:</label><br>
+  <select name="payment_method">
+    <option value="COD">Cash on Delivery (COD)</option>
+    <option value="UPI">UPI (GPay / PhonePe / Paytm)</option>
+  </select><br><br>
+
+  <button type="submit">Order Confirm Karein</button>
+</form>
 <script>
 const SETTINGS={upi:"8875021302@fam",whatsapp:"8875021302"};let cart=[];
 function addToCart(name,price,id){const size=document.getElementById(id).value;if(size==="Select Size"){alert("Please select a size.");return}cart.push({name,price,size});renderCart();alert("Added to cart!")}

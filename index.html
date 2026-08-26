@@ -68,26 +68,67 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 <div class="payment"><label><input type="radio" name="payment" value="COD"> Cash on Delivery</label></div>
 <p class="small">UPI and WhatsApp are placeholders until your real details are added.</p>
 <button class="place" onclick="placeOrder()">PLACE ORDER</button></div></div>
-<form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-  <h3>Order Detail Fill Karein:</h3>
+<!-- Buy Now Button -->
+<button onclick="openForm()" style="padding: 12px 24px; background-color: #25D366; color: white; border: none; font-size: 16px; cursor: pointer; border-radius: 5px;">
+  Buy Now (Order Karein)
+</button>
+
+<!-- Order Form (Shuru mein hidden rahega) -->
+<div id="orderModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000;">
+  <div style="background: white; width: 90%; max-width: 400px; margin: 50px auto; padding: 20px; border-radius: 8px; position: relative;">
+    
+    <span onclick="closeForm()" style="position: absolute; right: 15px; top: 10px; cursor: pointer; font-size: 20px; font-weight: bold;">&times;</span>
+
+    <form onsubmit="sendToWhatsApp(event)">
+      <h3 style="margin-top:0;">Order Detail Fill Karein:</h3>
+      
+      <label>Naam:</label><br>
+      <input type="text" id="name" required style="width:100%; margin-bottom:10px;"><br>
+
+      <label>Mobile Number:</label><br>
+      <input type="tel" id="phone" required style="width:100%; margin-bottom:10px;"><br>
+
+      <label>Delivery Address:</label><br>
+      <textarea id="address" required style="width:100%; margin-bottom:10px;"></textarea><br>
+
+      <label>Payment Mode:</label><br>
+      <select id="payment" style="width:100%; margin-bottom:15px;">
+        <option value="COD">Cash on Delivery (COD)</option>
+        <option value="UPI">UPI (GPay / PhonePe)</option>
+      </select><br>
+
+      <button type="submit" style="width:100%; background:#25D366; color:white; padding:10px; border:none; cursor:pointer;">
+        WhatsApp par Order Bhejen
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+function openForm() {
+  document.getElementById('orderModal').style.display = 'block';
+}
+
+function closeForm() {
+  document.getElementById('orderModal').style.display = 'none';
+}
+
+function sendToWhatsApp(event) {
+  event.preventDefault();
   
-  <label>Naam:</label><br>
-  <input type="text" name="name" required><br><br>
+  // Yahan apna WhatsApp number daalein (91 ke sath)
+  let myNumber = "919876543210"; 
 
-  <label>Mobile Number:</label><br>
-  <input type="tel" name="phone" required><br><br>
+  let name = document.getElementById('name').value;
+  let phone = document.getElementById('phone').value;
+  let address = document.getElementById('address').value;
+  let payment = document.getElementById('payment').value;
 
-  <label>Delivery Address:</label><br>
-  <textarea name="address" required></textarea><br><br>
+  let message = `Naya Order Aaya Hai!%0A*Naam:* ${name}%0A*Phone:* ${phone}%0A*Address:* ${address}%0A*Payment:* ${payment}`;
 
-  <label>Payment Mode Choose Karein:</label><br>
-  <select name="payment_method">
-    <option value="COD">Cash on Delivery (COD)</option>
-    <option value="UPI">UPI (GPay / PhonePe / Paytm)</option>
-  </select><br><br>
-
-  <button type="submit">Order Confirm Karein</button>
-</form>
+  window.open(`https://wa.me/${myNumber}?text=${message}`, '_blank');
+}
+</script>
 <script>
 const SETTINGS={upi:"6367938093@fam",whatsapp:"6367938093"};let cart=[];
 function addToCart(name,price,id){const size=document.getElementById(id).value;if(size==="Select Size"){alert("Please select a size.");return}cart.push({name,price,size});renderCart();alert("Added to cart!")}

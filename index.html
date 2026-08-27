@@ -34,6 +34,14 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 .payment label{cursor:pointer;font-weight:bold}
 .place{width:100%;padding:13px;background:#111;color:#fff;border:0;border-radius:8px;font-weight:900;cursor:pointer;margin-top:8px}
 .small{font-size:12px;color:#777;line-height:1.5}.empty{color:#777}
+
+/* UPI Section Styles */
+#upi-box{display:block;text-align:center;margin:15px 0;padding:15px;background:#f4f4f4;border-radius:12px;border:1px solid #e0e0e0}
+.qr-img{width:220px;max-width:100%;height:auto;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.15);margin:10px auto;display:block}
+.pay-app-btn{display:block;width:100%;padding:13px;margin:8px 0;background:#28a745;color:#fff;text-align:center;border-radius:8px;font-weight:900;text-decoration:none;font-size:15px;box-shadow:0 3px 8px rgba(40,167,69,0.3)}
+.pay-app-btn:hover{background:#218838}
+.upi-id-badge{display:inline-block;background:#e9ecef;padding:6px 12px;border-radius:6px;font-family:monospace;font-weight:bold;font-size:14px;margin-top:5px}
+
 @media(max-width:800px){.nav a{display:none}.hero h1{font-size:43px}.products{grid-template-columns:1fr}.product-photo{height:280px}}
 </style>
 </head>
@@ -99,18 +107,28 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 <input class="field" id="name" placeholder="Full Name">
 <input class="field" id="phone" placeholder="Mobile Number">
 <textarea class="field" id="address" rows="3" placeholder="Full Delivery Address"></textarea>
-<div class="payment"><label><input type="radio" name="payment" value="UPI" checked> Pay via UPI (GPay/PhonePe/Paytm)</label></div>
-<div class="payment"><label><input type="radio" name="payment" value="COD"> Cash on Delivery (Confirm via WhatsApp)</label></div>
-<p class="small">UPI select karne par UPI App open hogi. COD select karne par Order details WhatsApp par redirect honge.</p>
-<button class="place" onclick="placeOrder()">PLACE ORDER</button>
+
+<div class="payment"><label><input type="radio" name="payment" value="UPI" checked onclick="togglePaymentView('UPI')"> ⚡ Pay via UPI (GPay / PhonePe / Paytm / QR)</label></div>
+<div class="payment"><label><input type="radio" name="payment" value="COD" onclick="togglePaymentView('COD')"> 🚚 Cash on Delivery (Confirm via WhatsApp)</label></div>
+
+<div id="upi-box">
+<p style="margin:0 0 5px;font-weight:bold;">Mobile App Open Karein Ya QR Scan Karein:</p>
+
+<a id="direct-upi-link" href="#" class="pay-app-btn">⚡ CLICK TO PAY VIA UPI APP (GPay/PhonePe/Paytm)</a>
+
+<p style="margin:10px 0 5px;font-size:13px;color:#555;">Scan to pay (Nakul Meena):</p>
+<div class="upi-id-badge">UPI: 8875021302@fam</div>
+</div>
+
+<button class="place" onclick="placeOrder()">PLACE ORDER ON WHATSAPP</button>
 </div>
 </div>
 
 <script>
-// YAHAN APNI REAL UPI ID AUR WHATSAPP NUMBER DAALEIN (With Country Code 91)
 const SETTINGS = {
-  upi: "8875021302@fam",       // Apni UPI ID dalein (e.g., 9876543210@paytm)
-  whatsapp: "916367938093"   // Country code 91 ke saath apna WhatsApp number dalein
+  upi: "8875021302@fam",
+  name: "Nakul Meena",
+  whatsapp: "916367938093"
 };
 
 let cart = [];
@@ -127,9 +145,19 @@ function addToCart(name, price, id) {
 }
 
 function renderCart() {
+  const total = cart.reduce((s, x) => s + x.price, 0);
   document.getElementById("count").textContent = cart.length;
-  document.getElementById("items").innerHTML = cart.length ? cart.map((x, i) => `<p>${i+1}. ${x.name} — Size ${x.size} — ₹${x.price}</p>`).join("") : "<p class='empty'>Your cart is empty.</p>";
-  document.getElementById("total").textContent = cart.reduce((s, x) => s + x.price, 0);
+  document.getElementById("items").innerHTML = cart.length ? cart.map((x, i) => '<p>' + (i+1) + '. ' + x.name + ' — Size ' + x.size + ' — ₹' + x.price + '</p>').join("") : "<p class='empty'>Your cart is empty.</p>";
+  document.getElementById("total").textContent = total;
+  
+  // Dynamic UPI Link Setup with auto amount
+  const upiDeepLink = 'upi://pay?pa=' + SETTINGS.upi + '&pn=' + encodeURIComponent(SETTINGS.name) + '&am=' + total + '&cu=INR&tn=VERIOX%20Order';
+  const btn = document.getElementById("direct-upi-link");
+  btn.href = upiDeepLink;
+}
+
+function togglePaymentView(type) {
+  document.getElementById("upi-box").style.display = (type === "UPI") ? "block" : "none";
 }
 
 function openCart() {
@@ -157,22 +185,10 @@ function placeOrder() {
     return;
   }
 
-  const products = cart.map((x, i) => `${i+1}. ${x.name} (Size: ${x.size}) - ₹${x.price}`).join("\n");
-  const msg = `🛍️ *NEW ORDER - VERIOX*\n\n👤 *Customer Details:*\nName: ${n}\nPhone: ${p}\nAddress: ${a}\n\n📦 *Order Items:*\n${products}\n\n💵 *Total Amount:* ₹${total}\n💳 *Payment Method:* ${pay}`;
+  const products = cart.map((x, i) => (i+1) + '. ' + x.name + ' (Size: ' + x.size + ') - ₹' + x.price).join("\n");
+  const msg = '🛍️ *NEW ORDER - VERIOX*\n\n👤 *Customer Details:*\nName: ' + n + '\nPhone: ' + p + '\nAddress: ' + a + '\n\n📦 *Order Items:*\n' + products + '\n\n💵 *Total Amount:* ₹' + total + '\n💳 *Payment Method:* ' + pay + (pay === 'UPI' ? '\n📌 *Note:* Paid/Paying via UPI (' + SETTINGS.upi + ')' : '');
 
-  if(pay === "UPI") {
-    // Mobile par GPay/PhonePe app auto open hoga
-    const upiUrl = `upi://pay?pa=${encodeURIComponent(SETTINGS.upi)}&pn=VERIOX&am=${total}&cu=INR&tn=${encodeURIComponent('VERIOX Order - ' + n)}`;
-    
-    // Pehle WhatsApp par order detalis bhejein fir UPI open karein
-    window.open(`https://wa.me/${SETTINGS.whatsapp}?text=${encodeURIComponent(msg + '\n\n*(UPI Payment Link Processed)*')}`, "_blank");
-    setTimeout(() => {
-      window.location.href = upiUrl;
-    }, 1000);
-  } else {
-    // Cash on Delivery - Direct WhatsApp confirm
-    window.open(`https://wa.me/${SETTINGS.whatsapp}?text=${encodeURIComponent(msg)}`, "_blank");
-  }
+  window.open('https://wa.me/' + SETTINGS.whatsapp + '?text=' + encodeURIComponent(msg), '_blank');
 }
 
 renderCart();

@@ -18,13 +18,16 @@ header{height:72px;background:#0d0d0d;color:#fff;display:flex;align-items:center
 .shop-btn{display:inline-block;background:#fff;color:#111;padding:14px 26px;border-radius:9px;font-weight:900}
 section{padding:58px 6%}.section-title{text-align:center;font-size:31px;margin:0 0 35px;letter-spacing:1px}
 .products{max-width:1100px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.card{background:#fff;border-radius:15px;overflow:hidden;box-shadow:0 5px 22px #0001}
+.card{background:#fff;border-radius:15px;overflow:hidden;box-shadow:0 5px 22px #0001;display:flex;flex-direction:column;justify-content:space-between}
 
-/* Perfect Photo Fit Container */
+/* Photo & Gallery */
 .product-photo{height:350px;width:100%;background:#eee;overflow:hidden}
 .product-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.thumbnails{display:flex;gap:8px;padding:12px 20px 0;overflow-x:auto}
+.thumb{width:48px;height:48px;object-fit:cover;border-radius:6px;cursor:pointer;border:2px solid #ddd;transition:0.2s}
+.thumb:hover{border-color:#111}
 
-.info{padding:20px}.info h3{font-size:18px;margin:0 0 10px}.price{font-size:20px;font-weight:900;margin-bottom:13px}
+.info{padding:15px 20px 20px}.info h3{font-size:18px;margin:0 0 10px}.price{font-size:20px;font-weight:900;margin-bottom:13px}
 select{width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;background:#fff;margin-bottom:10px}
 .add{width:100%;padding:12px;border:0;border-radius:8px;background:#111;color:#fff;font-weight:900;cursor:pointer}
 .about{max-width:850px;margin:auto;text-align:center;line-height:1.7;color:#444}
@@ -37,13 +40,12 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 .payment{border:1px solid #ddd;border-radius:9px;padding:12px;margin:8px 0;cursor:pointer}
 .payment label{cursor:pointer;font-weight:bold}
 .place{width:100%;padding:13px;background:#111;color:#fff;border:0;border-radius:8px;font-weight:900;cursor:pointer;margin-top:8px}
-.small{font-size:12px;color:#777;line-height:1.5}.empty{color:#777}
+.empty{color:#777}
 
-/* UPI Section Styles */
+/* UPI Styles */
 #upi-box{display:block;text-align:center;margin:15px 0;padding:15px;background:#f4f4f4;border-radius:12px;border:1px solid #e0e0e0}
 .qr-img{width:220px;max-width:100%;height:220px;object-fit:contain;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.15);margin:10px auto;display:block;border:2px solid #ddd;background:#fff}
-.pay-app-btn{display:block;width:100%;padding:13px;margin:12px 0;background:#28a745;color:#fff;text-align:center;border-radius:8px;font-weight:900;text-decoration:none;font-size:15px;box-shadow:0 3px 8px rgba(40,167,69,0.3)}
-.pay-app-btn:hover{background:#218838}
+.pay-app-btn{display:block;width:100%;padding:13px;margin:12px 0;background:#28a745;color:#fff;text-align:center;border-radius:8px;font-weight:900;text-decoration:none;font-size:15px}
 .upi-id-badge{display:inline-block;background:#e9ecef;padding:6px 12px;border-radius:6px;font-family:monospace;font-weight:bold;font-size:14px;margin-top:5px}
 
 @media(max-width:800px){
@@ -74,8 +76,14 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 <section id="jeans">
 <h2 class="section-title">VERIOX JEANS COLLECTION</h2>
 <div class="products">
+
 <article class="card">
-<div class="product-photo"><img src="product-1.jpeg" alt="Wide Leg Acid Washed Black Jeans" onerror="this.parentNode.innerHTML='<div style=\'padding:100px 0;text-align:center;font-weight:bold;color:#777;\'>PRODUCT PHOTO</div>'"></div>
+<div class="product-photo"><img id="img-j1" src="product-1.jpeg" alt="Wide Leg Acid Washed Black Jeans"></div>
+<div class="thumbnails">
+  <img class="thumb" src="product-1.jpeg" onclick="changeImage('img-j1', this.src)">
+  <img class="thumb" src="product-1-2.jpeg" onclick="changeImage('img-j1', this.src)">
+  <img class="thumb" src="product-1-3.jpeg" onclick="changeImage('img-j1', this.src)">
+</div>
 <div class="info">
 <h3> Wide Leg Acid Washed Black Jeans </h3>
 <div class="price">₹599</div>
@@ -85,7 +93,12 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 </article>
 
 <article class="card">
-<div class="product-photo"><img src="product-2-1.jpeg" alt="Vintage Washed Wide Leg Jeans" onerror="this.parentNode.innerHTML='<div style=\'padding:100px 0;text-align:center;font-weight:bold;color:#777;\'>PRODUCT PHOTO</div>'"></div>
+<div class="product-photo"><img id="img-j2" src="product-2-1.jpeg" alt="Vintage Washed Wide Leg Jeans"></div>
+<div class="thumbnails">
+  <img class="thumb" src="product-2-1.jpeg" onclick="changeImage('img-j2', this.src)">
+  <img class="thumb" src="product-2-2.jpeg" onclick="changeImage('img-j2', this.src)">
+  <img class="thumb" src="product-2-3.jpeg" onclick="changeImage('img-j2', this.src)">
+</div>
 <div class="info">
 <h3> Vintage Washed Wide Leg Jeans </h3>
 <div class="price">₹599</div>
@@ -95,7 +108,12 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 </article>
 
 <article class="card">
-<div class="product-photo"><img src="product-3-1.jpeg" alt="Grey Wide Leg Jeans" onerror="this.parentNode.innerHTML='<div style=\'padding:100px 0;text-align:center;font-weight:bold;color:#777;\'>PRODUCT PHOTO</div>'"></div>
+<div class="product-photo"><img id="img-j3" src="product-3-1.jpeg" alt="Grey Wide Leg Jeans"></div>
+<div class="thumbnails">
+  <img class="thumb" src="product-3-1.jpeg" onclick="changeImage('img-j3', this.src)">
+  <img class="thumb" src="product-3-2.jpeg" onclick="changeImage('img-j3', this.src)">
+  <img class="thumb" src="product-3-3.jpeg" onclick="changeImage('img-j3', this.src)">
+</div>
 <div class="info">
 <h3> Grey Wide Leg Jeans </h3>
 <div class="price">₹699</div>
@@ -103,16 +121,21 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 <button class="add" onclick="addToCart('Grey Wide Leg Jeans',699,'size3')">ADD TO CART</button>
 </div>
 </article>
+
 </div>
 </section>
 
-<!-- 2. T-SHIRTS SECTION (3 Products) -->
+<!-- 2. T-SHIRTS SECTION -->
 <section id="tshirts">
 <h2 class="section-title">VERIOX T-SHIRTS COLLECTION</h2>
 <div class="products">
 
 <article class="card">
-<div class="product-photo"><img src="tshirt-1.jpeg" alt="Oversized Graphic T-Shirt" onerror="this.parentNode.innerHTML='<div style=\'padding:100px 0;text-align:center;font-weight:bold;color:#777;\'>T-SHIRT PHOTO</div>'"></div>
+<div class="product-photo"><img id="img-t1" src="tshirt-1.jpeg" alt="Oversized Graphic T-Shirt"></div>
+<div class="thumbnails">
+  <img class="thumb" src="tshirt-1.jpeg" onclick="changeImage('img-t1', this.src)">
+  <img class="thumb" src="tshirt-1-2.jpeg" onclick="changeImage('img-t1', this.src)">
+</div>
 <div class="info">
 <h3> Oversized Graphic T-Shirt </h3>
 <div class="price">₹499</div>
@@ -122,7 +145,11 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 </article>
 
 <article class="card">
-<div class="product-photo"><img src="tshirt-2.jpeg" alt="Acid Wash Heavyweight T-Shirt" onerror="this.parentNode.innerHTML='<div style=\'padding:100px 0;text-align:center;font-weight:bold;color:#777;\'>T-SHIRT PHOTO</div>'"></div>
+<div class="product-photo"><img id="img-t2" src="tshirt-2.jpeg" alt="Acid Wash Heavyweight T-Shirt"></div>
+<div class="thumbnails">
+  <img class="thumb" src="tshirt-2.jpeg" onclick="changeImage('img-t2', this.src)">
+  <img class="thumb" src="tshirt-2-2.jpeg" onclick="changeImage('img-t2', this.src)">
+</div>
 <div class="info">
 <h3> Acid Wash Heavyweight T-Shirt </h3>
 <div class="price">₹549</div>
@@ -132,7 +159,11 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 </article>
 
 <article class="card">
-<div class="product-photo"><img src="tshirt-3.jpeg" alt="Minimal Streetwear Oversized Tee" onerror="this.parentNode.innerHTML='<div style=\'padding:100px 0;text-align:center;font-weight:bold;color:#777;\'>T-SHIRT PHOTO</div>'"></div>
+<div class="product-photo"><img id="img-t3" src="tshirt-3.jpeg" alt="Minimal Streetwear Oversized Tee"></div>
+<div class="thumbnails">
+  <img class="thumb" src="tshirt-3.jpeg" onclick="changeImage('img-t3', this.src)">
+  <img class="thumb" src="tshirt-3-2.jpeg" onclick="changeImage('img-t3', this.src)">
+</div>
 <div class="info">
 <h3> Minimal Streetwear Oversized Tee </h3>
 <div class="price">₹499</div>
@@ -144,13 +175,17 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 </div>
 </section>
 
-<!-- 3. SHIRTS SECTION (3 Products) -->
+<!-- 3. SHIRTS SECTION -->
 <section id="shirts">
 <h2 class="section-title">VERIOX SHIRTS COLLECTION</h2>
 <div class="products">
 
 <article class="card">
-<div class="product-photo"><img src="shirt-1.jpeg" alt="Classic Casual Shirt" onerror="this.parentNode.innerHTML='<div style=\'padding:100px 0;text-align:center;font-weight:bold;color:#777;\'>SHIRT PHOTO</div>'"></div>
+<div class="product-photo"><img id="img-s1" src="shirt-1.jpeg" alt="Classic Casual Shirt"></div>
+<div class="thumbnails">
+  <img class="thumb" src="shirt-1.jpeg" onclick="changeImage('img-s1', this.src)">
+  <img class="thumb" src="shirt-1-2.jpeg" onclick="changeImage('img-s1', this.src)">
+</div>
 <div class="info">
 <h3> Classic Casual Shirt </h3>
 <div class="price">₹699</div>
@@ -160,7 +195,11 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 </article>
 
 <article class="card">
-<div class="product-photo"><img src="shirt-2.jpeg" alt="Textured Cuban Collar Shirt" onerror="this.parentNode.innerHTML='<div style=\'padding:100px 0;text-align:center;font-weight:bold;color:#777;\'>SHIRT PHOTO</div>'"></div>
+<div class="product-photo"><img id="img-s2" src="shirt-2.jpeg" alt="Textured Cuban Collar Shirt"></div>
+<div class="thumbnails">
+  <img class="thumb" src="shirt-2.jpeg" onclick="changeImage('img-s2', this.src)">
+  <img class="thumb" src="shirt-2-2.jpeg" onclick="changeImage('img-s2', this.src)">
+</div>
 <div class="info">
 <h3> Textured Cuban Collar Shirt </h3>
 <div class="price">₹749</div>
@@ -170,7 +209,11 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 </article>
 
 <article class="card">
-<div class="product-photo"><img src="shirt-3.jpeg" alt="Oversized Striped Cotton Shirt" onerror="this.parentNode.innerHTML='<div style=\'padding:100px 0;text-align:center;font-weight:bold;color:#777;\'>SHIRT PHOTO</div>'"></div>
+<div class="product-photo"><img id="img-s3" src="shirt-3.jpeg" alt="Oversized Striped Cotton Shirt"></div>
+<div class="thumbnails">
+  <img class="thumb" src="shirt-3.jpeg" onclick="changeImage('img-s3', this.src)">
+  <img class="thumb" src="shirt-3-2.jpeg" onclick="changeImage('img-s3', this.src)">
+</div>
 <div class="info">
 <h3> Oversized Striped Cotton Shirt </h3>
 <div class="price">₹699</div>
@@ -204,7 +247,8 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 <div id="upi-box">
 <p style="margin:0 0 5px;font-weight:bold;font-size:13px;color:#333;">Mobile Application Open Karein Ya QR Scan Karke Pay Karein aur Screenshot WhatsApp par Bhej Dein:</p>
 
-<!-- Dynamic Generated QR Code -->
+<a href="#" id="direct-upi-link" class="pay-app-btn">🚀 CLICK TO PAY VIA UPI APP</a>
+
 <div style="text-align: center; margin: 15px 0;">
   <p style="font-size: 14px; font-weight: bold; margin-bottom: 8px;">Scan QR Code to Pay Total Amount:</p>
   <img id="dynamic-qr" src="" alt="Payment QR Code" class="qr-img">
@@ -226,6 +270,10 @@ const SETTINGS = {
 };
 
 let cart = [];
+
+function changeImage(targetId, newSrc) {
+  document.getElementById(targetId).src = newSrc;
+}
 
 function addToCart(name, price, id) {
   const size = document.getElementById(id).value;

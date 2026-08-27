@@ -11,7 +11,7 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:#111;background:var(-
 a{text-decoration:none;color:inherit}
 header{height:72px;background:#0d0d0d;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 6%;position:sticky;top:0;z-index:50}
 .logo{font-size:28px;font-weight:900;letter-spacing:5px}
-.nav{display:flex;gap:24px;align-items:center;font-size:14px}.nav a:hover{opacity:.75}
+.nav{display:flex;gap:18px;align-items:center;font-size:14px}.nav a:hover{opacity:.75}
 .cart-btn{border:0;background:#fff;color:#111;border-radius:9px;padding:11px 16px;font-weight:800;cursor:pointer}
 .hero{min-height:445px;background:linear-gradient(120deg,#101010,#3b3b3b);display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;padding:70px 20px}
 .hero h1{font-size:64px;letter-spacing:7px;margin:0 0 12px}.hero p{font-size:21px;margin:0 0 28px;color:#eee}
@@ -19,7 +19,11 @@ header{height:72px;background:#0d0d0d;color:#fff;display:flex;align-items:center
 section{padding:58px 6%}.section-title{text-align:center;font-size:31px;margin:0 0 35px;letter-spacing:1px}
 .products{max-width:1100px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
 .card{background:#fff;border-radius:15px;overflow:hidden;box-shadow:0 5px 22px #0001}
-.product-photo{height:320px;background:#eee;display:flex;align-items:center;justify-content:center;color:#777;font-weight:800;letter-spacing:1px;text-align:center}.product-photo img{width:100%;height:100%;object-fit:cover}
+
+/* Perfect Photo Fit Container */
+.product-photo{height:350px;width:100%;background:#eee;overflow:hidden}
+.product-photo img{width:100%;height:100%;object-fit:cover;display:block}
+
 .info{padding:20px}.info h3{font-size:18px;margin:0 0 10px}.price{font-size:20px;font-weight:900;margin-bottom:13px}
 select{width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;background:#fff;margin-bottom:10px}
 .add{width:100%;padding:12px;border:0;border-radius:8px;background:#111;color:#fff;font-weight:900;cursor:pointer}
@@ -37,56 +41,98 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 
 /* UPI Section Styles */
 #upi-box{display:block;text-align:center;margin:15px 0;padding:15px;background:#f4f4f4;border-radius:12px;border:1px solid #e0e0e0}
-.qr-img{width:220px;max-width:100%;height:auto;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.15);margin:10px auto;display:block}
-.pay-app-btn{display:block;width:100%;padding:13px;margin:8px 0;background:#28a745;color:#fff;text-align:center;border-radius:8px;font-weight:900;text-decoration:none;font-size:15px;box-shadow:0 3px 8px rgba(40,167,69,0.3)}
+.qr-img{width:220px;max-width:100%;height:220px;object-fit:contain;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.15);margin:10px auto;display:block;border:2px solid #ddd;background:#fff}
+.pay-app-btn{display:block;width:100%;padding:13px;margin:12px 0;background:#28a745;color:#fff;text-align:center;border-radius:8px;font-weight:900;text-decoration:none;font-size:15px;box-shadow:0 3px 8px rgba(40,167,69,0.3)}
 .pay-app-btn:hover{background:#218838}
 .upi-id-badge{display:inline-block;background:#e9ecef;padding:6px 12px;border-radius:6px;font-family:monospace;font-weight:bold;font-size:14px;margin-top:5px}
 
-@media(max-width:800px){.nav a{display:none}.hero h1{font-size:43px}.products{grid-template-columns:1fr}.product-photo{height:280px}}
+@media(max-width:800px){
+  .nav{gap:10px;font-size:11px}
+  .hero h1{font-size:43px}
+  .products{grid-template-columns:1fr}
+  .product-photo{height:300px}
+}
 </style>
 </head>
 <body>
 <header>
 <div class="logo">VERIOX</div>
 <nav class="nav">
-<a href="#home">HOME</a><a href="#shop">SHOP</a><a href="#about">ABOUT</a><a href="#contact">CONTACT</a>
+<a href="#home">HOME</a>
+<a href="#jeans">JEANS</a>
+<a href="#tshirts">T-SHIRTS</a>
+<a href="#shirts">SHIRTS</a>
+<a href="#contact">CONTACT</a>
 <button class="cart-btn" onclick="openCart()">🛒 Cart (<span id="count">0</span>)</button>
 </nav>
 </header>
 
 <main id="home">
-<section class="hero"><div><h1>VERIOX</h1><p>Wear Your Style.</p><a class="shop-btn" href="#shop">SHOP NOW</a></div></section>
+<section class="hero"><div><h1>VERIOX</h1><p>Wear Your Style.</p><a class="shop-btn" href="#jeans">SHOP NOW</a></div></section>
 
-<section id="shop">
-<h2 class="section-title">VERIOX COLLECTION</h2>
+<!-- 1. JEANS SECTION -->
+<section id="jeans">
+<h2 class="section-title">VERIOX JEANS COLLECTION</h2>
 <div class="products">
 <article class="card">
-<div class="product-photo"><img src="product-1.jpeg" alt="VERIOX Graphic Long-Sleeve" onerror="this.parentNode.innerHTML='PRODUCT PHOTO'"></div>
+<div class="product-photo"><img src="product-1.jpeg" alt="Wide Leg Acid Washed Black Jeans" onerror="this.parentNode.innerHTML='<div style=\'padding:100px 0;text-align:center;font-weight:bold;color:#777;\'>PRODUCT PHOTO</div>'"></div>
 <div class="info">
 <h3> Wide Leg Acid Washed Black Jeans </h3>
 <div class="price">₹599</div>
 <select id="size1"><option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-<button class="add" onclick="addToCart('VERIOX Graphic Long-Sleeve',599,'size1')">ADD TO CART</button>
+<button class="add" onclick="addToCart('Wide Leg Acid Washed Black Jeans',599,'size1')">ADD TO CART</button>
 </div>
 </article>
 
 <article class="card">
-<div class="product-photo"><img src="product-2-1.jpeg" alt="Oversized T-Shirt" onerror="this.parentNode.innerHTML='PRODUCT PHOTO'"></div>
+<div class="product-photo"><img src="product-2-1.jpeg" alt="Vintage Washed Wide Leg Jeans" onerror="this.parentNode.innerHTML='<div style=\'padding:100px 0;text-align:center;font-weight:bold;color:#777;\'>PRODUCT PHOTO</div>'"></div>
 <div class="info">
 <h3> Vintage Washed Wide Leg Jeans </h3>
 <div class="price">₹599</div>
 <select id="size2"><option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select>
-<button class="add" onclick="addToCart('Oversized T-Shirt',599,'size2')">ADD TO CART</button>
+<button class="add" onclick="addToCart('Vintage Washed Wide Leg Jeans',599,'size2')">ADD TO CART</button>
 </div>
 </article>
 
 <article class="card">
-<div class="product-photo"><img src="product-3-1.jpeg" alt="Classic Shirt" onerror="this.parentNode.innerHTML='PRODUCT PHOTO'"></div>
+<div class="product-photo"><img src="product-3-1.jpeg" alt="Grey Wide Leg Jeans" onerror="this.parentNode.innerHTML='<div style=\'padding:100px 0;text-align:center;font-weight:bold;color:#777;\'>PRODUCT PHOTO</div>'"></div>
 <div class="info">
 <h3> Grey Wide Leg Jeans </h3>
 <div class="price">₹699</div>
 <select id="size3"><option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-<button class="add" onclick="addToCart('Classic Shirt',699,'size3')">ADD TO CART</button>
+<button class="add" onclick="addToCart('Grey Wide Leg Jeans',699,'size3')">ADD TO CART</button>
+</div>
+</article>
+</div>
+</section>
+
+<!-- 2. T-SHIRTS SECTION -->
+<section id="tshirts">
+<h2 class="section-title">VERIOX T-SHIRTS COLLECTION</h2>
+<div class="products">
+<article class="card">
+<div class="product-photo"><img src="tshirt-1.jpeg" alt="Oversized Printed T-Shirt" onerror="this.parentNode.innerHTML='<div style=\'padding:100px 0;text-align:center;font-weight:bold;color:#777;\'>T-SHIRT PHOTO</div>'"></div>
+<div class="info">
+<h3> Oversized Graphic T-Shirt </h3>
+<div class="price">₹499</div>
+<select id="size4"><option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+<button class="add" onclick="addToCart('Oversized Graphic T-Shirt',499,'size4')">ADD TO CART</button>
+</div>
+</article>
+</div>
+</section>
+
+<!-- 3. SHIRTS SECTION -->
+<section id="shirts">
+<h2 class="section-title">VERIOX SHIRTS COLLECTION</h2>
+<div class="products">
+<article class="card">
+<div class="product-photo"><img src="shirt-1.jpeg" alt="Classic Casual Shirt" onerror="this.parentNode.innerHTML='<div style=\'padding:100px 0;text-align:center;font-weight:bold;color:#777;\'>SHIRT PHOTO</div>'"></div>
+<div class="info">
+<h3> Classic Casual Shirt </h3>
+<div class="price">₹699</div>
+<select id="size5"><option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+<button class="add" onclick="addToCart('Classic Casual Shirt',699,'size5')">ADD TO CART</button>
 </div>
 </article>
 </div>
@@ -112,21 +158,19 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 <div class="payment"><label><input type="radio" name="payment" value="COD" onclick="togglePaymentView('COD')"> 🚚 Cash on Delivery (Confirm via WhatsApp)</label></div>
 
 <div id="upi-box">
-<p style="margin:0 0 5px;font-weight:bold;">Mobile App Open Karein Ya QR Scan Karein Pay Karein Total Amount Screenshot le kar ( WhatsApp ) par bhej de:</p>
-<!-- QR Code Display -->
-<div style="text-align: center; margin: 20px 0;">
-  <p style="font-size: 18px; font-weight: bold;">Scan QR Code to Pay </p>
-  
-  <!-- 'my-qr.png' ki jagah apni QR image file ka naam daalein -->
-  <img src="qrcode2.jpeg" alt="Payment QR Code" width="220" height="220" style="border: 2px solid #ddd; border-radius: 8px;">
-  
-  <p>UPI ID: <b>8875021302@fam</b></p>
-</div>
-<a href="upi://pay?pa=8875021302@fam&pn=Veriox&am=599&cu=INR" class="your-button-class">
-   CLICK TO PAY VIA UPI APP
+<p style="margin:0 0 5px;font-weight:bold;font-size:13px;color:#333;">Mobile Application Open Karein Ya QR Scan Karke Pay Karein aur Screenshot WhatsApp par Bhej Dein:</p>
 
-<p style="margin:10px 0 5px;font-size:13px;color:#555;">Scan to pay (Nakul Meena):</p>
-<div class="upi-id-badge">UPI: 8875021302@fam</div>
+<!-- Mobile Direct Payment Button -->
+<a href="#" id="direct-upi-link" class="pay-app-btn">🚀 CLICK TO PAY VIA UPI APP</a>
+
+<!-- Dynamic Generated QR Code -->
+<div style="text-align: center; margin: 15px 0;">
+  <p style="font-size: 14px; font-weight: bold; margin-bottom: 8px;">Scan QR Code to Pay Total Amount:</p>
+  <img id="dynamic-qr" src="" alt="Payment QR Code" class="qr-img">
+</div>
+
+<p style="margin:5px 0;font-size:13px;color:#555;">Manual Payment UPI ID (Nakul Meena):</p>
+<div class="upi-id-badge">8875021302@fam</div>
 </div>
 
 <button class="place" onclick="placeOrder()">PLACE ORDER ON WHATSAPP</button>
@@ -135,69 +179,76 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 
 <script>
 const SETTINGS = {
-  upi: "8875021302@fam",
-  name: "Nakul Meena",
-  whatsapp: "916367938093"
+  upi: "8875021302@fam",
+  name: "Veriox Store",
+  whatsapp: "916367938093"
 };
 
 let cart = [];
 
 function addToCart(name, price, id) {
-  const size = document.getElementById(id).value;
-  if(!size || size === "Select Size") {
-    alert("Please select a size.");
-    return;
-  }
-  cart.push({name, price, size});
-  renderCart();
-  alert("Added to cart!");
+  const size = document.getElementById(id).value;
+  if(!size || size === "Select Size") {
+    alert("Please select a size.");
+    return;
+  }
+  cart.push({name, price, size});
+  renderCart();
+  alert("Added to cart!");
 }
 
 function renderCart() {
-  const total = cart.reduce((s, x) => s + x.price, 0);
-  document.getElementById("count").textContent = cart.length;
-  document.getElementById("items").innerHTML = cart.length ? cart.map((x, i) => '<p>' + (i+1) + '. ' + x.name + ' — Size ' + x.size + ' — ₹' + x.price + '</p>').join("") : "<p class='empty'>Your cart is empty.</p>";
-  document.getElementById("total").textContent = total;
-  
-  // Dynamic UPI Link Setup with auto amount
-  const upiDeepLink = 'upi://pay?pa=' + SETTINGS.upi + '&pn=' + encodeURIComponent(SETTINGS.name) + '&am=' + total + '&cu=INR&tn=VERIOX%20Order';
-  const btn = document.getElementById("direct-upi-link");
-  btn.href = upiDeepLink;
+  const total = cart.reduce((s, x) => s + x.price, 0);
+  document.getElementById("count").textContent = cart.length;
+  document.getElementById("items").innerHTML = cart.length ? cart.map((x, i) => '<p>' + (i+1) + '. ' + x.name + ' — Size ' + x.size + ' — ₹' + x.price + '</p>').join("") : "<p class='empty'>Your cart is empty.</p>";
+  document.getElementById("total").textContent = total;
+  
+  if(total > 0) {
+    const upiRaw = 'upi://pay?pa=' + SETTINGS.upi + '&pn=' + encodeURIComponent(SETTINGS.name) + '&am=' + total + '&cu=INR&tn=VERIOX%20Order';
+    
+    const btn = document.getElementById("direct-upi-link");
+    if(btn) btn.href = upiRaw;
+
+    const qrImg = document.getElementById("dynamic-qr");
+    if(qrImg) {
+      qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(upiRaw);
+    }
+  }
 }
 
 function togglePaymentView(type) {
-  document.getElementById("upi-box").style.display = (type === "UPI") ? "block" : "none";
+  document.getElementById("upi-box").style.display = (type === "UPI") ? "block" : "none";
 }
 
 function openCart() {
-  if(!cart.length) {
-    alert("Please add a product first.");
-    return;
-  }
-  document.getElementById("cartModal").style.display = "flex";
-  renderCart();
+  if(!cart.length) {
+    alert("Please add a product first.");
+    return;
+  }
+  document.getElementById("cartModal").style.display = "flex";
+  renderCart();
 }
 
 function closeCart() {
-  document.getElementById("cartModal").style.display = "none";
+  document.getElementById("cartModal").style.display = "none";
 }
 
 function placeOrder() {
-  const n = document.getElementById("name").value.trim();
-  const p = document.getElementById("phone").value.trim();
-  const a = document.getElementById("address").value.trim();
-  const pay = document.querySelector('input[name="payment"]:checked').value;
-  const total = cart.reduce((s, x) => s + x.price, 0);
+  const n = document.getElementById("name").value.trim();
+  const p = document.getElementById("phone").value.trim();
+  const a = document.getElementById("address").value.trim();
+  const pay = document.querySelector('input[name="payment"]:checked').value;
+  const total = cart.reduce((s, x) => s + x.price, 0);
 
-  if(!n || !p || !a) {
-    alert("Please fill name, mobile number and address.");
-    return;
-  }
+  if(!n || !p || !a) {
+    alert("Please fill name, mobile number and address.");
+    return;
+  }
 
-  const products = cart.map((x, i) => (i+1) + '. ' + x.name + ' (Size: ' + x.size + ') - ₹' + x.price).join("\n");
-  const msg = '🛍️ *NEW ORDER - VERIOX*\n\n👤 *Customer Details:*\nName: ' + n + '\nPhone: ' + p + '\nAddress: ' + a + '\n\n📦 *Order Items:*\n' + products + '\n\n💵 *Total Amount:* ₹' + total + '\n💳 *Payment Method:* ' + pay + (pay === 'UPI' ? '\n📌 *Note:* Paid/Paying via UPI (' + SETTINGS.upi + ')' : '');
+  const products = cart.map((x, i) => (i+1) + '. ' + x.name + ' (Size: ' + x.size + ') - ₹' + x.price).join("\n");
+  const msg = '🛍️ *NEW ORDER - VERIOX*\n\n👤 *Customer Details:*\nName: ' + n + '\nPhone: ' + p + '\nAddress: ' + a + '\n\n📦 *Order Items:*\n' + products + '\n\n💵 *Total Amount:* ₹' + total + '\n💳 *Payment Method:* ' + pay + (pay === 'UPI' ? '\n📌 *Note:* Paid/Paying via UPI (' + SETTINGS.upi + ')' : '');
 
-  window.open('https://wa.me/' + SETTINGS.whatsapp + '?text=' + encodeURIComponent(msg), '_blank');
+  window.open('https://wa.me/' + SETTINGS.whatsapp + '?text=' + encodeURIComponent(msg), '_blank');
 }
 
 renderCart();

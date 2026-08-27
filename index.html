@@ -30,7 +30,8 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 .modal-box{background:#fff;width:min(94%,520px);max-height:90vh;overflow:auto;border-radius:16px;padding:24px}
 .close{float:right;border:0;background:none;font-size:28px;cursor:pointer}.modal h2{margin-top:0}
 .field{width:100%;padding:12px;margin:6px 0 12px;border:1px solid #ddd;border-radius:8px}
-.payment{border:1px solid #ddd;border-radius:9px;padding:12px;margin:8px 0}
+.payment{border:1px solid #ddd;border-radius:9px;padding:12px;margin:8px 0;cursor:pointer}
+.payment label{cursor:pointer;font-weight:bold}
 .place{width:100%;padding:13px;background:#111;color:#fff;border:0;border-radius:8px;font-weight:900;cursor:pointer;margin-top:8px}
 .small{font-size:12px;color:#777;line-height:1.5}.empty{color:#777}
 @media(max-width:800px){.nav a{display:none}.hero h1{font-size:43px}.products{grid-template-columns:1fr}.product-photo{height:280px}}
@@ -51,31 +52,129 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 <section id="shop">
 <h2 class="section-title">VERIOX COLLECTION</h2>
 <div class="products">
-<article class="card"><div class="product-photo"><img src="product-1.jpeg" alt="VERIOX Essential T-Shirt"></div><div class="info"><h3>VERIOX Graphic Long-Sleeve</h3><div class="price">₹599</div><select id="size1"><option>Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select><button class="add" onclick="addToCart('Essential T-Shirt',799,'size1')">ADD TO CART</button></div></article>
-<article class="card"><div class="product-photo">YOUR<br>PRODUCT PHOTO</div><div class="info"><h3>Oversized T-Shirt</h3><div class="price">₹599</div><select id="size2"><option>Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><button class="add" onclick="addToCart('Oversized T-Shirt',999,'size2')">ADD TO CART</button></div></article>
-<article class="card"><div class="product-photo">YOUR<br>PRODUCT PHOTO</div><div class="info"><h3>Classic Shirt</h3><div class="price">₹699</div><select id="size3"><option>Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select><button class="add" onclick="addToCart('Classic Shirt',1299,'size3')">ADD TO CART</button></div></article>
+<article class="card">
+<div class="product-photo"><img src="product-1.jpeg" alt="VERIOX Graphic Long-Sleeve" onerror="this.parentNode.innerHTML='PRODUCT PHOTO'"></div>
+<div class="info">
+<h3>VERIOX Graphic Long-Sleeve</h3>
+<div class="price">₹599</div>
+<select id="size1"><option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+<button class="add" onclick="addToCart('VERIOX Graphic Long-Sleeve',599,'size1')">ADD TO CART</button>
+</div>
+</article>
+
+<article class="card">
+<div class="product-photo"><img src="product-2.jpeg" alt="Oversized T-Shirt" onerror="this.parentNode.innerHTML='PRODUCT PHOTO'"></div>
+<div class="info">
+<h3>Oversized T-Shirt</h3>
+<div class="price">₹599</div>
+<select id="size2"><option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select>
+<button class="add" onclick="addToCart('Oversized T-Shirt',599,'size2')">ADD TO CART</button>
+</div>
+</article>
+
+<article class="card">
+<div class="product-photo"><img src="product-3.jpeg" alt="Classic Shirt" onerror="this.parentNode.innerHTML='PRODUCT PHOTO'"></div>
+<div class="info">
+<h3>Classic Shirt</h3>
+<div class="price">₹699</div>
+<select id="size3"><option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+<button class="add" onclick="addToCart('Classic Shirt',699,'size3')">ADD TO CART</button>
+</div>
+</article>
 </div>
 </section>
 
 <section id="about"><div class="about"><h2 class="section-title">ABOUT VERIOX</h2><p>VERIOX is a modern clothing brand focused on clean style, comfort and everyday confidence.</p></div></section>
 <section id="contact" class="contact"><h2 class="section-title">CONTACT</h2><p>Instagram: @veriox</p><p>Email: your@email.com</p><p>UPI + Cash on Delivery available</p></section>
 </main>
+
 <footer>© 2026 VERIOX — Wear Your Style.</footer>
 
-<div class="modal" id="cartModal"><div class="modal-box"><button class="close" onclick="closeCart()">×</button><h2>CHECKOUT</h2><div id="items"></div><h3>Total: ₹<span id="total">0</span></h3>
-<input class="field" id="name" placeholder="Full Name"><input class="field" id="phone" placeholder="Mobile Number"><textarea class="field" id="address" rows="3" placeholder="Full Delivery Address"></textarea>
-<div class="payment"><label><input type="radio" name="payment" value="UPI" checked> UPI</label></div>
-<div class="payment"><label><input type="radio" name="payment" value="COD"> Cash on Delivery</label></div>
-<p class="small">UPI and WhatsApp are placeholders until your real details are added.</p>
-<button class="place" onclick="placeOrder()">PLACE ORDER</button></div></div>
+<div class="modal" id="cartModal">
+<div class="modal-box">
+<button class="close" onclick="closeCart()">×</button>
+<h2>CHECKOUT</h2>
+<div id="items"></div>
+<h3>Total: ₹<span id="total">0</span></h3>
+<input class="field" id="name" placeholder="Full Name">
+<input class="field" id="phone" placeholder="Mobile Number">
+<textarea class="field" id="address" rows="3" placeholder="Full Delivery Address"></textarea>
+<div class="payment"><label><input type="radio" name="payment" value="UPI" checked> Pay via UPI (GPay/PhonePe/Paytm)</label></div>
+<div class="payment"><label><input type="radio" name="payment" value="COD"> Cash on Delivery (Confirm via WhatsApp)</label></div>
+<p class="small">UPI select karne par UPI App open hogi. COD select karne par Order details WhatsApp par redirect honge.</p>
+<button class="place" onclick="placeOrder()">PLACE ORDER</button>
+</div>
+</div>
 
 <script>
-const SETTINGS={upi:"8875021302@fam",whatsapp:"916367938093"};let cart=[];
-function addToCart(name,price,id){const size=document.getElementById(id).value;if(size==="Select Size"){alert("Please select a size.");return}cart.push({name,price,size});renderCart();alert("Added to cart!")}
-function renderCart(){document.getElementById("count").textContent=cart.length;document.getElementById("items").innerHTML=cart.length?cart.map((x,i)=>`<p>${i+1}. ${x.name} — Size ${x.size} — ₹${x.price}</p>`).join(""):"<p class='empty'>Your cart is empty.</p>";document.getElementById("total").textContent=cart.reduce((s,x)=>s+x.price,0)}
-function openCart(){if(!cart.length){alert("Please add a product first.");return}document.getElementById("cartModal").style.display="flex";renderCart()}
-function closeCart(){document.getElementById("cartModal").style.display="none"}
-function placeOrder(){const n=document.getElementById("name").value.trim(),p=document.getElementById("phone").value.trim(),a=document.getElementById("address").value.trim(),pay=document.querySelector('input[name="payment"]:checked').value,total=cart.reduce((s,x)=>s+x.price,0);if(!n||!p||!a){alert("Please fill name, mobile number and address.");return}const products=cart.map(x=>`${x.name} | Size: ${x.size} | ₹${x.price}`).join("\n");const msg=`VERIOX Order\nName: ${n}\nPhone: ${p}\nAddress: ${a}\nPayment: ${pay}\n${products}\nTotal: ₹${total}`;if(pay==="UPI"){if(SETTINGS.upi==="YOURUPI@upi"){alert("UPI is not connected yet. Replace SETTINGS.upi with your real UPI ID.");return}location.href=`upi://pay?pa=${encodeURIComponent(SETTINGS.upi)}&pn=VERIOX&am=${total}&cu=INR&tn=VERIOX%20Order`}else{if(SETTINGS.whatsapp==="91XXXXXXXXXX"){alert("COD is not connected yet. Replace SETTINGS.whatsapp with your WhatsApp number.");return}window.open(`https://wa.me/${SETTINGS.whatsapp}?text=${encodeURIComponent(msg)}`,"_blank")}}
+// YAHAN APNI REAL UPI ID AUR WHATSAPP NUMBER DAALEIN (With Country Code 91)
+const SETTINGS = {
+  upi: "8875021302@fam",       // Apni UPI ID dalein (e.g., 9876543210@paytm)
+  whatsapp: "916367938093"   // Country code 91 ke saath apna WhatsApp number dalein
+};
+
+let cart = [];
+
+function addToCart(name, price, id) {
+  const size = document.getElementById(id).value;
+  if(!size || size === "Select Size") {
+    alert("Please select a size.");
+    return;
+  }
+  cart.push({name, price, size});
+  renderCart();
+  alert("Added to cart!");
+}
+
+function renderCart() {
+  document.getElementById("count").textContent = cart.length;
+  document.getElementById("items").innerHTML = cart.length ? cart.map((x, i) => `<p>${i+1}. ${x.name} — Size ${x.size} — ₹${x.price}</p>`).join("") : "<p class='empty'>Your cart is empty.</p>";
+  document.getElementById("total").textContent = cart.reduce((s, x) => s + x.price, 0);
+}
+
+function openCart() {
+  if(!cart.length) {
+    alert("Please add a product first.");
+    return;
+  }
+  document.getElementById("cartModal").style.display = "flex";
+  renderCart();
+}
+
+function closeCart() {
+  document.getElementById("cartModal").style.display = "none";
+}
+
+function placeOrder() {
+  const n = document.getElementById("name").value.trim();
+  const p = document.getElementById("phone").value.trim();
+  const a = document.getElementById("address").value.trim();
+  const pay = document.querySelector('input[name="payment"]:checked').value;
+  const total = cart.reduce((s, x) => s + x.price, 0);
+
+  if(!n || !p || !a) {
+    alert("Please fill name, mobile number and address.");
+    return;
+  }
+
+  const products = cart.map((x, i) => `${i+1}. ${x.name} (Size: ${x.size}) - ₹${x.price}`).join("\n");
+  const msg = `🛍️ *NEW ORDER - VERIOX*\n\n👤 *Customer Details:*\nName: ${n}\nPhone: ${p}\nAddress: ${a}\n\n📦 *Order Items:*\n${products}\n\n💵 *Total Amount:* ₹${total}\n💳 *Payment Method:* ${pay}`;
+
+  if(pay === "UPI") {
+    // Mobile par GPay/PhonePe app auto open hoga
+    const upiUrl = `upi://pay?pa=${encodeURIComponent(SETTINGS.upi)}&pn=VERIOX&am=${total}&cu=INR&tn=${encodeURIComponent('VERIOX Order - ' + n)}`;
+    
+    // Pehle WhatsApp par order detalis bhejein fir UPI open karein
+    window.open(`https://wa.me/${SETTINGS.whatsapp}?text=${encodeURIComponent(msg + '\n\n*(UPI Payment Link Processed)*')}`, "_blank");
+    setTimeout(() => {
+      window.location.href = upiUrl;
+    }, 1000);
+  } else {
+    // Cash on Delivery - Direct WhatsApp confirm
+    window.open(`https://wa.me/${SETTINGS.whatsapp}?text=${encodeURIComponent(msg)}`, "_blank");
+  }
+}
+
 renderCart();
 </script>
 </body>

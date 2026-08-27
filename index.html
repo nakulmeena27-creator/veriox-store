@@ -362,7 +362,7 @@ footer{background:#090909;color:#888;text-align:center;padding:25px;font-size:12
 <div class="price">₹599</div>
 <div class="size-selector">
   <label class="size-label" for="size1">Select Size</label>
-  <select id="size1"><option value="">-- Choose Size --</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+  <select id="size1"><option value="">-- Choose Size --</option><option>28</option><option>30</option><option>32</option><option>34</option></select>
 </div>
 <button class="add" onclick="addToCart('Wide Leg Acid Washed Black Jeans',599,'size1')">ADD TO CART</button>
 </div>
@@ -795,7 +795,7 @@ function renderCart() {
 
     const qrImg = document.getElementById("dynamic-qr");
     if(qrImg) {
-      qrImg.src = 'qrcode2.jpeg' + encodeURIComponent(upiRaw);
+      qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(upiRaw);
     }
   }
 }

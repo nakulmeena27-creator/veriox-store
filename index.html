@@ -51,9 +51,9 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 <section id="shop">
 <h2 class="section-title">VERIOX COLLECTION</h2>
 <div class="products">
-<article class="card"><div class="product-photo"><img src="product-1.jpeg" alt="VERIOX Essential T-Shirt"></div><div class="info"><h3>VERIOX Graphic Long-Sleeve</h3><div class="price">₹799</div><select id="size1"><option>Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select><button class="add" onclick="addToCart('Essential T-Shirt',799,'size1')">ADD TO CART</button></div></article>
-<article class="card"><div class="product-photo">YOUR<br>PRODUCT PHOTO</div><div class="info"><h3>Oversized T-Shirt</h3><div class="price">₹999</div><select id="size2"><option>Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><button class="add" onclick="addToCart('Oversized T-Shirt',999,'size2')">ADD TO CART</button></div></article>
-<article class="card"><div class="product-photo">YOUR<br>PRODUCT PHOTO</div><div class="info"><h3>Classic Shirt</h3><div class="price">₹1,299</div><select id="size3"><option>Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select><button class="add" onclick="addToCart('Classic Shirt',1299,'size3')">ADD TO CART</button></div></article>
+<article class="card"><div class="product-photo"><img src="product-1.jpeg" alt="VERIOX Essential T-Shirt"></div><div class="info"><h3>VERIOX Graphic Long-Sleeve</h3><div class="price">₹599</div><select id="size1"><option>Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select><button class="add" onclick="addToCart('Essential T-Shirt',799,'size1')">ADD TO CART</button></div></article>
+<article class="card"><div class="product-photo">YOUR<br>PRODUCT PHOTO</div><div class="info"><h3>Oversized T-Shirt</h3><div class="price">₹599</div><select id="size2"><option>Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><button class="add" onclick="addToCart('Oversized T-Shirt',999,'size2')">ADD TO CART</button></div></article>
+<article class="card"><div class="product-photo">YOUR<br>PRODUCT PHOTO</div><div class="info"><h3>Classic Shirt</h3><div class="price">₹699</div><select id="size3"><option>Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select><button class="add" onclick="addToCart('Classic Shirt',1299,'size3')">ADD TO CART</button></div></article>
 </div>
 </section>
 
@@ -70,7 +70,7 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 <button class="place" onclick="placeOrder()">PLACE ORDER</button></div></div>
 
 <script>
-const SETTINGS={upi:"YOURUPI@upi",whatsapp:"91XXXXXXXXXX"};let cart=[];
+const SETTINGS={upi:"8875021302@fam",whatsapp:"916367938093"};let cart=[];
 function addToCart(name,price,id){const size=document.getElementById(id).value;if(size==="Select Size"){alert("Please select a size.");return}cart.push({name,price,size});renderCart();alert("Added to cart!")}
 function renderCart(){document.getElementById("count").textContent=cart.length;document.getElementById("items").innerHTML=cart.length?cart.map((x,i)=>`<p>${i+1}. ${x.name} — Size ${x.size} — ₹${x.price}</p>`).join(""):"<p class='empty'>Your cart is empty.</p>";document.getElementById("total").textContent=cart.reduce((s,x)=>s+x.price,0)}
 function openCart(){if(!cart.length){alert("Please add a product first.");return}document.getElementById("cartModal").style.display="flex";renderCart()}

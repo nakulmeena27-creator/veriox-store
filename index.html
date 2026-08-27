@@ -5,112 +5,312 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VERIOX — Wear Your Style</title>
 <style>
-:root{--black:#0d0d0d;--light:#fafafa;--accent:#111;--gray:#f0f0f0}
+:root{
+  --black: #0d0d0d;
+  --light: #fafafa;
+  --accent: #111;
+  --gray: #f0f0f0;
+  --primary-btn: #111;
+  --primary-btn-hover: #333;
+  --danger: #dc3545;
+  --success: #28a745;
+  --radius: 10px;
+}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#111;background:var(--light)}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color:#111;
+  background:var(--light);
+  line-height: 1.5;
+}
 a{text-decoration:none;color:inherit}
 
+/* Top Announcement Bar */
+.top-bar {
+  background: #111;
+  color: #fff;
+  text-align: center;
+  padding: 6px 10px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
 /* Header & Nav */
-header{height:65px;background:#0d0d0d;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 5%;position:sticky;top:0;z-index:50;box-shadow:0 2px 10px rgba(0,0,0,0.15)}
+header{
+  height:65px;
+  background:#0d0d0d;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 5%;
+  position:sticky;
+  top:0;
+  z-index:50;
+  box-shadow:0 2px 10px rgba(0,0,0,0.15)
+}
 .logo-container{display:flex;align-items:center;gap:10px}
 .logo-img{height:36px;width:auto;object-fit:contain}
 .logo-text{font-size:22px;font-weight:900;letter-spacing:3px}
-.nav{display:flex;gap:15px;align-items:center;font-size:13px;font-weight:600}
+.nav{display:flex;gap:18px;align-items:center;font-size:13px;font-weight:600}
 .nav a{transition:opacity 0.2s}
 .nav a:hover{opacity:.7}
-.cart-btn{border:0;background:#fff;color:#111;border-radius:20px;padding:8px 16px;font-weight:800;cursor:pointer;font-size:13px;transition:transform 0.2s}
+.cart-btn{
+  border:0;
+  background:#fff;
+  color:#111;
+  border-radius:20px;
+  padding:8px 18px;
+  font-weight:800;
+  cursor:pointer;
+  font-size:13px;
+  transition:transform 0.2s, background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.cart-btn:hover{background:#f0f0f0}
 .cart-btn:active{transform:scale(0.95)}
+.cart-badge {
+  background: #111;
+  color: #fff;
+  padding: 2px 7px;
+  border-radius: 10px;
+  font-size: 11px;
+}
 
 /* Hero Section */
-.hero{min-height:350px;background:linear-gradient(135deg,#0d0d0d,#2c2c2c);display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;padding:40px 20px}
+.hero{
+  min-height:380px;
+  background:linear-gradient(135deg,#0d0d0d,#2c2c2c);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#fff;
+  padding:50px 20px
+}
 .hero h1{font-size:48px;letter-spacing:5px;margin:0 0 10px;font-weight:900}
 .hero p{font-size:18px;margin:0 0 24px;color:#ddd;letter-spacing:1px}
-.shop-btn{display:inline-block;background:#fff;color:#111;padding:12px 28px;border-radius:25px;font-weight:800;font-size:14px;letter-spacing:1px}
+.hero-btns {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.shop-btn{
+  display:inline-block;
+  background:#fff;
+  color:#111;
+  padding:12px 28px;
+  border-radius:25px;
+  font-weight:800;
+  font-size:14px;
+  letter-spacing:1px;
+  transition: opacity 0.2s;
+}
+.shop-btn:hover{opacity: 0.9}
 
 /* Main Sections */
-section{padding:40px 5%;max-width:1200px;margin:auto}
-.section-title{text-align:center;font-size:24px;margin:0 0 28px;letter-spacing:2px;text-transform:uppercase;font-weight:800;position:relative}
+section{padding:50px 5%;max-width:1200px;margin:auto}
+.section-title{text-align:center;font-size:24px;margin:0 0 30px;letter-spacing:2px;text-transform:uppercase;font-weight:800;position:relative}
 .section-title::after{content:'';display:block;width:50px;height:3px;background:#111;margin:8px auto 0;border-radius:2px}
 
 /* Product Grid */
-.products{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 15px rgba(0,0,0,0.06);display:flex;flex-direction:column;justify-content:space-between;border:1px solid #eaeaea;transition:transform 0.2s}
-.card:hover{transform:translateY(-4px)}
+.products{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.card{
+  background:#fff;
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:0 4px 15px rgba(0,0,0,0.05);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  border:1px solid #eaeaea;
+  transition:transform 0.25s ease, box-shadow 0.25s ease
+}
+.card:hover{transform:translateY(-5px);box-shadow:0 8px 25px rgba(0,0,0,0.1)}
 
 /* Product Photo & Touch Gallery */
 .product-photo{height:380px;width:100%;background:var(--gray);overflow:hidden;position:relative}
 .product-photo img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:opacity 0.25s ease}
+.swipe-hint {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  pointer-events: none;
+}
 
 /* Thumbnails Carousel / Slider */
 .thumbnails-container{padding:10px 12px 0;background:#fff}
-.thumbnails{display:flex;gap:8px;overflow-x:auto;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+.thumbnails{display:flex;gap:8px;overflow-x:auto;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;padding-bottom:6px}
 .thumbnails::-webkit-scrollbar{height:4px}
 .thumbnails::-webkit-scrollbar-thumb{background:#ccc;border-radius:4px}
-.thumb{width:54px;height:54px;flex-shrink:0;object-fit:cover;object-position:top;border-radius:8px;cursor:pointer;border:2px solid #e5e5e5;transition:all 0.2s ease}
+.thumb{width:56px;height:56px;flex-shrink:0;object-fit:cover;object-position:top;border-radius:8px;cursor:pointer;border:2px solid #e5e5e5;transition:all 0.2s ease}
 .thumb:hover, .thumb.active{border-color:#111;transform:scale(1.04)}
 
 /* Card Info */
-.info{padding:14px 16px 18px}
+.info{padding:16px}
 .info h3{font-size:16px;margin:0 0 8px;font-weight:700;line-height:1.3;color:#222}
 .price{font-size:18px;font-weight:900;margin-bottom:12px;color:#000}
-select{width:100%;padding:10px 12px;border:1px solid #ddd;border-radius:8px;background:#fff;margin-bottom:10px;font-size:14px;outline:none}
+.size-selector { margin-bottom: 12px; }
+.size-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #666;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  display: block;
+}
+select{width:100%;padding:10px 12px;border:1px solid #ddd;border-radius:8px;background:#fff;font-size:14px;outline:none;cursor:pointer}
 select:focus{border-color:#111}
-.add{width:100%;padding:12px;border:0;border-radius:8px;background:#111;color:#fff;font-weight:800;cursor:pointer;font-size:13px;letter-spacing:0.5px;transition:background 0.2s}
-.add:hover{background:#333}
+.add{width:100%;padding:12px;border:0;border-radius:8px;background:var(--primary-btn);color:#fff;font-weight:800;cursor:pointer;font-size:13px;letter-spacing:0.5px;transition:background 0.2s}
+.add:hover{background:var(--primary-btn-hover)}
 
 /* About & Contact */
 .about{max-width:700px;margin:auto;text-align:center;line-height:1.7;color:#555}
-.contact-section{background:#111;color:#fff;border-radius:16px;text-align:center;padding:35px 20px;margin-bottom:40px}
+.contact-section{background:#111;color:#fff;border-radius:16px;text-align:center;padding:40px 20px;margin-bottom:40px}
 .contact-section h2{color:#fff;margin-bottom:15px}
 .contact-section h2::after{background:#fff}
 .contact-section p{margin:8px 0;color:#ccc;font-size:15px}
+.contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+}
+.contact-btn {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: background 0.2s;
+}
+.contact-btn:hover { background: rgba(255,255,255,0.2); }
 
-footer{background:#090909;color:#888;text-align:center;padding:20px;font-size:12px;letter-spacing:1px}
+footer{background:#090909;color:#888;text-align:center;padding:25px;font-size:12px;letter-spacing:1px}
+
+/* Toast Notification */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #111;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  z-index: 200;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
 
 /* Cart Modal */
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:100;align-items:center;justify-content:center;padding:15px;backdrop-filter:blur(3px)}
-.modal-box{background:#fff;width:min(94%,480px);max-height:85vh;overflow-y:auto;border-radius:16px;padding:22px;box-shadow:0 10px 30px rgba(0,0,0,0.3)}
-.close{float:right;border:0;background:none;font-size:26px;cursor:pointer;line-height:1}
+.modal-box{background:#fff;width:min(94%,520px);max-height:85vh;overflow-y:auto;border-radius:16px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,0.3)}
+.close{float:right;border:0;background:none;font-size:26px;cursor:pointer;line-height:1;color: #666}
+.close:hover{color:#000}
 .modal h2{margin-top:0;font-size:20px;letter-spacing:1px}
+
+/* Cart Items List */
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+  padding: 10px 14px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+.cart-item-info { flex: 1; }
+.cart-item-title { font-weight: 700; font-size: 14px; }
+.cart-item-meta { font-size: 12px; color: #666; margin-top: 2px; }
+.cart-item-price { font-weight: 800; font-size: 14px; margin-right: 12px; }
+.remove-btn {
+  background: none;
+  border: 0;
+  color: var(--danger);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.remove-btn:hover { background: #fee2e2; }
+
+/* Form Fields */
 .field{width:100%;padding:11px 14px;margin:6px 0 12px;border:1px solid #ddd;border-radius:8px;font-size:14px;outline:none}
 .field:focus{border-color:#111}
 .payment{border:1px solid #eee;border-radius:8px;padding:12px;margin:8px 0;cursor:pointer;background:#f9f9f9}
-.payment label{cursor:pointer;font-weight:600;font-size:14px}
-.place{width:100%;padding:14px;background:#111;color:#fff;border:0;border-radius:8px;font-weight:800;cursor:pointer;margin-top:10px;font-size:14px;letter-spacing:0.5px}
-.empty{color:#777;text-align:center;padding:20px 0}
+.payment label{cursor:pointer;font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px}
+.place{width:100%;padding:14px;background:#25D366;color:#fff;border:0;border-radius:8px;font-weight:800;cursor:pointer;margin-top:15px;font-size:14px;letter-spacing:0.5px;display:flex;align-items:center;justify-content:center;gap:8px}
+.place:hover{background:#20ba5a}
+.empty{color:#777;text-align:center;padding:20px 0;font-style:italic}
 
 /* UPI Payment Styles */
 #upi-box{display:block;text-align:center;margin:15px 0;padding:15px;background:#f8f9fa;border-radius:12px;border:1px solid #e9ecef}
-.qr-img{width:200px;max-width:100%;height:200px;object-fit:contain;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.1);margin:10px auto;display:block;border:2px solid #fff;background:#fff}
-.pay-app-btn{display:block;width:100%;padding:12px;margin:10px 0;background:#28a745;color:#fff;text-align:center;border-radius:8px;font-weight:800;text-decoration:none;font-size:14px}
-.upi-id-badge{display:inline-block;background:#e9ecef;padding:6px 12px;border-radius:6px;font-family:monospace;font-weight:bold;font-size:13px;margin-top:5px;color:#333}
+.qr-img{width:180px;max-width:100%;height:180px;object-fit:contain;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.1);margin:10px auto;display:block;border:2px solid #fff;background:#fff}
+.pay-app-btn{display:block;width:100%;padding:12px;margin:10px 0;background:var(--success);color:#fff;text-align:center;border-radius:8px;font-weight:800;text-decoration:none;font-size:14px}
+.pay-app-btn:hover{background:#218838}
+.upi-id-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:#e9ecef;
+  padding:6px 14px;
+  border-radius:6px;
+  font-family:monospace;
+  font-weight:bold;
+  font-size:13px;
+  margin-top:5px;
+  color:#333;
+  cursor:pointer;
+}
+.upi-id-badge:hover { background: #dee2e6; }
 
-/* Mobile Responsiveness (Responsive Fixes) */
+/* Mobile Responsiveness */
 @media(max-width:900px){
-  .products{grid-template-columns:repeat(2,1fr);gap:16px}
-  .product-photo{height:300px}
+  .products{grid-template-columns:repeat(2,1fr);gap:18px}
+  .product-photo{height:320px}
 }
 
 @media(max-width:600px){
   header{padding:0 4%;height:60px}
   .logo-text{font-size:18px}
   .nav{gap:10px;font-size:11px}
-  .nav a{display:none} /* Mobile screen clean rakhne ke liye extra nav links hide kiye hain */
-  .hero{min-height:260px;padding:30px 15px}
+  .nav a{display:none}
+  .hero{min-height:300px;padding:35px 15px}
   .hero h1{font-size:32px;letter-spacing:3px}
-  .hero p{font-size:15px;margin-bottom:18px}
-  section{padding:30px 4%}
-  .section-title{font-size:20px;margin-bottom:20px}
-  
-  /* Mobile me single column me comfortable view */
-  .products{grid-template-columns:1fr;gap:22px}
-  .product-photo{height:360px} /* Mobile me image fully visible rahegi */
-  .thumb{width:60px;height:60px} /* Thoda bada thumbnail easy touch ke liye */
+  .hero p{font-size:15px;margin-bottom:20px}
+  section{padding:35px 4%}
+  .section-title{font-size:20px;margin-bottom:22px}
+  .products{grid-template-columns:1fr;gap:24px}
+  .product-photo{height:360px}
+  .thumb{width:60px;height:60px}
 }
 </style>
 </head>
 <body>
+
+<div class="top-bar">⚡ FREE EXPRESS SHIPPING ON ALL UPI ORDERS 🚚 CASH ON DELIVERY AVAILABLE</div>
 
 <header>
 <div class="logo-container">
@@ -121,7 +321,9 @@ footer{background:#090909;color:#888;text-align:center;padding:20px;font-size:12
 <a href="#jeans">JEANS</a>
 <a href="#tshirts">T-SHIRTS</a>
 <a href="#shirts">SHIRTS</a>
-<button class="cart-btn" onclick="openCart()">🛒 Cart (<span id="count">0</span>)</button>
+<button class="cart-btn" onclick="openCart()">
+  🛒 Cart <span class="cart-badge" id="count">0</span>
+</button>
 </nav>
 </header>
 
@@ -129,18 +331,25 @@ footer{background:#090909;color:#888;text-align:center;padding:20px;font-size:12
 <section class="hero">
   <div>
     <h1>VERIOX</h1>
-    <p>Wear Your Style.</p>
-    <a class="shop-btn" href="#jeans">SHOP NOW</a>
+    <p>Wear Your Style. Define Your Streetwear.</p>
+    <div class="hero-btns">
+      <a class="shop-btn" href="#jeans">JEANS</a>
+      <a class="shop-btn" href="#tshirts">T-SHIRTS</a>
+      <a class="shop-btn" href="#shirts">SHIRTS</a>
+    </div>
   </div>
 </section>
 
-<!-- 1. JEANS SECTION -->
+<!-- JEANS SECTION -->
 <section id="jeans">
 <h2 class="section-title">JEANS COLLECTION</h2>
 <div class="products">
 
 <article class="card">
-<div class="product-photo"><img id="img-j1" src="product1-1.jpeg" alt="Wide Leg Acid Washed Black Jeans"></div>
+<div class="product-photo">
+  <img id="img-j1" src="product1-1.jpeg" alt="Wide Leg Acid Washed Black Jeans">
+  <span class="swipe-hint">Swipe ↔</span>
+</div>
 <div class="thumbnails-container">
   <div class="thumbnails">
     <img class="thumb active" src="product1-1.jpeg" onmouseover="changeImage('img-j1', this.src, this)" onclick="changeImage('img-j1', this.src, this)">
@@ -151,13 +360,19 @@ footer{background:#090909;color:#888;text-align:center;padding:20px;font-size:12
 <div class="info">
 <h3>Wide Leg Acid Washed Black Jeans</h3>
 <div class="price">₹599</div>
-<select id="size1"><option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+<div class="size-selector">
+  <label class="size-label" for="size1">Select Size</label>
+  <select id="size1"><option value="">-- Choose Size --</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+</div>
 <button class="add" onclick="addToCart('Wide Leg Acid Washed Black Jeans',599,'size1')">ADD TO CART</button>
 </div>
 </article>
 
 <article class="card">
-<div class="product-photo"><img id="img-j2" src="product-2-1.jpeg" alt="Vintage Washed Wide Leg Jeans"></div>
+<div class="product-photo">
+  <img id="img-j2" src="product-2-1.jpeg" alt="Vintage Washed Wide Leg Jeans">
+  <span class="swipe-hint">Swipe ↔</span>
+</div>
 <div class="thumbnails-container">
   <div class="thumbnails">
     <img class="thumb active" src="product-2-1.jpeg" onmouseover="changeImage('img-j2', this.src, this)" onclick="changeImage('img-j2', this.src, this)">
@@ -168,13 +383,19 @@ footer{background:#090909;color:#888;text-align:center;padding:20px;font-size:12
 <div class="info">
 <h3>Vintage Washed Wide Leg Jeans</h3>
 <div class="price">₹599</div>
-<select id="size2"><option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select>
+<div class="size-selector">
+  <label class="size-label" for="size2">Select Size</label>
+  <select id="size2"><option value="">-- Choose Size --</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select>
+</div>
 <button class="add" onclick="addToCart('Vintage Washed Wide Leg Jeans',599,'size2')">ADD TO CART</button>
 </div>
 </article>
 
 <article class="card">
-<div class="product-photo"><img id="img-j3" src="product-3-1.jpeg" alt="Grey Wide Leg Jeans"></div>
+<div class="product-photo">
+  <img id="img-j3" src="product-3-1.jpeg" alt="Grey Wide Leg Jeans">
+  <span class="swipe-hint">Swipe ↔</span>
+</div>
 <div class="thumbnails-container">
   <div class="thumbnails">
     <img class="thumb active" src="product-3-1.jpeg" onmouseover="changeImage('img-j3', this.src, this)" onclick="changeImage('img-j3', this.src, this)">
@@ -185,7 +406,10 @@ footer{background:#090909;color:#888;text-align:center;padding:20px;font-size:12
 <div class="info">
 <h3>Grey Wide Leg Jeans</h3>
 <div class="price">₹699</div>
-<select id="size3"><option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+<div class="size-selector">
+  <label class="size-label" for="size3">Select Size</label>
+  <select id="size3"><option value="">-- Choose Size --</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+</div>
 <button class="add" onclick="addToCart('Grey Wide Leg Jeans',699,'size3')">ADD TO CART</button>
 </div>
 </article>
@@ -193,13 +417,16 @@ footer{background:#090909;color:#888;text-align:center;padding:20px;font-size:12
 </div>
 </section>
 
-<!-- 2. T-SHIRTS SECTION -->
+<!-- T-SHIRTS SECTION -->
 <section id="tshirts">
 <h2 class="section-title">T-SHIRTS COLLECTION</h2>
 <div class="products">
 
 <article class="card">
-<div class="product-photo"><img id="img-t1" src="tshirt-1-1.PNG" alt="Oversized Graphic T-Shirt"></div>
+<div class="product-photo">
+  <img id="img-t1" src="tshirt-1-1.PNG" alt="Oversized Graphic T-Shirt">
+  <span class="swipe-hint">Swipe ↔</span>
+</div>
 <div class="thumbnails-container">
   <div class="thumbnails">
     <img class="thumb active" src="tshirt-1-1.PNG" onmouseover="changeImage('img-t1', this.src, this)" onclick="changeImage('img-t1', this.src, this)">
@@ -210,13 +437,19 @@ footer{background:#090909;color:#888;text-align:center;padding:20px;font-size:12
 <div class="info">
 <h3>Oversized Graphic T-Shirt</h3>
 <div class="price">₹499</div>
-<select id="size4"><option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+<div class="size-selector">
+  <label class="size-label" for="size4">Select Size</label>
+  <select id="size4"><option value="">-- Choose Size --</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+</div>
 <button class="add" onclick="addToCart('Oversized Graphic T-Shirt',499,'size4')">ADD TO CART</button>
 </div>
 </article>
 
 <article class="card">
-<div class="product-photo"><img id="img-t2" src="tshirt-2-1.PNG" alt="Acid Wash Heavyweight T-Shirt"></div>
+<div class="product-photo">
+  <img id="img-t2" src="tshirt-2-1.PNG" alt="Acid Wash Heavyweight T-Shirt">
+  <span class="swipe-hint">Swipe ↔</span>
+</div>
 <div class="thumbnails-container">
   <div class="thumbnails">
     <img class="thumb active" src="tshirt-2-1.PNG" onmouseover="changeImage('img-t2', this.src, this)" onclick="changeImage('img-t2', this.src, this)">
@@ -227,13 +460,19 @@ footer{background:#090909;color:#888;text-align:center;padding:20px;font-size:12
 <div class="info">
 <h3>Acid Wash Heavyweight T-Shirt</h3>
 <div class="price">₹549</div>
-<select id="size5"><option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+<div class="size-selector">
+  <label class="size-label" for="size5">Select Size</label>
+  <select id="size5"><option value="">-- Choose Size --</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+</div>
 <button class="add" onclick="addToCart('Acid Wash Heavyweight T-Shirt',549,'size5')">ADD TO CART</button>
 </div>
 </article>
 
 <article class="card">
-<div class="product-photo"><img id="img-t3" src="tshirt-3-1.PNG" alt="Minimal Streetwear Oversized Tee"></div>
+<div class="product-photo">
+  <img id="img-t3" src="tshirt-3-1.PNG" alt="Minimal Streetwear Oversized Tee">
+  <span class="swipe-hint">Swipe ↔</span>
+</div>
 <div class="thumbnails-container">
   <div class="thumbnails">
     <img class="thumb active" src="tshirt-3-1.PNG" onmouseover="changeImage('img-t3', this.src, this)" onclick="changeImage('img-t3', this.src, this)">
@@ -244,7 +483,10 @@ footer{background:#090909;color:#888;text-align:center;padding:20px;font-size:12
 <div class="info">
 <h3>Minimal Streetwear Oversized Tee</h3>
 <div class="price">₹499</div>
-<select id="size6"><option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+<div class="size-selector">
+  <label class="size-label" for="size6">Select Size</label>
+  <select id="size6"><option value="">-- Choose Size --</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+</div>
 <button class="add" onclick="addToCart('Minimal Streetwear Oversized Tee',499,'size6')">ADD TO CART</button>
 </div>
 </article>
@@ -252,13 +494,16 @@ footer{background:#090909;color:#888;text-align:center;padding:20px;font-size:12
 </div>
 </section>
 
-<!-- 3. SHIRTS SECTION -->
+<!-- SHIRTS SECTION -->
 <section id="shirts">
 <h2 class="section-title">SHIRTS COLLECTION</h2>
 <div class="products">
 
 <article class="card">
-<div class="product-photo"><img id="img-s1" src="shirt-1-1.PNG" alt="Classic Casual Shirt"></div>
+<div class="product-photo">
+  <img id="img-s1" src="shirt-1-1.PNG" alt="Classic Casual Shirt">
+  <span class="swipe-hint">Swipe ↔</span>
+</div>
 <div class="thumbnails-container">
   <div class="thumbnails">
     <img class="thumb active" src="shirt-1-1.PNG" onmouseover="changeImage('img-s1', this.src, this)" onclick="changeImage('img-s1', this.src, this)">
@@ -269,13 +514,19 @@ footer{background:#090909;color:#888;text-align:center;padding:20px;font-size:12
 <div class="info">
 <h3>Classic Casual Shirt</h3>
 <div class="price">₹699</div>
-<select id="size7"><option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+<div class="size-selector">
+  <label class="size-label" for="size7">Select Size</label>
+  <select id="size7"><option value="">-- Choose Size --</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+</div>
 <button class="add" onclick="addToCart('Classic Casual Shirt',699,'size7')">ADD TO CART</button>
 </div>
 </article>
 
 <article class="card">
-<div class="product-photo"><img id="img-s2" src="shirt-2-1.jpeg" alt="Textured Cuban Collar Shirt"></div>
+<div class="product-photo">
+  <img id="img-s2" src="shirt-2-1.jpeg" alt="Textured Cuban Collar Shirt">
+  <span class="swipe-hint">Swipe ↔</span>
+</div>
 <div class="thumbnails-container">
   <div class="thumbnails">
     <img class="thumb active" src="shirt-2-1.jpeg" onmouseover="changeImage('img-s2', this.src, this)" onclick="changeImage('img-s2', this.src, this)">
@@ -286,13 +537,19 @@ footer{background:#090909;color:#888;text-align:center;padding:20px;font-size:12
 <div class="info">
 <h3>Textured Cuban Collar Shirt</h3>
 <div class="price">₹749</div>
-<select id="size8"><option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+<div class="size-selector">
+  <label class="size-label" for="size8">Select Size</label>
+  <select id="size8"><option value="">-- Choose Size --</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+</div>
 <button class="add" onclick="addToCart('Textured Cuban Collar Shirt',749,'size8')">ADD TO CART</button>
 </div>
 </article>
 
 <article class="card">
-<div class="product-photo"><img id="img-s3" src="shirt-3-1.WEBP" alt="Oversized Striped Cotton Shirt"></div>
+<div class="product-photo">
+  <img id="img-s3" src="shirt-3-1.WEBP" alt="Oversized Striped Cotton Shirt">
+  <span class="swipe-hint">Swipe ↔</span>
+</div>
 <div class="thumbnails-container">
   <div class="thumbnails">
     <img class="thumb active" src="shirt-3-1.WEBP" onmouseover="changeImage('img-s3', this.src, this)" onclick="changeImage('img-s3', this.src, this)">
@@ -303,7 +560,10 @@ footer{background:#090909;color:#888;text-align:center;padding:20px;font-size:12
 <div class="info">
 <h3>Oversized Striped Cotton Shirt</h3>
 <div class="price">₹699</div>
-<select id="size9"><option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+<div class="size-selector">
+  <label class="size-label" for="size9">Select Size</label>
+  <select id="size9"><option value="">-- Choose Size --</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+</div>
 <button class="add" onclick="addToCart('Oversized Striped Cotton Shirt',699,'size9')">ADD TO CART</button>
 </div>
 </article>
@@ -314,52 +574,70 @@ footer{background:#090909;color:#888;text-align:center;padding:20px;font-size:12
 <section id="about">
   <div class="about">
     <h2 class="section-title">ABOUT VERIOX</h2>
-    <p>VERIOX is a modern clothing brand focused on clean style, comfort and everyday confidence.</p>
+    <p>VERIOX is a modern clothing brand focused on clean style, ultimate comfort, and everyday confidence. Crafted for modern streetwear lovers.</p>
   </div>
 </section>
 
 <section id="contact">
   <div class="contact-section">
     <h2 class="section-title">CONTACT US</h2>
-    <p>Instagram: @veriox</p>
-    <p>Email: your@email.com</p>
-    <p>⚡ UPI & 🚚 Cash on Delivery Available</p>
+    <p>Need help with your order or have questions?</p>
+    <div class="contact-links">
+      <a class="contact-btn" href="https://instagram.com/veriox" target="_blank">📸 @veriox</a>
+      <a class="contact-btn" href="mailto:support@veriox.com">✉️ support@veriox.com</a>
+    </div>
+    <p style="margin-top:20px; font-size:13px; color:#aaa;">⚡ UPI Instant Pay & 🚚 Cash on Delivery Available</p>
   </div>
 </section>
 </main>
 
-<footer>© 2026 VERIOX — Wear Your Style.</footer>
+<footer>© 2026 VERIOX — Wear Your Style. All Rights Reserved.</footer>
+
+<!-- TOAST NOTIFICATION -->
+<div class="toast" id="toast">Added to cart!</div>
 
 <!-- CART MODAL -->
-<div class="modal" id="cartModal">
+<div class="modal" id="cartModal" onclick="if(event.target===this) closeCart()">
 <div class="modal-box">
 <button class="close" onclick="closeCart()">×</button>
-<h2>CHECKOUT</h2>
+<h2>YOUR SHOPPING CART</h2>
 <div id="items"></div>
-<h3 style="margin:15px 0;">Total: ₹<span id="total">0</span></h3>
+<h3 style="margin:15px 0; display:flex; justify-content:space-between;">
+  <span>Total Amount:</span>
+  <span>₹<span id="total">0</span></span>
+</h3>
 
-<input class="field" id="name" placeholder="Full Name">
-<input class="field" id="phone" placeholder="Mobile Number">
-<textarea class="field" id="address" rows="3" placeholder="Full Delivery Address"></textarea>
+<div id="checkout-form">
+  <p style="font-size:12px; font-weight:bold; color:#666; text-transform:uppercase; margin-bottom:8px;">Shipping Details</p>
+  <input class="field" id="name" placeholder="Full Name *" required>
+  <input class="field" id="phone" type="tel" maxlength="10" placeholder="10-digit Mobile Number *" required>
+  <textarea class="field" id="address" rows="3" placeholder="Complete Delivery Address (House No, Street, Landmark, Pincode) *" required></textarea>
 
-<div class="payment"><label><input type="radio" name="payment" value="UPI" checked onclick="togglePaymentView('UPI')"> ⚡ Pay via UPI (GPay / PhonePe / Paytm / QR)</label></div>
-<div class="payment"><label><input type="radio" name="payment" value="COD" onclick="togglePaymentView('COD')"> 🚚 Cash on Delivery (Confirm via WhatsApp)</label></div>
+  <p style="font-size:12px; font-weight:bold; color:#666; text-transform:uppercase; margin-bottom:8px;">Payment Method</p>
+  <div class="payment"><label><input type="radio" name="payment" value="UPI" checked onclick="togglePaymentView('UPI')"> ⚡ Pay via UPI App / QR (Instant Dispatch)</label></div>
+  <div class="payment"><label><input type="radio" name="payment" value="COD" onclick="togglePaymentView('COD')"> 🚚 Cash on Delivery (Confirm via WhatsApp)</label></div>
 
-<div id="upi-box">
-<p style="margin:0 0 5px;font-weight:bold;font-size:13px;color:#333;">Pay App par click karein ya QR Scan karke Payment karein:</p>
+  <div id="upi-box">
+  <p style="margin:0 0 5px;font-weight:bold;font-size:13px;color:#333;">Pay App par click karein ya QR Scan karke Payment karein:</p>
 
-<a href="#" id="direct-upi-link" class="pay-app-btn">🚀 CLICK TO PAY VIA UPI APP</a>
+  <a href="#" id="direct-upi-link" class="pay-app-btn">🚀 CLICK TO PAY VIA UPI APP</a>
 
-<div style="text-align: center; margin: 10px 0;">
-  <p style="font-size: 13px; font-weight: bold; margin-bottom: 6px;">Scan QR Code:</p>
-  <img id="dynamic-qr" src="" alt="Payment QR Code" class="qr-img">
+  <div style="text-align: center; margin: 10px 0;">
+    <p style="font-size: 13px; font-weight: bold; margin-bottom: 6px;">Scan QR Code to Pay:</p>
+    <img id="dynamic-qr" src="" alt="Payment QR Code" class="qr-img" onerror="this.src='https://via.placeholder.com/200?text=Scan+UPI+QR'">
+  </div>
+
+  <p style="margin:5px 0;font-size:12px;color:#555;">Manual UPI ID (Nakul Meena):</p>
+  <div class="upi-id-badge" onclick="copyUpiId()" title="Click to copy">
+    <span id="upi-text">8875021302@fam</span> 📋
+  </div>
+  </div>
+
+  <button class="place" onclick="placeOrder()">
+    <span>PLACE ORDER ON WHATSAPP</span>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+  </button>
 </div>
-
-<p style="margin:5px 0;font-size:12px;color:#555;">Manual UPI ID (Nakul Meena):</p>
-<div class="upi-id-badge">8875021302@fam</div>
-</div>
-
-<button class="place" onclick="placeOrder()">PLACE ORDER ON WHATSAPP</button>
 </div>
 </div>
 
@@ -370,7 +648,20 @@ const SETTINGS = {
   whatsapp: "916367938093"
 };
 
-let cart = [];
+// Load Cart from LocalStorage or initialize empty array
+let cart = JSON.parse(localStorage.getItem('veriox_cart')) || [];
+
+function saveCart() {
+  localStorage.setItem('veriox_cart', JSON.stringify(cart));
+  renderCart();
+}
+
+function showToast(text) {
+  const toast = document.getElementById("toast");
+  toast.textContent = text;
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 2500);
+}
 
 // Image Switching Function
 function changeImage(targetId, newSrc, el) {
@@ -425,27 +716,79 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   });
+
+  renderCart();
 });
 
 function addToCart(name, price, id) {
-  const size = document.getElementById(id).value;
-  if(!size || size === "Select Size") {
-    alert("Please select a size.");
+  const sizeSelect = document.getElementById(id);
+  const size = sizeSelect.value;
+  if(!size || size === "") {
+    alert("Kripya pehle Size select karein!");
+    sizeSelect.focus();
     return;
   }
-  cart.push({name, price, size});
-  renderCart();
-  alert("Added to cart!");
+  
+  // Check if item with same name and size exists
+  const existingIndex = cart.findIndex(item => item.name === name && item.size === size);
+  if(existingIndex > -1) {
+    cart[existingIndex].qty += 1;
+  } else {
+    cart.push({name, price, size, qty: 1});
+  }
+  
+  saveCart();
+  showToast("Item Cart me add ho gaya! 🛒");
+}
+
+function updateQty(index, change) {
+  if(cart[index]) {
+    cart[index].qty += change;
+    if(cart[index].qty <= 0) {
+      cart.splice(index, 1);
+    }
+    saveCart();
+  }
+}
+
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  saveCart();
+  showToast("Item cart se hata diya gaya");
 }
 
 function renderCart() {
-  const total = cart.reduce((s, x) => s + x.price, 0);
-  document.getElementById("count").textContent = cart.length;
-  document.getElementById("items").innerHTML = cart.length ? cart.map((x, i) => '<p style="margin:6px 0;font-size:14px;">' + (i+1) + '. <b>' + x.name + '</b> (' + x.size + ') — ₹' + x.price + '</p>').join("") : "<p class='empty'>Your cart is empty.</p>";
-  document.getElementById("total").textContent = total;
+  const totalCount = cart.reduce((s, x) => s + x.qty, 0);
+  const totalPrice = cart.reduce((s, x) => s + (x.price * x.qty), 0);
   
-  if(total > 0) {
-    const upiRaw = 'upi://pay?pa=' + SETTINGS.upi + '&pn=' + encodeURIComponent(SETTINGS.name) + '&am=' + total + '&cu=INR&tn=VERIOX%20Order';
+  document.getElementById("count").textContent = totalCount;
+  document.getElementById("total").textContent = totalPrice;
+  
+  const itemsContainer = document.getElementById("items");
+  if (!cart.length) {
+    itemsContainer.innerHTML = "<p class='empty'>Aapka cart khaali hai.</p>";
+  } else {
+    itemsContainer.innerHTML = cart.map((x, i) => `
+      <div class="cart-item">
+        <div class="cart-item-info">
+          <div class="cart-item-title">${x.name}</div>
+          <div class="cart-item-meta">Size: <b>${x.size}</b> | ₹${x.price} each</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <div style="display:flex; align-items:center; border:1px solid #ccc; border-radius:4px; overflow:hidden;">
+            <button onclick="updateQty(${i}, -1)" style="border:0; padding:2px 8px; background:#eee; cursor:pointer;">-</button>
+            <span style="padding:2px 8px; font-weight:bold; font-size:13px;">${x.qty}</span>
+            <button onclick="updateQty(${i}, 1)" style="border:0; padding:2px 8px; background:#eee; cursor:pointer;">+</button>
+          </div>
+          <div class="cart-item-price">₹${x.price * x.qty}</div>
+          <button class="remove-btn" onclick="removeFromCart(${i})" title="Remove item">✕</button>
+        </div>
+      </div>
+    `).join("");
+  }
+  
+  if(totalPrice > 0) {
+    const upiRaw = 'upi://pay?pa=' + SETTINGS.upi + '&pn=' + encodeURIComponent(SETTINGS.name) + '&am=' + totalPrice + '&cu=INR&tn=VERIOX%20Order';
     
     const btn = document.getElementById("direct-upi-link");
     if(btn) btn.href = upiRaw;
@@ -462,10 +805,6 @@ function togglePaymentView(type) {
 }
 
 function openCart() {
-  if(!cart.length) {
-    alert("Please add a product first.");
-    return;
-  }
   document.getElementById("cartModal").style.display = "flex";
   renderCart();
 }
@@ -474,25 +813,50 @@ function closeCart() {
   document.getElementById("cartModal").style.display = "none";
 }
 
+function copyUpiId() {
+  const upiId = "8875021302@fam";
+  navigator.clipboard.writeText(upiId).then(() => {
+    showToast("UPI ID Copied to clipboard! 📋");
+  }).catch(() => {
+    alert("UPI ID: " + upiId);
+  });
+}
+
 function placeOrder() {
+  if(!cart.length) {
+    alert("Aapka cart khaali hai! Pehle product add karein.");
+    return;
+  }
+
   const n = document.getElementById("name").value.trim();
   const p = document.getElementById("phone").value.trim();
   const a = document.getElementById("address").value.trim();
   const pay = document.querySelector('input[name="payment"]:checked').value;
-  const total = cart.reduce((s, x) => s + x.price, 0);
+  const totalPrice = cart.reduce((s, x) => s + (x.price * x.qty), 0);
 
   if(!n || !p || !a) {
-    alert("Please fill name, mobile number and address.");
+    alert("Kripya Name, Mobile Number aur Complete Address enter karein.");
     return;
   }
 
-  const products = cart.map((x, i) => (i+1) + '. ' + x.name + ' (Size: ' + x.size + ') - ₹' + x.price).join("\n");
-  const msg = '🛍️ *NEW ORDER - VERIOX*\n\n👤 *Customer Details:*\nName: ' + n + '\nPhone: ' + p + '\nAddress: ' + a + '\n\n📦 *Order Items:*\n' + products + '\n\n💵 *Total Amount:* ₹' + total + '\n💳 *Payment Method:* ' + pay + (pay === 'UPI' ? '\n📌 *Note:* Paid/Paying via UPI (' + SETTINGS.upi + ')' : '');
+  if(p.length < 10 || isNaN(p)) {
+    alert("Kripya 10-digit ka valid mobile number dalein.");
+    document.getElementById("phone").focus();
+    return;
+  }
 
+  const products = cart.map((x, i) => (i+1) + '. ' + x.name + ' (Size: ' + x.size + ') x' + x.qty + ' = ₹' + (x.price * x.qty)).join("\n");
+  const msg = '🛍️ *NEW ORDER - VERIOX*\n\n👤 *Customer Details:*\nName: ' + n + '\nPhone: ' + p + '\nAddress: ' + a + '\n\n📦 *Order Items:*\n' + products + '\n\n💵 *Total Amount:* ₹' + totalPrice + '\n💳 *Payment Method:* ' + pay + (pay === 'UPI' ? '\n📌 *Status:* Paid/Paying via UPI (' + SETTINGS.upi + ')' : '\n📌 *Status:* Cash on Delivery');
+
+  // Open WhatsApp
   window.open('https://wa.me/' + SETTINGS.whatsapp + '?text=' + encodeURIComponent(msg), '_blank');
+  
+  // Clear cart after order
+  cart = [];
+  saveCart();
+  closeCart();
+  showToast("WhatsApp Open Ho Raha Hai... Thank you!");
 }
-
-renderCart();
 </script>
 </body>
 </html>

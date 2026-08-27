@@ -5,95 +5,151 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VERIOX — Wear Your Style</title>
 <style>
-:root{--black:#0d0d0d;--light:#f7f7f7}
-*{box-sizing:border-box}html{scroll-behavior:smooth}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;color:#111;background:var(--light)}
+:root{--black:#0d0d0d;--light:#fafafa;--accent:#111;--gray:#f0f0f0}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#111;background:var(--light)}
 a{text-decoration:none;color:inherit}
-header{height:72px;background:#0d0d0d;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 6%;position:sticky;top:0;z-index:50}
 
-/* Logo CSS */
+/* Header & Nav */
+header{height:65px;background:#0d0d0d;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 5%;position:sticky;top:0;z-index:50;box-shadow:0 2px 10px rgba(0,0,0,0.15)}
 .logo-container{display:flex;align-items:center;gap:10px}
-.logo-img{height:40px;width:auto;object-fit:contain}
-.logo-text{font-size:24px;font-weight:900;letter-spacing:4px}
+.logo-img{height:36px;width:auto;object-fit:contain}
+.logo-text{font-size:22px;font-weight:900;letter-spacing:3px}
+.nav{display:flex;gap:15px;align-items:center;font-size:13px;font-weight:600}
+.nav a{transition:opacity 0.2s}
+.nav a:hover{opacity:.7}
+.cart-btn{border:0;background:#fff;color:#111;border-radius:20px;padding:8px 16px;font-weight:800;cursor:pointer;font-size:13px;transition:transform 0.2s}
+.cart-btn:active{transform:scale(0.95)}
 
-.nav{display:flex;gap:18px;align-items:center;font-size:14px}.nav a:hover{opacity:.75}
-.cart-btn{border:0;background:#fff;color:#111;border-radius:9px;padding:11px 16px;font-weight:800;cursor:pointer}
-.hero{min-height:445px;background:linear-gradient(120deg,#101010,#3b3b3b);display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;padding:70px 20px}
-.hero h1{font-size:64px;letter-spacing:7px;margin:0 0 12px}.hero p{font-size:21px;margin:0 0 28px;color:#eee}
-.shop-btn{display:inline-block;background:#fff;color:#111;padding:14px 26px;border-radius:9px;font-weight:900}
-section{padding:58px 6%}.section-title{text-align:center;font-size:31px;margin:0 0 35px;letter-spacing:1px}
-.products{max-width:1100px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.card{background:#fff;border-radius:15px;overflow:hidden;box-shadow:0 5px 22px #0001;display:flex;flex-direction:column;justify-content:space-between}
+/* Hero Section */
+.hero{min-height:350px;background:linear-gradient(135deg,#0d0d0d,#2c2c2c);display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;padding:40px 20px}
+.hero h1{font-size:48px;letter-spacing:5px;margin:0 0 10px;font-weight:900}
+.hero p{font-size:18px;margin:0 0 24px;color:#ddd;letter-spacing:1px}
+.shop-btn{display:inline-block;background:#fff;color:#111;padding:12px 28px;border-radius:25px;font-weight:800;font-size:14px;letter-spacing:1px}
 
-/* Photo & Gallery Improvements */
-.product-photo{height:350px;width:100%;background:#eee;overflow:hidden}
-.product-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:0.3s ease}
-.thumbnails{display:flex;gap:8px;padding:12px 20px 0;overflow-x:auto}
-.thumb{width:48px;height:48px;object-fit:cover;border-radius:6px;cursor:pointer;border:2px solid #ddd;transition:0.2s}
-.thumb:hover, .thumb.active{border-color:#111;transform:scale(1.05)}
+/* Main Sections */
+section{padding:40px 5%;max-width:1200px;margin:auto}
+.section-title{text-align:center;font-size:24px;margin:0 0 28px;letter-spacing:2px;text-transform:uppercase;font-weight:800;position:relative}
+.section-title::after{content:'';display:block;width:50px;height:3px;background:#111;margin:8px auto 0;border-radius:2px}
 
-.info{padding:15px 20px 20px}.info h3{font-size:18px;margin:0 0 10px}.price{font-size:20px;font-weight:900;margin-bottom:13px}
-select{width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;background:#fff;margin-bottom:10px}
-.add{width:100%;padding:12px;border:0;border-radius:8px;background:#111;color:#fff;font-weight:900;cursor:pointer}
-.about{max-width:850px;margin:auto;text-align:center;line-height:1.7;color:#444}
-.contact{background:#111;color:#fff;text-align:center}.contact p{margin:8px 0;color:#ddd}
-footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13px}
-.modal{display:none;position:fixed;inset:0;background:#000b;z-index:100;align-items:center;justify-content:center;padding:15px}
-.modal-box{background:#fff;width:min(94%,520px);max-height:90vh;overflow:auto;border-radius:16px;padding:24px}
-.close{float:right;border:0;background:none;font-size:28px;cursor:pointer}.modal h2{margin-top:0}
-.field{width:100%;padding:12px;margin:6px 0 12px;border:1px solid #ddd;border-radius:8px}
-.payment{border:1px solid #ddd;border-radius:9px;padding:12px;margin:8px 0;cursor:pointer}
-.payment label{cursor:pointer;font-weight:bold}
-.place{width:100%;padding:13px;background:#111;color:#fff;border:0;border-radius:8px;font-weight:900;cursor:pointer;margin-top:8px}
-.empty{color:#777}
+/* Product Grid */
+.products{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 15px rgba(0,0,0,0.06);display:flex;flex-direction:column;justify-content:space-between;border:1px solid #eaeaea;transition:transform 0.2s}
+.card:hover{transform:translateY(-4px)}
 
-/* UPI Styles */
-#upi-box{display:block;text-align:center;margin:15px 0;padding:15px;background:#f4f4f4;border-radius:12px;border:1px solid #e0e0e0}
-.qr-img{width:220px;max-width:100%;height:220px;object-fit:contain;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.15);margin:10px auto;display:block;border:2px solid #ddd;background:#fff}
-.pay-app-btn{display:block;width:100%;padding:13px;margin:12px 0;background:#28a745;color:#fff;text-align:center;border-radius:8px;font-weight:900;text-decoration:none;font-size:15px}
-.upi-id-badge{display:inline-block;background:#e9ecef;padding:6px 12px;border-radius:6px;font-family:monospace;font-weight:bold;font-size:14px;margin-top:5px}
+/* Product Photo & Touch Gallery */
+.product-photo{height:380px;width:100%;background:var(--gray);overflow:hidden;position:relative}
+.product-photo img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:opacity 0.25s ease}
 
-@media(max-width:800px){
-  .nav{gap:10px;font-size:11px}
-  .hero h1{font-size:43px}
-  .products{grid-template-columns:1fr}
+/* Thumbnails Carousel / Slider */
+.thumbnails-container{padding:10px 12px 0;background:#fff}
+.thumbnails{display:flex;gap:8px;overflow-x:auto;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+.thumbnails::-webkit-scrollbar{height:4px}
+.thumbnails::-webkit-scrollbar-thumb{background:#ccc;border-radius:4px}
+.thumb{width:54px;height:54px;flex-shrink:0;object-fit:cover;object-position:top;border-radius:8px;cursor:pointer;border:2px solid #e5e5e5;transition:all 0.2s ease}
+.thumb:hover, .thumb.active{border-color:#111;transform:scale(1.04)}
+
+/* Card Info */
+.info{padding:14px 16px 18px}
+.info h3{font-size:16px;margin:0 0 8px;font-weight:700;line-height:1.3;color:#222}
+.price{font-size:18px;font-weight:900;margin-bottom:12px;color:#000}
+select{width:100%;padding:10px 12px;border:1px solid #ddd;border-radius:8px;background:#fff;margin-bottom:10px;font-size:14px;outline:none}
+select:focus{border-color:#111}
+.add{width:100%;padding:12px;border:0;border-radius:8px;background:#111;color:#fff;font-weight:800;cursor:pointer;font-size:13px;letter-spacing:0.5px;transition:background 0.2s}
+.add:hover{background:#333}
+
+/* About & Contact */
+.about{max-width:700px;margin:auto;text-align:center;line-height:1.7;color:#555}
+.contact-section{background:#111;color:#fff;border-radius:16px;text-align:center;padding:35px 20px;margin-bottom:40px}
+.contact-section h2{color:#fff;margin-bottom:15px}
+.contact-section h2::after{background:#fff}
+.contact-section p{margin:8px 0;color:#ccc;font-size:15px}
+
+footer{background:#090909;color:#888;text-align:center;padding:20px;font-size:12px;letter-spacing:1px}
+
+/* Cart Modal */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:100;align-items:center;justify-content:center;padding:15px;backdrop-filter:blur(3px)}
+.modal-box{background:#fff;width:min(94%,480px);max-height:85vh;overflow-y:auto;border-radius:16px;padding:22px;box-shadow:0 10px 30px rgba(0,0,0,0.3)}
+.close{float:right;border:0;background:none;font-size:26px;cursor:pointer;line-height:1}
+.modal h2{margin-top:0;font-size:20px;letter-spacing:1px}
+.field{width:100%;padding:11px 14px;margin:6px 0 12px;border:1px solid #ddd;border-radius:8px;font-size:14px;outline:none}
+.field:focus{border-color:#111}
+.payment{border:1px solid #eee;border-radius:8px;padding:12px;margin:8px 0;cursor:pointer;background:#f9f9f9}
+.payment label{cursor:pointer;font-weight:600;font-size:14px}
+.place{width:100%;padding:14px;background:#111;color:#fff;border:0;border-radius:8px;font-weight:800;cursor:pointer;margin-top:10px;font-size:14px;letter-spacing:0.5px}
+.empty{color:#777;text-align:center;padding:20px 0}
+
+/* UPI Payment Styles */
+#upi-box{display:block;text-align:center;margin:15px 0;padding:15px;background:#f8f9fa;border-radius:12px;border:1px solid #e9ecef}
+.qr-img{width:200px;max-width:100%;height:200px;object-fit:contain;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.1);margin:10px auto;display:block;border:2px solid #fff;background:#fff}
+.pay-app-btn{display:block;width:100%;padding:12px;margin:10px 0;background:#28a745;color:#fff;text-align:center;border-radius:8px;font-weight:800;text-decoration:none;font-size:14px}
+.upi-id-badge{display:inline-block;background:#e9ecef;padding:6px 12px;border-radius:6px;font-family:monospace;font-weight:bold;font-size:13px;margin-top:5px;color:#333}
+
+/* Mobile Responsiveness (Responsive Fixes) */
+@media(max-width:900px){
+  .products{grid-template-columns:repeat(2,1fr);gap:16px}
   .product-photo{height:300px}
+}
+
+@media(max-width:600px){
+  header{padding:0 4%;height:60px}
+  .logo-text{font-size:18px}
+  .nav{gap:10px;font-size:11px}
+  .nav a{display:none} /* Mobile screen clean rakhne ke liye extra nav links hide kiye hain */
+  .hero{min-height:260px;padding:30px 15px}
+  .hero h1{font-size:32px;letter-spacing:3px}
+  .hero p{font-size:15px;margin-bottom:18px}
+  section{padding:30px 4%}
+  .section-title{font-size:20px;margin-bottom:20px}
+  
+  /* Mobile me single column me comfortable view */
+  .products{grid-template-columns:1fr;gap:22px}
+  .product-photo{height:360px} /* Mobile me image fully visible rahegi */
+  .thumb{width:60px;height:60px} /* Thoda bada thumbnail easy touch ke liye */
 }
 </style>
 </head>
 <body>
+
 <header>
 <div class="logo-container">
   <img src="logo.png" alt="VERIOX Logo" class="logo-img" onerror="this.style.display='none'">
   <span class="logo-text">VERIOX</span>
 </div>
 <nav class="nav">
-<a href="#home">HOME</a>
 <a href="#jeans">JEANS</a>
 <a href="#tshirts">T-SHIRTS</a>
 <a href="#shirts">SHIRTS</a>
-<a href="#contact">CONTACT</a>
 <button class="cart-btn" onclick="openCart()">🛒 Cart (<span id="count">0</span>)</button>
 </nav>
 </header>
 
 <main id="home">
-<section class="hero"><div><h1>VERIOX</h1><p>Wear Your Style.</p><a class="shop-btn" href="#jeans">SHOP NOW</a></div></section>
+<section class="hero">
+  <div>
+    <h1>VERIOX</h1>
+    <p>Wear Your Style.</p>
+    <a class="shop-btn" href="#jeans">SHOP NOW</a>
+  </div>
+</section>
 
 <!-- 1. JEANS SECTION -->
 <section id="jeans">
-<h2 class="section-title">VERIOX JEANS COLLECTION</h2>
+<h2 class="section-title">JEANS COLLECTION</h2>
 <div class="products">
 
 <article class="card">
 <div class="product-photo"><img id="img-j1" src="product1-1.jpeg" alt="Wide Leg Acid Washed Black Jeans"></div>
-<div class="thumbnails">
-  <img class="thumb active" src="product1-1.jpeg" onmouseover="changeImage('img-j1', this.src, this)" onclick="changeImage('img-j1', this.src, this)">
-  <img class="thumb" src="product-1-2.jpeg" onmouseover="changeImage('img-j1', this.src, this)" onclick="changeImage('img-j1', this.src, this)">
-  <img class="thumb" src="product-1-3.jpeg" onmouseover="changeImage('img-j1', this.src, this)" onclick="changeImage('img-j1', this.src, this)">
+<div class="thumbnails-container">
+  <div class="thumbnails">
+    <img class="thumb active" src="product1-1.jpeg" onmouseover="changeImage('img-j1', this.src, this)" onclick="changeImage('img-j1', this.src, this)">
+    <img class="thumb" src="product-1-2.jpeg" onmouseover="changeImage('img-j1', this.src, this)" onclick="changeImage('img-j1', this.src, this)">
+    <img class="thumb" src="product-1-3.jpeg" onmouseover="changeImage('img-j1', this.src, this)" onclick="changeImage('img-j1', this.src, this)">
+  </div>
 </div>
 <div class="info">
-<h3> Wide Leg Acid Washed Black Jeans </h3>
+<h3>Wide Leg Acid Washed Black Jeans</h3>
 <div class="price">₹599</div>
 <select id="size1"><option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
 <button class="add" onclick="addToCart('Wide Leg Acid Washed Black Jeans',599,'size1')">ADD TO CART</button>
@@ -102,13 +158,15 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 
 <article class="card">
 <div class="product-photo"><img id="img-j2" src="product-2-1.jpeg" alt="Vintage Washed Wide Leg Jeans"></div>
-<div class="thumbnails">
-  <img class="thumb active" src="product-2-1.jpeg" onmouseover="changeImage('img-j2', this.src, this)" onclick="changeImage('img-j2', this.src, this)">
-  <img class="thumb" src="product-2-2.jpeg" onmouseover="changeImage('img-j2', this.src, this)" onclick="changeImage('img-j2', this.src, this)">
-  <img class="thumb" src="product-2-3.jpeg" onmouseover="changeImage('img-j2', this.src, this)" onclick="changeImage('img-j2', this.src, this)">
+<div class="thumbnails-container">
+  <div class="thumbnails">
+    <img class="thumb active" src="product-2-1.jpeg" onmouseover="changeImage('img-j2', this.src, this)" onclick="changeImage('img-j2', this.src, this)">
+    <img class="thumb" src="product-2-2.jpeg" onmouseover="changeImage('img-j2', this.src, this)" onclick="changeImage('img-j2', this.src, this)">
+    <img class="thumb" src="product-2-3.jpeg" onmouseover="changeImage('img-j2', this.src, this)" onclick="changeImage('img-j2', this.src, this)">
+  </div>
 </div>
 <div class="info">
-<h3> Vintage Washed Wide Leg Jeans </h3>
+<h3>Vintage Washed Wide Leg Jeans</h3>
 <div class="price">₹599</div>
 <select id="size2"><option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select>
 <button class="add" onclick="addToCart('Vintage Washed Wide Leg Jeans',599,'size2')">ADD TO CART</button>
@@ -117,13 +175,15 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 
 <article class="card">
 <div class="product-photo"><img id="img-j3" src="product-3-1.jpeg" alt="Grey Wide Leg Jeans"></div>
-<div class="thumbnails">
-  <img class="thumb active" src="product-3-1.jpeg" onmouseover="changeImage('img-j3', this.src, this)" onclick="changeImage('img-j3', this.src, this)">
-  <img class="thumb" src="product-3-2.jpeg" onmouseover="changeImage('img-j3', this.src, this)" onclick="changeImage('img-j3', this.src, this)">
-  <img class="thumb" src="product-3-3.jpeg" onmouseover="changeImage('img-j3', this.src, this)" onclick="changeImage('img-j3', this.src, this)">
+<div class="thumbnails-container">
+  <div class="thumbnails">
+    <img class="thumb active" src="product-3-1.jpeg" onmouseover="changeImage('img-j3', this.src, this)" onclick="changeImage('img-j3', this.src, this)">
+    <img class="thumb" src="product-3-2.jpeg" onmouseover="changeImage('img-j3', this.src, this)" onclick="changeImage('img-j3', this.src, this)">
+    <img class="thumb" src="product-3-3.jpeg" onmouseover="changeImage('img-j3', this.src, this)" onclick="changeImage('img-j3', this.src, this)">
+  </div>
 </div>
 <div class="info">
-<h3> Grey Wide Leg Jeans </h3>
+<h3>Grey Wide Leg Jeans</h3>
 <div class="price">₹699</div>
 <select id="size3"><option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
 <button class="add" onclick="addToCart('Grey Wide Leg Jeans',699,'size3')">ADD TO CART</button>
@@ -133,20 +193,22 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 </div>
 </section>
 
-<!-- 2. T-SHIRTS SECTION (Updated with 3 Photos Each) -->
+<!-- 2. T-SHIRTS SECTION -->
 <section id="tshirts">
-<h2 class="section-title">VERIOX T-SHIRTS COLLECTION</h2>
+<h2 class="section-title">T-SHIRTS COLLECTION</h2>
 <div class="products">
 
 <article class="card">
 <div class="product-photo"><img id="img-t1" src="tshirt-1-1.PNG" alt="Oversized Graphic T-Shirt"></div>
-<div class="thumbnails">
-  <img class="thumb active" src="tshirt-1-1.PNG" onmouseover="changeImage('img-t1', this.src, this)" onclick="changeImage('img-t1', this.src, this)">
-  <img class="thumb" src="tshirt-1-2.PNG" onmouseover="changeImage('img-t1', this.src, this)" onclick="changeImage('img-t1', this.src, this)">
-  <img class="thumb" src="tshirt-1-3.PNG" onmouseover="changeImage('img-t1', this.src, this)" onclick="changeImage('img-t1', this.src, this)">
+<div class="thumbnails-container">
+  <div class="thumbnails">
+    <img class="thumb active" src="tshirt-1-1.PNG" onmouseover="changeImage('img-t1', this.src, this)" onclick="changeImage('img-t1', this.src, this)">
+    <img class="thumb" src="tshirt-1-2.PNG" onmouseover="changeImage('img-t1', this.src, this)" onclick="changeImage('img-t1', this.src, this)">
+    <img class="thumb" src="tshirt-1-3.jpeg" onmouseover="changeImage('img-t1', this.src, this)" onclick="changeImage('img-t1', this.src, this)">
+  </div>
 </div>
 <div class="info">
-<h3> Oversized Graphic T-Shirt </h3>
+<h3>Oversized Graphic T-Shirt</h3>
 <div class="price">₹499</div>
 <select id="size4"><option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
 <button class="add" onclick="addToCart('Oversized Graphic T-Shirt',499,'size4')">ADD TO CART</button>
@@ -154,14 +216,16 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 </article>
 
 <article class="card">
-<div class="product-photo"><img id="img-t2" src="tshirt-2-1.PNG" alt="Acid Wash Heavyweight T-Shirt"></div>
-<div class="thumbnails">
-  <img class="thumb active" src="tshirt-2-1.PNG" onmouseover="changeImage('img-t2', this.src, this)" onclick="changeImage('img-t2', this.src, this)">
-  <img class="thumb" src="tshirt-2-2.PNG" onmouseover="changeImage('img-t2', this.src, this)" onclick="changeImage('img-t2', this.src, this)">
-  <img class="thumb" src="tshirt-2-3.PNG" onmouseover="changeImage('img-t2', this.src, this)" onclick="changeImage('img-t2', this.src, this)">
+<div class="product-photo"><img id="img-t2" src="tshirt-2.jpeg" alt="Acid Wash Heavyweight T-Shirt"></div>
+<div class="thumbnails-container">
+  <div class="thumbnails">
+    <img class="thumb active" src="tshirt-2.jpeg" onmouseover="changeImage('img-t2', this.src, this)" onclick="changeImage('img-t2', this.src, this)">
+    <img class="thumb" src="tshirt-2-2.jpeg" onmouseover="changeImage('img-t2', this.src, this)" onclick="changeImage('img-t2', this.src, this)">
+    <img class="thumb" src="tshirt-2-3.jpeg" onmouseover="changeImage('img-t2', this.src, this)" onclick="changeImage('img-t2', this.src, this)">
+  </div>
 </div>
 <div class="info">
-<h3> Acid Wash Heavyweight T-Shirt </h3>
+<h3>Acid Wash Heavyweight T-Shirt</h3>
 <div class="price">₹549</div>
 <select id="size5"><option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
 <button class="add" onclick="addToCart('Acid Wash Heavyweight T-Shirt',549,'size5')">ADD TO CART</button>
@@ -170,13 +234,15 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 
 <article class="card">
 <div class="product-photo"><img id="img-t3" src="tshirt-3.jpeg" alt="Minimal Streetwear Oversized Tee"></div>
-<div class="thumbnails">
-  <img class="thumb active" src="tshirt-3.jpeg" onmouseover="changeImage('img-t3', this.src, this)" onclick="changeImage('img-t3', this.src, this)">
-  <img class="thumb" src="tshirt-3-2.jpeg" onmouseover="changeImage('img-t3', this.src, this)" onclick="changeImage('img-t3', this.src, this)">
-  <img class="thumb" src="tshirt-3-3.jpeg" onmouseover="changeImage('img-t3', this.src, this)" onclick="changeImage('img-t3', this.src, this)">
+<div class="thumbnails-container">
+  <div class="thumbnails">
+    <img class="thumb active" src="tshirt-3.jpeg" onmouseover="changeImage('img-t3', this.src, this)" onclick="changeImage('img-t3', this.src, this)">
+    <img class="thumb" src="tshirt-3-2.jpeg" onmouseover="changeImage('img-t3', this.src, this)" onclick="changeImage('img-t3', this.src, this)">
+    <img class="thumb" src="tshirt-3-3.jpeg" onmouseover="changeImage('img-t3', this.src, this)" onclick="changeImage('img-t3', this.src, this)">
+  </div>
 </div>
 <div class="info">
-<h3> Minimal Streetwear Oversized Tee </h3>
+<h3>Minimal Streetwear Oversized Tee</h3>
 <div class="price">₹499</div>
 <select id="size6"><option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
 <button class="add" onclick="addToCart('Minimal Streetwear Oversized Tee',499,'size6')">ADD TO CART</button>
@@ -186,20 +252,22 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 </div>
 </section>
 
-<!-- 3. SHIRTS SECTION (Updated with 3 Photos Each) -->
+<!-- 3. SHIRTS SECTION -->
 <section id="shirts">
-<h2 class="section-title">VERIOX SHIRTS COLLECTION</h2>
+<h2 class="section-title">SHIRTS COLLECTION</h2>
 <div class="products">
 
 <article class="card">
 <div class="product-photo"><img id="img-s1" src="shirt-1.jpeg" alt="Classic Casual Shirt"></div>
-<div class="thumbnails">
-  <img class="thumb active" src="shirt-1.jpeg" onmouseover="changeImage('img-s1', this.src, this)" onclick="changeImage('img-s1', this.src, this)">
-  <img class="thumb" src="shirt-1-2.jpeg" onmouseover="changeImage('img-s1', this.src, this)" onclick="changeImage('img-s1', this.src, this)">
-  <img class="thumb" src="shirt-1-3.jpeg" onmouseover="changeImage('img-s1', this.src, this)" onclick="changeImage('img-s1', this.src, this)">
+<div class="thumbnails-container">
+  <div class="thumbnails">
+    <img class="thumb active" src="shirt-1.jpeg" onmouseover="changeImage('img-s1', this.src, this)" onclick="changeImage('img-s1', this.src, this)">
+    <img class="thumb" src="shirt-1-2.jpeg" onmouseover="changeImage('img-s1', this.src, this)" onclick="changeImage('img-s1', this.src, this)">
+    <img class="thumb" src="shirt-1-3.jpeg" onmouseover="changeImage('img-s1', this.src, this)" onclick="changeImage('img-s1', this.src, this)">
+  </div>
 </div>
 <div class="info">
-<h3> Classic Casual Shirt </h3>
+<h3>Classic Casual Shirt</h3>
 <div class="price">₹699</div>
 <select id="size7"><option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
 <button class="add" onclick="addToCart('Classic Casual Shirt',699,'size7')">ADD TO CART</button>
@@ -208,13 +276,15 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 
 <article class="card">
 <div class="product-photo"><img id="img-s2" src="shirt-2.jpeg" alt="Textured Cuban Collar Shirt"></div>
-<div class="thumbnails">
-  <img class="thumb active" src="shirt-2.jpeg" onmouseover="changeImage('img-s2', this.src, this)" onclick="changeImage('img-s2', this.src, this)">
-  <img class="thumb" src="shirt-2-2.jpeg" onmouseover="changeImage('img-s2', this.src, this)" onclick="changeImage('img-s2', this.src, this)">
-  <img class="thumb" src="shirt-2-3.jpeg" onmouseover="changeImage('img-s2', this.src, this)" onclick="changeImage('img-s2', this.src, this)">
+<div class="thumbnails-container">
+  <div class="thumbnails">
+    <img class="thumb active" src="shirt-2.jpeg" onmouseover="changeImage('img-s2', this.src, this)" onclick="changeImage('img-s2', this.src, this)">
+    <img class="thumb" src="shirt-2-2.jpeg" onmouseover="changeImage('img-s2', this.src, this)" onclick="changeImage('img-s2', this.src, this)">
+    <img class="thumb" src="shirt-2-3.jpeg" onmouseover="changeImage('img-s2', this.src, this)" onclick="changeImage('img-s2', this.src, this)">
+  </div>
 </div>
 <div class="info">
-<h3> Textured Cuban Collar Shirt </h3>
+<h3>Textured Cuban Collar Shirt</h3>
 <div class="price">₹749</div>
 <select id="size8"><option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
 <button class="add" onclick="addToCart('Textured Cuban Collar Shirt',749,'size8')">ADD TO CART</button>
@@ -223,13 +293,15 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 
 <article class="card">
 <div class="product-photo"><img id="img-s3" src="shirt-3.jpeg" alt="Oversized Striped Cotton Shirt"></div>
-<div class="thumbnails">
-  <img class="thumb active" src="shirt-3.jpeg" onmouseover="changeImage('img-s3', this.src, this)" onclick="changeImage('img-s3', this.src, this)">
-  <img class="thumb" src="shirt-3-2.jpeg" onmouseover="changeImage('img-s3', this.src, this)" onclick="changeImage('img-s3', this.src, this)">
-  <img class="thumb" src="shirt-3-3.jpeg" onmouseover="changeImage('img-s3', this.src, this)" onclick="changeImage('img-s3', this.src, this)">
+<div class="thumbnails-container">
+  <div class="thumbnails">
+    <img class="thumb active" src="shirt-3.jpeg" onmouseover="changeImage('img-s3', this.src, this)" onclick="changeImage('img-s3', this.src, this)">
+    <img class="thumb" src="shirt-3-2.jpeg" onmouseover="changeImage('img-s3', this.src, this)" onclick="changeImage('img-s3', this.src, this)">
+    <img class="thumb" src="shirt-3-3.jpeg" onmouseover="changeImage('img-s3', this.src, this)" onclick="changeImage('img-s3', this.src, this)">
+  </div>
 </div>
 <div class="info">
-<h3> Oversized Striped Cotton Shirt </h3>
+<h3>Oversized Striped Cotton Shirt</h3>
 <div class="price">₹699</div>
 <select id="size9"><option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
 <button class="add" onclick="addToCart('Oversized Striped Cotton Shirt',699,'size9')">ADD TO CART</button>
@@ -239,18 +311,33 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 </div>
 </section>
 
-<section id="about"><div class="about"><h2 class="section-title">ABOUT VERIOX</h2><p>VERIOX is a modern clothing brand focused on clean style, comfort and everyday confidence.</p></div></section>
-<section id="contact" class="contact"><h2 class="section-title">CONTACT</h2><p>Instagram: @veriox</p><p>Email: your@email.com</p><p>UPI + Cash on Delivery available</p></section>
+<section id="about">
+  <div class="about">
+    <h2 class="section-title">ABOUT VERIOX</h2>
+    <p>VERIOX is a modern clothing brand focused on clean style, comfort and everyday confidence.</p>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-section">
+    <h2 class="section-title">CONTACT US</h2>
+    <p>Instagram: @veriox</p>
+    <p>Email: your@email.com</p>
+    <p>⚡ UPI & 🚚 Cash on Delivery Available</p>
+  </div>
+</section>
 </main>
 
 <footer>© 2026 VERIOX — Wear Your Style.</footer>
 
+<!-- CART MODAL -->
 <div class="modal" id="cartModal">
 <div class="modal-box">
 <button class="close" onclick="closeCart()">×</button>
 <h2>CHECKOUT</h2>
 <div id="items"></div>
-<h3>Total: ₹<span id="total">0</span></h3>
+<h3 style="margin:15px 0;">Total: ₹<span id="total">0</span></h3>
+
 <input class="field" id="name" placeholder="Full Name">
 <input class="field" id="phone" placeholder="Mobile Number">
 <textarea class="field" id="address" rows="3" placeholder="Full Delivery Address"></textarea>
@@ -259,16 +346,16 @@ footer{background:#090909;color:#aaa;text-align:center;padding:24px;font-size:13
 <div class="payment"><label><input type="radio" name="payment" value="COD" onclick="togglePaymentView('COD')"> 🚚 Cash on Delivery (Confirm via WhatsApp)</label></div>
 
 <div id="upi-box">
-<p style="margin:0 0 5px;font-weight:bold;font-size:13px;color:#333;">Mobile Application Open Karein Ya QR Scan Karke Pay Karein aur Screenshot WhatsApp par Bhej Dein:</p>
+<p style="margin:0 0 5px;font-weight:bold;font-size:13px;color:#333;">Pay App par click karein ya QR Scan karke Payment karein:</p>
 
 <a href="#" id="direct-upi-link" class="pay-app-btn">🚀 CLICK TO PAY VIA UPI APP</a>
 
-<div style="text-align: center; margin: 15px 0;">
-  <p style="font-size: 14px; font-weight: bold; margin-bottom: 8px;">Scan QR Code to Pay Total Amount:</p>
+<div style="text-align: center; margin: 10px 0;">
+  <p style="font-size: 13px; font-weight: bold; margin-bottom: 6px;">Scan QR Code:</p>
   <img id="dynamic-qr" src="" alt="Payment QR Code" class="qr-img">
 </div>
 
-<p style="margin:5px 0;font-size:13px;color:#555;">Manual Payment UPI ID (Nakul Meena):</p>
+<p style="margin:5px 0;font-size:12px;color:#555;">Manual UPI ID (Nakul Meena):</p>
 <div class="upi-id-badge">8875021302@fam</div>
 </div>
 
@@ -285,8 +372,16 @@ const SETTINGS = {
 
 let cart = [];
 
+// Image Switching Function
 function changeImage(targetId, newSrc, el) {
-  document.getElementById(targetId).src = newSrc;
+  const mainImg = document.getElementById(targetId);
+  if(mainImg) {
+    mainImg.style.opacity = '0.4';
+    setTimeout(() => {
+      mainImg.src = newSrc;
+      mainImg.style.opacity = '1';
+    }, 100);
+  }
   
   if (el) {
     const parent = el.parentElement;
@@ -297,6 +392,40 @@ function changeImage(targetId, newSrc, el) {
     el.classList.add('active');
   }
 }
+
+// Add Swipe (Touch Gesture) support for main photo
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.card').forEach(card => {
+    const mainImg = card.querySelector('.product-photo img');
+    const thumbs = card.querySelectorAll('.thumb');
+    if(!mainImg || thumbs.length === 0) return;
+
+    let startX = 0;
+    let endX = 0;
+
+    card.querySelector('.product-photo').addEventListener('touchstart', e => {
+      startX = e.changedTouches[0].screenX;
+    }, {passive: true});
+
+    card.querySelector('.product-photo').addEventListener('touchend', e => {
+      endX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, {passive: true});
+
+    function handleSwipe() {
+      const activeIdx = Array.from(thumbs).findIndex(t => t.classList.contains('active'));
+      if (startX - endX > 40) {
+        // Swipe Left -> Next Image
+        const nextIdx = (activeIdx + 1) % thumbs.length;
+        thumbs[nextIdx].click();
+      } else if (endX - startX > 40) {
+        // Swipe Right -> Previous Image
+        const prevIdx = (activeIdx - 1 + thumbs.length) % thumbs.length;
+        thumbs[prevIdx].click();
+      }
+    }
+  });
+});
 
 function addToCart(name, price, id) {
   const size = document.getElementById(id).value;
@@ -312,7 +441,7 @@ function addToCart(name, price, id) {
 function renderCart() {
   const total = cart.reduce((s, x) => s + x.price, 0);
   document.getElementById("count").textContent = cart.length;
-  document.getElementById("items").innerHTML = cart.length ? cart.map((x, i) => '<p>' + (i+1) + '. ' + x.name + ' — Size ' + x.size + ' — ₹' + x.price + '</p>').join("") : "<p class='empty'>Your cart is empty.</p>";
+  document.getElementById("items").innerHTML = cart.length ? cart.map((x, i) => '<p style="margin:6px 0;font-size:14px;">' + (i+1) + '. <b>' + x.name + '</b> (' + x.size + ') — ₹' + x.price + '</p>').join("") : "<p class='empty'>Your cart is empty.</p>";
   document.getElementById("total").textContent = total;
   
   if(total > 0) {
@@ -323,7 +452,7 @@ function renderCart() {
 
     const qrImg = document.getElementById("dynamic-qr");
     if(qrImg) {
-      qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(upiRaw);
+      qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(upiRaw);
     }
   }
 }

@@ -1251,10 +1251,28 @@ function placeOrderWebsite() {
     text += `- ${i.title} (Size: ${i.size}) x ${i.qty} = ₹${i.price * i.qty}\n`;
   });
   text += `\n*Total Paid Amount:* ₹${total}\n\nPlease verify my payment. I have attached the payment screenshot below:`;
-
-  alert(`Order Placed Successfully! Order ID: ${orderObj.id}. Please send the payment screenshot on WhatsApp to complete your order verification.`);
-  window.open(`https://wa.me/918875021302?text=${encodeURIComponent(text)}`, '_blank');
-}
+// ✅ Isse Replace Kardo:
+db.collection("orders").add({
+  orderId: "VX" + Math.floor(100000 + Math.random() * 900000),
+  name: name,
+  phone: phone,
+  address: addr,
+  paymentMethod: method,
+  items: cart,
+  totalAmount: total,
+  status: "Pending",
+  timestamp: firebase.firestore.FieldValue.serverTimestamp()
+})
+.then(() => {
+  alert("🎉 Order Placed Successfully!");
+  cart = [];
+  updateCartCount();
+  closeModal('cartModal');
+})
+.catch((error) => {
+  alert("Error placing order: " + error.message);
+});
+ 
 
 function openTrackModal() { document.getElementById('trackModal').style.display = 'flex'; }
 
@@ -1390,6 +1408,18 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+... aapka baaki HTML code ...
 
+  <!-- 1. Firebase ki ye 2 SDK lines -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <!-- 2. Aapka purana main <script> tag jisme order logic hai -->
+  <script>
+    // Aapka JavaScript code...
+  </script>
+
+</body>
+</html>
 </body>
 </html>

@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VERIOX — Wear Your Style</title>
+
+<!-- Firebase SDK Scripts -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
 <style>
 :root{
   --black: #0d0d0d;
@@ -153,35 +158,28 @@ section{padding:40px 5%;max-width:1200px;margin:auto}
 
 .size-wrapper { margin-bottom: 15px; }
 .size-slider-box {
-  position: relative;
   display: flex;
   background: #e9ecef;
   padding: 3px;
   border-radius: 25px;
   user-select: none;
-}
-.slider-indicator {
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  height: calc(100% - 6px);
-  background: #000;
-  border-radius: 20px;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  gap: 4px;
 }
 .size-opt {
   flex: 1;
   text-align: center;
-  position: relative;
-  z-index: 1;
   padding: 8px 0;
   font-size: 13px;
   font-weight: 700;
   color: #495057;
   cursor: pointer;
-  transition: color 0.2s;
+  border-radius: 20px;
+  transition: all 0.2s ease;
 }
-.size-opt.selected { color: #ffffff; }
+.size-opt.selected { 
+  background: #000;
+  color: #ffffff; 
+}
 
 .add{width:100%;padding:12px;border:0;border-radius:8px;background:var(--primary-btn);color:#fff;font-weight:800;cursor:pointer;font-size:13px;letter-spacing:0.5px;transition:background 0.2s}
 .add:hover{background:var(--primary-btn-hover)}
@@ -245,8 +243,8 @@ footer{background:#090909;color:#888;text-align:center;padding:25px;font-size:12
 .field:focus{border-color:#111}
 .payment{border:1px solid #eee;border-radius:8px;padding:12px;margin:8px 0;cursor:pointer;background:#f9f9f9}
 .payment label{cursor:pointer;font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px}
-.place{width:100%;padding:14px;background:#25D366;color:#fff;border:0;border-radius:8px;font-weight:800;cursor:pointer;margin-top:15px;font-size:14px;letter-spacing:0.5px;display:flex;align-items:center;justify-content:center;gap:8px}
-.place:hover{background:#20ba5a}
+.place{width:100%;padding:14px;background:#111;color:#fff;border:0;border-radius:8px;font-weight:800;cursor:pointer;margin-top:15px;font-size:14px;letter-spacing:0.5px;display:flex;align-items:center;justify-content:center;gap:8px}
+.place:hover{background:#333}
 .empty{color:#777;text-align:center;padding:20px 0;font-style:italic}
 
 #upi-box{display:block;text-align:center;margin:15px 0;padding:15px;background:#f8f9fa;border-radius:12px;border:1px solid #e9ecef}
@@ -288,7 +286,6 @@ footer{background:#090909;color:#888;text-align:center;padding:25px;font-size:12
   .reviews-grid{grid-template-columns:1fr}
 }
 
-/* UPDATED MOBILE RESPONSIVE CSS */
 @media(max-width:600px){
   header{
     padding:8px 3%; 
@@ -377,11 +374,10 @@ footer{background:#090909;color:#888;text-align:center;padding:25px;font-size:12
     <span class="size-chart-link" onclick="openSizeChart('jeans')">Size Guide</span>
   </div>
   <div class="size-slider-box" id="slider-j1">
-    <div class="slider-indicator"></div>
-    <div class="size-opt selected" onclick="pickSize(this, 'slider-j1')">28</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-j1')">30</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-j1')">32</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-j1')">34</div>
+    <div class="size-opt selected" onclick="pickSize(this)">28</div>
+    <div class="size-opt" onclick="pickSize(this)">30</div>
+    <div class="size-opt" onclick="pickSize(this)">32</div>
+    <div class="size-opt" onclick="pickSize(this)">34</div>
   </div>
 </div>
 <button class="add" id="btn-j1" onclick="addToCart('j1', 'Wide Leg Acid Washed Black Jeans', 599, 'slider-j1')">ADD TO CART</button>
@@ -413,11 +409,10 @@ footer{background:#090909;color:#888;text-align:center;padding:25px;font-size:12
     <span class="size-chart-link" onclick="openSizeChart('jeans')">Size Guide</span>
   </div>
   <div class="size-slider-box" id="slider-j2">
-    <div class="slider-indicator"></div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-j2')">28</div>
-    <div class="size-opt selected" onclick="pickSize(this, 'slider-j2')">30</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-j2')">32</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-j2')">34</div>
+    <div class="size-opt" onclick="pickSize(this)">28</div>
+    <div class="size-opt selected" onclick="pickSize(this)">30</div>
+    <div class="size-opt" onclick="pickSize(this)">32</div>
+    <div class="size-opt" onclick="pickSize(this)">34</div>
   </div>
 </div>
 <button class="add" id="btn-j2" onclick="addToCart('j2', 'Vintage Washed Wide Leg Jeans', 599, 'slider-j2')">ADD TO CART</button>
@@ -449,11 +444,10 @@ footer{background:#090909;color:#888;text-align:center;padding:25px;font-size:12
     <span class="size-chart-link" onclick="openSizeChart('jeans')">Size Guide</span>
   </div>
   <div class="size-slider-box" id="slider-j3">
-    <div class="slider-indicator"></div>
-    <div class="size-opt selected" onclick="pickSize(this, 'slider-j3')">28</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-j3')">30</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-j3')">32</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-j3')">34</div>
+    <div class="size-opt selected" onclick="pickSize(this)">28</div>
+    <div class="size-opt" onclick="pickSize(this)">30</div>
+    <div class="size-opt" onclick="pickSize(this)">32</div>
+    <div class="size-opt" onclick="pickSize(this)">34</div>
   </div>
 </div>
 <button class="add" id="btn-j3" onclick="addToCart('j3', 'Grey Wide Leg Jeans', 699, 'slider-j3')">ADD TO CART</button>
@@ -492,11 +486,10 @@ footer{background:#090909;color:#888;text-align:center;padding:25px;font-size:12
     <span class="size-chart-link" onclick="openSizeChart('jeans')">Size Guide</span>
   </div>
   <div class="size-slider-box" id="slider-bc1">
-    <div class="slider-indicator"></div>
-    <div class="size-opt selected" onclick="pickSize(this, 'slider-bc1')">28</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-bc1')">30</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-bc1')">32</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-bc1')">34</div>
+    <div class="size-opt selected" onclick="pickSize(this)">28</div>
+    <div class="size-opt" onclick="pickSize(this)">30</div>
+    <div class="size-opt" onclick="pickSize(this)">32</div>
+    <div class="size-opt" onclick="pickSize(this)">34</div>
   </div>
 </div>
 <button class="add" id="btn-bc1" onclick="addToCart('bc1', 'Retro Flare Bootcut Denim', 749, 'slider-bc1')">ADD TO CART</button>
@@ -528,11 +521,10 @@ footer{background:#090909;color:#888;text-align:center;padding:25px;font-size:12
     <span class="size-chart-link" onclick="openSizeChart('jeans')">Size Guide</span>
   </div>
   <div class="size-slider-box" id="slider-bc2">
-    <div class="slider-indicator"></div>
-    <div class="size-opt selected" onclick="pickSize(this, 'slider-bc2')">28</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-bc2')">30</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-bc2')">32</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-bc2')">34</div>
+    <div class="size-opt selected" onclick="pickSize(this)">28</div>
+    <div class="size-opt" onclick="pickSize(this)">30</div>
+    <div class="size-opt" onclick="pickSize(this)">32</div>
+    <div class="size-opt" onclick="pickSize(this)">34</div>
   </div>
 </div>
 <button class="add" id="btn-bc2" onclick="addToCart('bc2', 'Raw Hem Black Bootcut Jeans', 799, 'slider-bc2')">ADD TO CART</button>
@@ -564,11 +556,10 @@ footer{background:#090909;color:#888;text-align:center;padding:25px;font-size:12
     <span class="size-chart-link" onclick="openSizeChart('jeans')">Size Guide</span>
   </div>
   <div class="size-slider-box" id="slider-bc3">
-    <div class="slider-indicator"></div>
-    <div class="size-opt selected" onclick="pickSize(this, 'slider-bc3')">28</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-bc3')">30</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-bc3')">32</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-bc3')">34</div>
+    <div class="size-opt selected" onclick="pickSize(this)">28</div>
+    <div class="size-opt" onclick="pickSize(this)">30</div>
+    <div class="size-opt" onclick="pickSize(this)">32</div>
+    <div class="size-opt" onclick="pickSize(this)">34</div>
   </div>
 </div>
 <button class="add" id="btn-bc3" onclick="addToCart('bc3', 'Distressed Vintage Bootcut Jeans', 799, 'slider-bc3')">ADD TO CART</button>
@@ -607,11 +598,10 @@ footer{background:#090909;color:#888;text-align:center;padding:25px;font-size:12
     <span class="size-chart-link" onclick="openSizeChart('tops')">Size Guide</span>
   </div>
   <div class="size-slider-box" id="slider-t1">
-    <div class="slider-indicator"></div>
-    <div class="size-opt selected" onclick="pickSize(this, 'slider-t1')">S</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-t1')">M</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-t1')">L</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-t1')">XL</div>
+    <div class="size-opt selected" onclick="pickSize(this)">S</div>
+    <div class="size-opt" onclick="pickSize(this)">M</div>
+    <div class="size-opt" onclick="pickSize(this)">L</div>
+    <div class="size-opt" onclick="pickSize(this)">XL</div>
   </div>
 </div>
 <button class="add" id="btn-t1" onclick="addToCart('t1', 'Oversized Graphic T-Shirt', 499, 'slider-t1')">ADD TO CART</button>
@@ -643,11 +633,10 @@ footer{background:#090909;color:#888;text-align:center;padding:25px;font-size:12
     <span class="size-chart-link" onclick="openSizeChart('tops')">Size Guide</span>
   </div>
   <div class="size-slider-box" id="slider-t2">
-    <div class="slider-indicator"></div>
-    <div class="size-opt selected" onclick="pickSize(this, 'slider-t2')">S</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-t2')">M</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-t2')">L</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-t2')">XL</div>
+    <div class="size-opt selected" onclick="pickSize(this)">S</div>
+    <div class="size-opt" onclick="pickSize(this)">M</div>
+    <div class="size-opt" onclick="pickSize(this)">L</div>
+    <div class="size-opt" onclick="pickSize(this)">XL</div>
   </div>
 </div>
 <button class="add" id="btn-t2" onclick="addToCart('t2', 'Acid Wash Heavyweight T-Shirt', 549, 'slider-t2')">ADD TO CART</button>
@@ -679,11 +668,10 @@ footer{background:#090909;color:#888;text-align:center;padding:25px;font-size:12
     <span class="size-chart-link" onclick="openSizeChart('tops')">Size Guide</span>
   </div>
   <div class="size-slider-box" id="slider-t3">
-    <div class="slider-indicator"></div>
-    <div class="size-opt selected" onclick="pickSize(this, 'slider-t3')">S</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-t3')">M</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-t3')">L</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-t3')">XL</div>
+    <div class="size-opt selected" onclick="pickSize(this)">S</div>
+    <div class="size-opt" onclick="pickSize(this)">M</div>
+    <div class="size-opt" onclick="pickSize(this)">L</div>
+    <div class="size-opt" onclick="pickSize(this)">XL</div>
   </div>
 </div>
 <button class="add" id="btn-t3" onclick="addToCart('t3', 'Minimal Streetwear Oversized Tee', 499, 'slider-t3')">ADD TO CART</button>
@@ -722,11 +710,10 @@ footer{background:#090909;color:#888;text-align:center;padding:25px;font-size:12
     <span class="size-chart-link" onclick="openSizeChart('tops')">Size Guide</span>
   </div>
   <div class="size-slider-box" id="slider-wf1">
-    <div class="slider-indicator"></div>
-    <div class="size-opt selected" onclick="pickSize(this, 'slider-wf1')">S</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-wf1')">M</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-wf1')">L</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-wf1')">XL</div>
+    <div class="size-opt selected" onclick="pickSize(this)">S</div>
+    <div class="size-opt" onclick="pickSize(this)">M</div>
+    <div class="size-opt" onclick="pickSize(this)">L</div>
+    <div class="size-opt" onclick="pickSize(this)">XL</div>
   </div>
 </div>
 <button class="add" id="btn-wf1" onclick="addToCart('wf1', 'Beige Waffle Oversized Tee', 599, 'slider-wf1')">ADD TO CART</button>
@@ -758,11 +745,10 @@ footer{background:#090909;color:#888;text-align:center;padding:25px;font-size:12
     <span class="size-chart-link" onclick="openSizeChart('tops')">Size Guide</span>
   </div>
   <div class="size-slider-box" id="slider-wf2">
-    <div class="slider-indicator"></div>
-    <div class="size-opt selected" onclick="pickSize(this, 'slider-wf2')">S</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-wf2')">M</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-wf2')">L</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-wf2')">XL</div>
+    <div class="size-opt selected" onclick="pickSize(this)">S</div>
+    <div class="size-opt" onclick="pickSize(this)">M</div>
+    <div class="size-opt" onclick="pickSize(this)">L</div>
+    <div class="size-opt" onclick="pickSize(this)">XL</div>
   </div>
 </div>
 <button class="add" id="btn-wf2" onclick="addToCart('wf2', 'Charcoal Waffle Knit Tee', 599, 'slider-wf2')">ADD TO CART</button>
@@ -801,11 +787,10 @@ footer{background:#090909;color:#888;text-align:center;padding:25px;font-size:12
     <span class="size-chart-link" onclick="openSizeChart('tops')">Size Guide</span>
   </div>
   <div class="size-slider-box" id="slider-s1">
-    <div class="slider-indicator"></div>
-    <div class="size-opt selected" onclick="pickSize(this, 'slider-s1')">S</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-s1')">M</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-s1')">L</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-s1')">XL</div>
+    <div class="size-opt selected" onclick="pickSize(this)">S</div>
+    <div class="size-opt" onclick="pickSize(this)">M</div>
+    <div class="size-opt" onclick="pickSize(this)">L</div>
+    <div class="size-opt" onclick="pickSize(this)">XL</div>
   </div>
 </div>
 <button class="add" id="btn-s1" onclick="addToCart('s1', 'Classic Casual Shirt', 699, 'slider-s1')">ADD TO CART</button>
@@ -837,11 +822,10 @@ footer{background:#090909;color:#888;text-align:center;padding:25px;font-size:12
     <span class="size-chart-link" onclick="openSizeChart('tops')">Size Guide</span>
   </div>
   <div class="size-slider-box" id="slider-s2">
-    <div class="slider-indicator"></div>
-    <div class="size-opt selected" onclick="pickSize(this, 'slider-s2')">S</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-s2')">M</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-s2')">L</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-s2')">XL</div>
+    <div class="size-opt selected" onclick="pickSize(this)">S</div>
+    <div class="size-opt" onclick="pickSize(this)">M</div>
+    <div class="size-opt" onclick="pickSize(this)">L</div>
+    <div class="size-opt" onclick="pickSize(this)">XL</div>
   </div>
 </div>
 <button class="add" id="btn-s2" onclick="addToCart('s2', 'Textured Cuban Collar Shirt', 749, 'slider-s2')">ADD TO CART</button>
@@ -873,11 +857,10 @@ footer{background:#090909;color:#888;text-align:center;padding:25px;font-size:12
     <span class="size-chart-link" onclick="openSizeChart('tops')">Size Guide</span>
   </div>
   <div class="size-slider-box" id="slider-s3">
-    <div class="slider-indicator"></div>
-    <div class="size-opt selected" onclick="pickSize(this, 'slider-s3')">S</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-s3')">M</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-s3')">L</div>
-    <div class="size-opt" onclick="pickSize(this, 'slider-s3')">XL</div>
+    <div class="size-opt selected" onclick="pickSize(this)">S</div>
+    <div class="size-opt" onclick="pickSize(this)">M</div>
+    <div class="size-opt" onclick="pickSize(this)">L</div>
+    <div class="size-opt" onclick="pickSize(this)">XL</div>
   </div>
 </div>
 <button class="add" id="btn-s3" onclick="addToCart('s3', 'Relaxed Fit Oversized Shirt', 799, 'slider-s3')">ADD TO CART</button>
@@ -925,7 +908,7 @@ footer{background:#090909;color:#888;text-align:center;padding:25px;font-size:12
         <label><input type="radio" name="payMethod" value="UPI" checked onclick="togglePaymentUI()"> ⚡ Pay via UPI App / QR (Instant Dispatch)</label>
       </div>
       <div class="payment">
-        <label><input type="radio" name="payMethod" value="COD" onclick="togglePaymentUI()"> 🚚 Cash on Delivery (Confirm via WhatsApp)</label>
+        <label><input type="radio" name="payMethod" value="COD" onclick="togglePaymentUI()"> 🚚 Cash on Delivery (Confirm Order)</label>
       </div>
 
       <div id="upi-box">
@@ -982,6 +965,22 @@ footer{background:#090909;color:#888;text-align:center;padding:25px;font-size:12
 <div id="toast" class="toast">Item added to cart!</div>
 
 <script>
+// 🚀 Firebase Setup (Aapki Keys Yahan Aayengi)
+const firebaseConfig = {
+  apiKey: "AIzaSyCa7AQVhtb2_dAXo_7sR_quV4NWnA2tc0A",
+  authDomain: "veriox-store.firebaseapp.com",
+  projectId: "veriox-store",
+  storageBucket: "veriox-store.firebasestorage.app",
+  messagingSenderId: "148016477744",
+  appId: "1:148016477744:web:bfa3eff81a687b50ea5ff5"
+};
+
+// Initialize Firebase
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+const db = firebase.firestore();
+
 let inventory = JSON.parse(localStorage.getItem('veriox_inventory')) || {
   'j1': 12, 'j2': 8, 'j3': 5,
   'bc1': 10, 'bc2': 6, 'bc3': 8,
@@ -1104,16 +1103,11 @@ function changeImage(mainImgId, newSrc, thumbElem) {
   }
 }
 
-function pickSize(element, containerId) {
-  const container = document.getElementById(containerId);
-  const indicator = container.querySelector('.slider-indicator');
-  const options = container.querySelectorAll('.size-opt');
-
-  options.forEach(opt => opt.classList.remove('selected'));
-  element.classList.add('selected');
-
-  indicator.style.width = `${element.offsetWidth}px`;
-  indicator.style.transform = `translateX(${element.offsetLeft - 3}px)`;
+// 🎯 Size Picker Fixed Simple Function
+function pickSize(elem) {
+  const parent = elem.parentElement;
+  parent.querySelectorAll('.size-opt').forEach(opt => opt.classList.remove('selected'));
+  elem.classList.add('selected');
 }
 
 function addToCart(prodId, title, price, sizeBoxId) {
@@ -1121,7 +1115,9 @@ function addToCart(prodId, title, price, sizeBoxId) {
     alert("Sorry, item is out of stock!");
     return;
   }
-  const selectedSize = document.querySelector(`#${sizeBoxId} .size-opt.selected`).innerText;
+  const selectedSizeElem = document.querySelector(`#${sizeBoxId} .size-opt.selected`);
+  const selectedSize = selectedSizeElem ? selectedSizeElem.innerText : 'M';
+
   const existing = cart.find(i => i.id === prodId && i.size === selectedSize);
   
   if(existing) {
@@ -1211,6 +1207,7 @@ function copyUPI() {
   showToast("UPI ID Copied to Clipboard!");
 }
 
+// 🚀 Direct Firebase Database Place Order Function
 function placeOrderWebsite() {
   const name = document.getElementById('custName').value.trim();
   const phone = document.getElementById('custPhone').value.trim();
@@ -1223,37 +1220,49 @@ function placeOrderWebsite() {
   }
 
   let total = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
-  const orderObj = {
-    id: "VX" + Math.floor(100000 + Math.random() * 900000),
-    date: new Date().toLocaleDateString(),
-    customer: { name, phone, addr },
-    method,
-    items: [...cart],
-    total,
-    status: 'Processing'
-  };
+  const orderId = "VX" + Math.floor(100000 + Math.random() * 900000);
 
-  cart.forEach(item => {
-    if(inventory[item.id]) {
-      inventory[item.id] = Math.max(0, inventory[item.id] - item.qty);
-    }
+  // Direct Order Submission to Firebase
+  db.collection("orders").add({
+    orderId: orderId,
+    name: name,
+    phone: phone,
+    address: addr,
+    paymentMethod: method,
+    items: cart,
+    totalAmount: total,
+    status: "Pending",
+    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+  })
+  .then(() => {
+    // Inventory Stock Reduce Logic
+    cart.forEach(item => {
+      if(inventory[item.id]) {
+        inventory[item.id] = Math.max(0, inventory[item.id] - item.qty);
+      }
+    });
+
+    orders.unshift({
+      id: orderId,
+      date: new Date().toLocaleDateString(),
+      customer: { name, phone, addr },
+      method,
+      items: [...cart],
+      total,
+      status: 'Processing'
+    });
+
+    cart = [];
+    saveAll();
+    updateCartCount();
+    updateStockUI();
+    closeCart();
+
+    alert(`🎉 Order Placed Successfully!\n\nYour Order ID: ${orderId}\nWe have received your order!`);
+  })
+  .catch((error) => {
+    alert("Error placing order: " + error.message);
   });
-
-  orders.unshift(orderObj);
-  cart = [];
-  saveAll();
-  updateCartCount();
-  updateStockUI();
-  closeCart();
-
-  let text = `Hello VERIOX Team,\n\nI have placed an order on your website.\n\n*Order ID:* ${orderObj.id}\n*Customer Name:* ${name}\n*Phone:* ${phone}\n*Address:* ${addr}\n*Payment Method:* ${method}\n\n*Ordered Items:*\n`;
-  orderObj.items.forEach(i => {
-    text += `- ${i.title} (Size: ${i.size}) x ${i.qty} = ₹${i.price * i.qty}\n`;
-  });
-  text += `\n*Total Paid Amount:* ₹${total}\n\nPlease verify my payment. I have attached the payment screenshot below:`;
-
-  alert(`Order Placed Successfully! Order ID: ${orderObj.id}. Please send the payment screenshot on WhatsApp to complete your order verification.`);
-  window.open(`https://wa.me/918875021302?text=${encodeURIComponent(text)}`, '_blank');
 }
 
 function openTrackModal() { document.getElementById('trackModal').style.display = 'flex'; }
@@ -1342,6 +1351,7 @@ function updateInventoryCount(id, newCount) {
   showToast("Inventory updated!");
 }
 
+// 📱 Mobile Touch Swipe Fixed Handler
 function initTouchSwipe() {
   document.querySelectorAll('.card').forEach(card => {
     const photoContainer = card.querySelector('.product-photo');
@@ -1384,10 +1394,6 @@ document.addEventListener("DOMContentLoaded", () => {
   updateStockUI();
   renderReviews();
   initTouchSwipe();
-  document.querySelectorAll('.size-slider-box').forEach(box => {
-    const selected = box.querySelector('.size-opt.selected');
-    if(selected) pickSize(selected, box.id);
-  });
 });
 </script>
 

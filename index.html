@@ -1912,7 +1912,7 @@ function updateCartTotals(subtotal = cart.reduce((acc, i) => acc + (i.price * i.
   const qr = document.getElementById('qrTotal');
   if(qr) qr.innerText = `₹${total}`;
 
-  const upiID = "8875021302@fam";
+  const upiID = "7976300109@fam";
   const name = "Nakul Meena";
   const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=${upiID}%26pn=${encodeURIComponent(name)}%26am=${total}%26cu=INR`;
   const upiDeepLink = `upi://pay?pa=${upiID}&pn=${encodeURIComponent(name)}&am=${total}&cu=INR`;

@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VERIOX — Wear Your Style</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<style>
+:root{
+  --black: #0d0d0d;
+  --light: #fafafa;
+  --accent: #111;
+  --gray: #f0f0f0;
+  --primary-btn: #111;
+  --primary-btn-hover: #333;
+  --danger: #dc3545;
+  --success: #28a745;
+  --radius: 10px;
+}
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color: transparent; /* Mobile blue highlight fix */
+}
+html{scroll-behavior:smooth}
+body{
+  overflow-x:hidden;
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color:#111;
+  background:var(--light);
+  line-height: 1.5;
+}
+a{text-decoration:none;color:inherit}
+
+.top-bar {
+  background: #111;
+  color: #fff;
+  text-align: center;
+  padding: 6px 10px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+header{
+  min-height:65px;
+  background:#0d0d0d;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 5%;
+  position:sticky;
+  top:0;
+  z-index:50;
+  box-shadow:0 2px 10px rgba(0,0,0,0.15);
+  flex-wrap: wrap;
+}
+.logo-container{display:flex;align-items:center;gap:10px}
+.logo-img{height:36px;width:auto;object-fit:contain}
+.logo-text{font-size:22px;font-weight:900;letter-spacing:3px}
+.nav{display:flex;gap:12px;align-items:center;font-size:13px;font-weight:700;overflow-x:auto;white-space:nowrap;padding: 5px 0;}
+.nav a{color:#fff;text-transform:uppercase;letter-spacing:1px;transition:opacity 0.2s}
+.nav a:hover{opacity:.7}
+
+.cart-btn, .action-nav-btn{
+  border:0;
+  background:#fff;
+  color:#111;
+  border-radius:20px;
+  padding:6px 14px;
+  font-weight:800;
+  cursor:pointer;
+  font-size:12px;
+  transition:transform 0.2s, background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  outline: none;
+}
+.cart-btn:hover, .action-nav-btn:hover{background:#f0f0f0}
+.cart-btn:active, .action-nav-btn:active{transform:scale(0.95)}
+.cart-badge {
+  background: #111;
+  color: #fff;
+  padding: 2px 7px;
+  border-radius: 10px;
+  font-size: 11px;
+}
+
+.hero-wrapper {
+  width: 100%;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.hero-banner-img {
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+section{padding:40px 5%;max-width:1200px;margin:auto}
+.section-title{text-align:center;font-size:24px;margin:0 0 30px;letter-spacing:2px;text-transform:uppercase;font-weight:800;position:relative}
+.section-title::after{content:'';display:block;width:50px;height:3px;background:#111;margin:8px auto 0;border-radius:2px}
+
+.products{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.card{
+  background:#fff;
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:0 4px 15px rgba(0,0,0,0.05);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  border:1px solid #eaeaea;
+  transition:transform 0.25s ease, box-shadow 0.25s ease
+}
+.card:hover{transform:translateY(-5px);box-shadow:0 8px 25px rgba(0,0,0,0.1)}
+
+.product-photo{height:380px;width:100%;background:#ffffff;overflow:hidden;position:relative;touch-action: pan-y;}
+.product-photo img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center;
+  display:block;
+  transition:opacity 0.25s ease;
+  user-select:none;
+}
+
+.thumbnails-container{padding:10px 12px 0;background:#fff}
+.thumbnails{display:flex;gap:8px;overflow-x:auto;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;padding-bottom:6px}
+.thumbnails::-webkit-scrollbar{height:4px}
+.thumbnails::-webkit-scrollbar-thumb{background:#ccc;border-radius:4px}
+.thumb{
+  width:56px;
+  height:56px;
+  flex-shrink:0;
+  object-fit:contain;
+  object-position:center;
+  border-radius:8px;
+  cursor:pointer;
+  border:2px solid #e5e5e5;
+  transition:all 0.2s ease;
+  background:#fff;
+}
+.thumb:hover, .thumb.active{border-color:#111;transform:scale(1.04)}
+
+.info{padding:16px}
+.info h3{font-size:16px;margin:0 0 4px;font-weight:700;line-height:1.3;color:#222}
+.prod-desc{font-size:12px;color:#666;margin-bottom:10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.price-stock-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.price{font-size:18px;font-weight:900;color:#000}
+.stock-badge{font-size:11px;font-weight:700;padding:3px 8px;border-radius:12px;background:#e9ecef;color:#333}
+.stock-badge.low{background:#fff3cd;color:#856404}
+.stock-badge.out{background:#f8d7da;color:#721c24}
+
+.size-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.size-label { font-size: 11px; font-weight: 700; color: #666; text-transform: uppercase; }
+.size-chart-link{font-size:11px;font-weight:700;color:#007bff;cursor:pointer;text-decoration:underline}
+
+.size-wrapper { margin-bottom: 15px; }
+.size-slider-box {
+  display: flex;
+  background: #e9ecef;
+  padding: 3px;
+  border-radius: 25px;
+  user-select: none;
+  gap: 4px;
+}
+.size-opt {
+  flex: 1;
+  text-align: center;
+  padding: 8px 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #495057;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+  outline: none;
+}
+.size-opt.selected { 
+  background: #000;
+  color: #ffffff; 
+}
+
+.add{width:100%;padding:12px;border:0;border-radius:8px;background:var(--primary-btn);color:#fff;font-weight:800;cursor:pointer;font-size:13px;letter-spacing:0.5px;transition:background 0.2s;outline:none}
+.add:hover{background:var(--primary-btn-hover)}
+.add:disabled{background:#ccc;cursor:not-allowed}
+
+footer{background:#090909;color:#888;text-align:center;padding:25px;font-size:12px;letter-spacing:1px}
+footer a{color:#fff;text-decoration:underline;margin-top:8px;display:inline-block}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #111;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  z-index: 200;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:100;align-items:center;justify-content:center;padding:15px;backdrop-filter:blur(3px)}
+.modal-box{background:#fff;width:min(94%,560px);max-height:85vh;overflow-y:auto;border-radius:16px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,0.3)}
+.close{float:right;border:0;background:none;font-size:26px;cursor:pointer;line-height:1;color: #666}
+.close:hover{color:#000}
+.modal h2{margin-top:0;font-size:20px;letter-spacing:1px}
+
+/* REVIEWS & TABLES */
+.reviews-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin-top:20px}
+.review-card{background:#fff;padding:15px;border-radius:8px;border:1px solid #eee;box-shadow:0 2px 8px rgba(0,0,0,0.03)}
+.review-header{display:flex;justify-content:space-between;margin-bottom:6px;font-weight:bold;font-size:13px}
+.review-img{width:100%;max-height:180px;object-fit:cover;border-radius:6px;margin-top:8px;}
+.stars{color:#f39c12}
+.size-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px}
+.size-table th, .size-table td{border:1px solid #ddd;padding:8px;text-align:center}
+.size-table th{background:#111;color:#fff}
+
+@media(max-width:992px){
+  .products{grid-template-columns:repeat(2,1fr);gap:18px}
+  .hero-banner-img{max-height: 350px;}
+  .reviews-grid{grid-template-columns:1fr}
+}
+
+@media(max-width:600px){
+  header{
+    padding:8px 3%; 
+    min-height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+  .logo-text{font-size:16px;letter-spacing:1px}
+  .nav{
+    gap:8px;
+    font-size:11px;
+    width: auto;
+    justify-content: flex-end;
+    margin-top: 0;
+    overflow-x: auto;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+  }
+  .cart-btn, .action-nav-btn{
+    padding:4px 8px;
+    font-size:11px;
+    flex-shrink: 0;
+  }
+  .hero-banner-img{max-height: 220px;}
+  section{padding:25px 3%}
+  .section-title{font-size:18px;margin-bottom:18px}
+  .products{grid-template-columns:1fr;gap:20px}
+  .product-photo{height:320px}
+  .thumb{width:48px;height:48px}
+}
+
+/* Category switcher & search */
+.category-section,.latest-section{padding-top:28px}
+.category-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.category-card{
+  min-height:150px;
+  border:1px solid #ddd;
+  border-radius:16px;
+  background:#fff;
+  padding:24px;
+  text-align:left;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:5px;
+  transition:.2s;
+  outline: none;
+}
+.category-card:hover,.category-card.active{border-color:#111;transform:translateY(-2px)}
+.category-card strong{font-size:34px;letter-spacing:2px}
+.category-card span:last-child{font-size:13px;color:#666}
+.category-kicker{font-size:11px;letter-spacing:2px;font-weight:800;color:#777}
+.category-panel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+.category-panel-head p{color:#666;font-size:13px;margin-top:-18px}
+.back-men{border:1px solid #111;background:#111;color:#fff;border-radius:8px;padding:10px 16px;cursor:pointer;font-weight:700;outline:none}
+.search-wrap{display:flex;align-items:center;background:#fff;border-radius:20px;padding:2px 4px 2px 12px;min-width:190px}
+.search-input{border:0;outline:0;width:150px;font-size:12px;background:transparent}
+.search-btn{border:0;background:#111;color:#fff;border-radius:50%;width:28px;height:28px;cursor:pointer}
+.nav{margin-left:auto}
+
+/* RESPONSIVE & MOBILE FIXES */
+html,body{width:100%;max-width:100%;overflow-x:hidden}
+main{width:100%}
+section{width:100%;max-width:1280px;margin-left:auto;margin-right:auto}
+.products{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:24px;
+  align-items:stretch;
+}
+.card{min-width:0;width:100%;height:100%}
+.product-photo{
+  width:100%;
+  height:clamp(300px,32vw,430px);
+  min-height:300px;
+  background:#fff;
+}
+.product-photo img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center;
+  display:block;
+}
+
+/* Women category filters */
+.women-category-wrap{margin-top:18px}
+.women-category-tabs{
+  display:grid;
+  grid-template-columns:repeat(7,minmax(0,1fr));
+  gap:10px;
+  margin-bottom:22px;
+}
+.women-tab{
+  border:1px solid #ddd;
+  background:#fff;
+  color:#111;
+  border-radius:10px;
+  padding:12px 8px;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.5px;
+  cursor:pointer;
+  transition:.2s;
+  outline: none;
+  text-align: center;
+}
+.women-tab:hover,.women-tab.active{
+  background:#111;
+  color:#fff;
+  border-color:#111;
+}
+.women-product.hidden-by-category{display:none!important}
+.women-category-count{
+  text-align:center;
+  color:#777;
+  font-size:12px;
+  margin:-8px 0 16px;
+}
+@media(max-width:850px){
+  .women-category-tabs{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+}
+@media(max-width:500px){
+  .women-category-tabs{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .women-tab{padding:10px 4px;font-size:11px}
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="logo-container">
+  <img src="logo.png" alt="VERIOX Logo" class="logo-img" onerror="this.style.display='none'">
+  <span class="logo-text">VERIOX</span>
+</div>
+<nav class="nav">
+  <div class="search-wrap">
+    <input id="siteSearch" class="search-input" type="search" placeholder="Search products..." aria-label="Search products">
+    <button class="search-btn" type="button">⌕</button>
+  </div>
+  <button class="action-nav-btn">📦 Track</button>
+  <button class="cart-btn">🛒 <span class="cart-badge" id="count">0</span></button>
+</nav>
+</header>
+
+<main id="home">
+<div class="hero-wrapper">
+  <img src="banner.jpg" alt="VERIOX Streetwear Banner" class="hero-banner-img">
+</div>
+
+<section class="category-section" id="collections">
+  <h2 class="section-title">SHOP COLLECTION</h2>
+  <div class="category-grid">
+    <button class="category-card active" id="btn-men-cat" type="button" onclick="showCategory('men')">
+      <span class="category-kicker">VERIOX</span>
+      <strong>MEN</strong>
+      <span>Shop Men’s Collection →</span>
+    </button>
+    <button class="category-card" id="btn-women-cat" type="button" onclick="showCategory('women')">
+      <span class="category-kicker">VERIOX</span>
+      <strong>WOMEN</strong>
+      <span>Shop Women’s Collection →</span>
+    </button>
+  </div>
+</section>
+
+<!-- MEN SECTION -->
+<div id="menSection">
+<section id="jeans">
+<h2 class="section-title">WIDE LEG & DENIM JEANS COLLECTION</h2>
+<div class="products">
+
+<article class="card" data-id="j1">
+<div class="product-photo"><img id="img-j1" src="product1-1.jpeg" alt="Wide Leg Acid Washed Black Jeans"></div>
+<div class="thumbnails-container"><div class="thumbnails">
+  <img class="thumb active" src="product1-1.jpeg" onclick="changeImage('img-j1', this.src, this)">
+  <img class="thumb" src="product-1-2.jpeg" onclick="changeImage('img-j1', this.src, this)">
+  <img class="thumb" src="product-1-3.jpeg" onclick="changeImage('img-j1', this.src, this)">
+</div></div>
+<div class="info">
+<h3>Wide Leg Acid Washed Black Jeans</h3>
+<div class="prod-desc">Premium heavy-duty denim featuring high-street acid wash treatment and relaxed fitting.</div>
+<div class="price-stock-row"><div class="price">₹750</div><span class="stock-badge" id="stock-j1">Stock: 12</span></div>
+<button class="add">ADD TO CART</button>
+</div>
+</article>
+
+<article class="card" data-id="j2">
+<div class="product-photo"><img id="img-j2" src="product-2-1.jpeg" alt="Vintage Washed Wide Leg Jeans"></div>
+<div class="thumbnails-container"><div class="thumbnails">
+  <img class="thumb active" src="product-2-1.jpeg" onclick="changeImage('img-j2', this.src, this)">
+  <img class="thumb" src="product-2-2.jpeg" onclick="changeImage('img-j2', this.src, this)">
+  <img class="thumb" src="product-2-3.jpeg" onclick="changeImage('img-j2', this.src, this)">
+</div></div>
+<div class="info">
+<h3>Vintage Washed Wide Leg Jeans</h3>
+<div class="prod-desc">Classic 90s retro light wash wide-leg denim. Soft fabric with reinforced stitching.</div>
+<div class="price-stock-row"><div class="price">₹750</div><span class="stock-badge" id="stock-j2">Stock: 8</span></div>
+<button class="add">ADD TO CART</button>
+</div>
+</article>
+
+</div>
+</section>
+</div>
+
+<!-- WOMEN SECTION -->
+<section id="womenSection" class="category-panel" style="display:none;">
+  <div class="category-panel-head">
+    <div>
+      <span class="category-kicker">VERIOX WOMEN</span>
+      <h2 class="section-title">WOMEN’S COLLECTION</h2>
+      <p>T-Shirts, Jeans, Long Sleeves, Tank Tops, Shirts, Hoodies and Bottoms.</p>
+    </div>
+    <button class="back-men" type="button" onclick="showCategory('men')">← Men</button>
+  </div>
+  
+  <div class="women-category-wrap">
+    <div class="women-category-tabs" role="tablist" aria-label="Women product categories">
+      <button class="women-tab active" type="button" onclick="filterWomenCategory('all', this)">All</button>
+      <button class="women-tab" type="button" onclick="filterWomenCategory('jeans', this)">Jeans</button>
+      <button class="women-tab" type="button" onclick="filterWomenCategory('tops', this)">Tops</button>
+      <button class="women-tab" type="button" onclick="filterWomenCategory('long-sleeve', this)">Long Sleeve</button>
+      <button class="women-tab" type="button" onclick="filterWomenCategory('tshirt', this)">T-Shirts</button>
+      <button class="women-tab" type="button" onclick="filterWomenCategory('hoodie', this)">Hoodies</button>
+      <button class="women-tab" type="button" onclick="filterWomenCategory('bottoms', this)">Bottoms</button>
+    </div>
+    <div id="womenCategoryCount" class="women-category-count">Showing all women products</div>
+  </div>
+
+  <div class="products women-products">
+
+    <!-- LONG SLEEVE (3 ITEMS) -->
+    <article class="card women-product" data-id="w6" data-women-category="long-sleeve">
+      <div class="product-photo"><img id="img-w6" src="women-6-1.jpeg" alt="Women Long Sleeve Top" onerror="this.src='https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?auto=format&fit=crop&w=900&q=85'"></div>
+      <div class="thumbnails-container"><div class="thumbnails">
+        <img class="thumb active" src="women-6-1.jpeg" onclick="changeImage('img-w6',this.src,this)">
+        <img class="thumb" src="women-6-2.jpeg" onclick="changeImage('img-w6',this.src,this)">
+        <img class="thumb" src="women-6-3.jpeg" onclick="changeImage('img-w6',this.src,this)">
+      </div></div>
+      <div class="info">
+        <h3>Women Long Sleeve Top</h3>
+        <div class="prod-desc">Women’s long sleeve collection piece with a clean, comfortable VERIOX fit.</div>
+        <div class="price-stock-row"><div class="price">₹649</div><span class="stock-badge">Stock: 10</span></div>
+        <button class="add">ADD TO CART</button>
+      </div>
+    </article>
+
+    <article class="card women-product" data-id="w8" data-women-category="long-sleeve">
+      <div class="product-photo"><img id="img-w8" src="women-8-1.jpeg" alt="Women Full Sleeve T-Shirt" onerror="this.src='https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=85'"></div>
+      <div class="thumbnails-container"><div class="thumbnails">
+        <img class="thumb active" src="women-8-1.jpeg" onclick="changeImage('img-w8',this.src,this)">
+        <img class="thumb" src="women-8-2.jpeg" onclick="changeImage('img-w8',this.src,this)">
+        <img class="thumb" src="women-8-3.jpeg" onclick="changeImage('img-w8',this.src,this)">
+      </div></div>
+      <div class="info">
+        <h3>Women Full Sleeve T-Shirt</h3>
+        <div class="prod-desc">Women’s full sleeve t-shirt collection piece with a clean, comfortable VERIOX fit.</div>
+        <div class="price-stock-row"><div class="price">₹599</div><span class="stock-badge">Stock: 10</span></div>
+        <button class="add">ADD TO CART</button>
+      </div>
+    </article>
+
+    <!-- NEW ADDED LONG SLEEVE PRODUCT -->
+    <article class="card women-product" data-id="w15" data-women-category="long-sleeve">
+      <div class="product-photo"><img id="img-w15" src="women-15-1.jpeg" alt="Women Washed Ribbed Long Sleeve" onerror="this.src='https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=85'"></div>
+      <div class="thumbnails-container"><div class="thumbnails">
+        <img class="thumb active" src="women-15-1.jpeg" onclick="changeImage('img-w15',this.src,this)">
+        <img class="thumb" src="women-15-2.jpeg" onclick="changeImage('img-w15',this.src,this)">
+        <img class="thumb" src="women-15-3.jpeg" onclick="changeImage('img-w15',this.src,this)">
+      </div></div>
+      <div class="info">
+        <h3>Women Washed Ribbed Long Sleeve Top</h3>
+        <div class="prod-desc">Premium ribbed texture full-sleeve top designed for effortless layering.</div>
+        <div class="price-stock-row"><div class="price">₹699</div><span class="stock-badge">Stock: 8</span></div>
+        <button class="add">ADD TO CART</button>
+      </div>
+    </article>
+
+    <!-- JEANS (6 ITEMS) -->
+    <article class="card women-product" data-id="w5" data-women-category="jeans">
+      <div class="product-photo"><img id="img-w5" src="women-5-1.jpeg" alt="Women Wide Leg Jeans" onerror="this.src='https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=900&q=85'"></div>
+      <div class="thumbnails-container"><div class="thumbnails">
+        <img class="thumb active" src="women-5-1.jpeg" onclick="changeImage('img-w5',this.src,this)">
+        <img class="thumb" src="women-5-2.jpeg" onclick="changeImage('img-w5',this.src,this)">
+        <img class="thumb" src="women-5-3.jpeg" onclick="changeImage('img-w5',this.src,this)">
+      </div></div>
+      <div class="info">
+        <h3>Women Wide Leg Jeans</h3>
+        <div class="prod-desc">Women’s wide leg denim collection piece with a relaxed vibe.</div>
+        <div class="price-stock-row"><div class="price">₹799</div><span class="stock-badge">Stock: 10</span></div>
+        <button class="add">ADD TO CART</button>
+      </div>
+    </article>
+
+    <article class="card women-product" data-id="w10" data-women-category="jeans">
+      <div class="product-photo"><img id="img-w10" src="women-10-1.jpeg" alt="Women Straight Fit Jeans" onerror="this.src='https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=900&q=85'"></div>
+      <div class="thumbnails-container"><div class="thumbnails">
+        <img class="thumb active" src="women-10-1.jpeg" onclick="changeImage('img-w10',this.src,this)">
+        <img class="thumb" src="women-10-2.jpeg" onclick="changeImage('img-w10',this.src,this)">
+        <img class="thumb" src="women-10-3.jpeg" onclick="changeImage('img-w10',this.src,this)">
+      </div></div>
+      <div class="info">
+        <h3>Women Straight Fit Jeans</h3>
+        <div class="prod-desc">Classic straight cut vintage aesthetic jeans.</div>
+        <div class="price-stock-row"><div class="price">₹749</div><span class="stock-badge">Stock: 10</span></div>
+        <button class="add">ADD TO CART</button>
+      </div>
+    </article>
+
+    <article class="card women-product" data-id="w13" data-women-category="jeans">
+      <div class="product-photo"><img id="img-w13" src="women-13-1.jpeg" alt="Women Utility Cargo Jeans" onerror="this.src='https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=900&q=85'"></div>
+      <div class="thumbnails-container"><div class="thumbnails">
+        <img class="thumb active" src="women-13-1.jpeg" onclick="changeImage('img-w13',this.src,this)">
+        <img class="thumb" src="women-13-2.jpeg" onclick="changeImage('img-w13',this.src,this)">
+        <img class="thumb" src="women-13-3.jpeg" onclick="changeImage('img-w13',this.src,this)">
+      </div></div>
+      <div class="info">
+        <h3>Women Utility Cargo Jeans</h3>
+        <div class="prod-desc">Multi-pocket baggy utility denim for everyday streetwear look.</div>
+        <div class="price-stock-row"><div class="price">₹849</div><span class="stock-badge">Stock: 10</span></div>
+        <button class="add">ADD TO CART</button>
+      </div>
+    </article>
+
+    <!-- NEW ADDED JEANS 1 -->
+    <article class="card women-product" data-id="w16" data-women-category="jeans">
+      <div class="product-photo"><img id="img-w16" src="women-16-1.jpeg" alt="Women Vintage Flare Jeans" onerror="this.src='https://images.unsplash.com/photo-1582552938357-32b906df40cb?auto=format&fit=crop&w=900&q=85'"></div>
+      <div class="thumbnails-container"><div class="thumbnails">
+        <img class="thumb active" src="women-16-1.jpeg" onclick="changeImage('img-w16',this.src,this)">
+        <img class="thumb" src="women-16-2.jpeg" onclick="changeImage('img-w16',this.src,this)">
+        <img class="thumb" src="women-16-3.jpeg" onclick="changeImage('img-w16',this.src,this)">
+      </div></div>
+      <div class="info">
+        <h3>Women Vintage Flare Jeans</h3>
+        <div class="prod-desc">Retro bootcut flare fit denim with light wash finish.</div>
+        <div class="price-stock-row"><div class="price">₹899</div><span class="stock-badge">Stock: 7</span></div>
+        <button class="add">ADD TO CART</button>
+      </div>
+    </article>
+
+    <!-- NEW ADDED JEANS 2 -->
+    <article class="card women-product" data-id="w17" data-women-category="jeans">
+      <div class="product-photo"><img id="img-w17" src="women-17-1.jpeg" alt="Women Baggy Fit Grey Jeans" onerror="this.src='https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=900&q=85'"></div>
+      <div class="thumbnails-container"><div class="thumbnails">
+        <img class="thumb active" src="women-17-1.jpeg" onclick="changeImage('img-w17',this.src,this)">
+        <img class="thumb" src="women-17-2.jpeg" onclick="changeImage('img-w17',this.src,this)">
+        <img class="thumb" src="women-17-3.jpeg" onclick="changeImage('img-w17',this.src,this)">
+      </div></div>
+      <div class="info">
+        <h3>Women Baggy Fit Grey Jeans</h3>
+        <div class="prod-desc">Deep charcoal grey wide leg oversized baggy denim.</div>
+        <div class="price-stock-row"><div class="price">₹799</div><span class="stock-badge">Stock: 9</span></div>
+        <button class="add">ADD TO CART</button>
+      </div>
+    </article>
+
+    <!-- NEW ADDED JEANS 3 -->
+    <article class="card women-product" data-id="w18" data-women-category="jeans">
+      <div class="product-photo"><img id="img-w18" src="women-18-1.jpeg" alt="Women High-Waist Wide Leg Jeans" onerror="this.src='https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=900&q=85'"></div>
+      <div class="thumbnails-container"><div class="thumbnails">
+        <img class="thumb active" src="women-18-1.jpeg" onclick="changeImage('img-w18',this.src,this)">
+        <img class="thumb" src="women-18-2.jpeg" onclick="changeImage('img-w18',this.src,this)">
+        <img class="thumb" src="women-18-3.jpeg" onclick="changeImage('img-w18',this.src,this)">
+      </div></div>
+      <div class="info">
+        <h3>Women High-Waist Wide Leg Jeans</h3>
+        <div class="prod-desc">Classic washed blue high-waist loose fit denim.</div>
+        <div class="price-stock-row"><div class="price">₹849</div><span class="stock-badge">Stock: 12</span></div>
+        <button class="add">ADD TO CART</button>
+      </div>
+    </article>
+
+    <!-- HOODIES -->
+    <article class="card women-product" data-id="w11" data-women-category="hoodie">
+      <div class="product-photo"><img id="img-w11" src="women-11-1.jpeg" alt="Women Zip Hoodie" onerror="this.src='https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?auto=format&fit=crop&w=900&q=85'"></div>
+      <div class="thumbnails-container"><div class="thumbnails">
+        <img class="thumb active" src="women-11-1.jpeg" onclick="changeImage('img-w11',this.src,this)">
+        <img class="thumb" src="women-11-2.jpeg" onclick="changeImage('img-w11',this.src,this)">
+        <img class="thumb" src="women-11-3.jpeg" onclick="changeImage('img-w11',this.src,this)">
+      </div></div>
+      <div class="info">
+        <h3>Women Zip Hoodie</h3>
+        <div class="prod-desc">Heavyweight fleece zip hoodie with relaxed drop shoulders.</div>
+        <div class="price-stock-row"><div class="price">₹899</div><span class="stock-badge">Stock: 10</span></div>
+        <button class="add">ADD TO CART</button>
+      </div>
+    </article>
+
+    <!-- BOTTOMS -->
+    <article class="card women-product" data-id="w3" data-women-category="bottoms">
+      <div class="product-photo"><img id="img-w3" src="women-3-1.jpeg" alt="Women Relaxed Cargo Pants" onerror="this.src='https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=900&q=85'"></div>
+      <div class="thumbnails-container"><div class="thumbnails">
+        <img class="thumb active" src="women-3-1.jpeg" onclick="changeImage('img-w3',this.src,this)">
+        <img class="thumb" src="women-3-2.jpeg" onclick="changeImage('img-w3',this.src,this)">
+        <img class="thumb" src="women-3-3.jpeg" onclick="changeImage('img-w3',this.src,this)">
+      </div></div>
+      <div class="info">
+        <h3>Women Relaxed Cargo Pants</h3>
+        <div class="prod-desc">Clean streetwear bottom wear with functional pockets.</div>
+        <div class="price-stock-row"><div class="price">₹799</div><span class="stock-badge">Stock: 10</span></div>
+        <button class="add">ADD TO CART</button>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>© 2026 VERIOX. All Rights Reserved.</p>
+  <p>Follow us on Instagram:</p>
+  <a href="https://www.instagram.com/verioxwear.in?stkn=NGV4Y2E3ZmV2MGxx&utm_source=qr" target="_blank">@verioxwear.in</a>
+</footer>
+
+<script>
+function changeImage(imgId, src, thumbElement) {
+  document.getElementById(imgId).src = src;
+  let container = thumbElement.parentElement;
+  let thumbs = container.getElementsByClassName('thumb');
+  for (let t of thumbs) { t.classList.remove('active'); }
+  thumbElement.classList.add('active');
+}
+
+function showCategory(category) {
+  const menSec = document.getElementById('menSection');
+  const womenSec = document.getElementById('womenSection');
+  const btnMen = document.getElementById('btn-men-cat');
+  const btnWomen = document.getElementById('btn-women-cat');
+
+  if (category === 'women') {
+    menSec.style.display = 'none';
+    womenSec.style.display = 'block';
+    btnWomen.classList.add('active');
+    btnMen.classList.remove('active');
+  } else {
+    womenSec.style.display = 'none';
+    menSec.style.display = 'block';
+    btnMen.classList.add('active');
+    btnWomen.classList.remove('active');
+  }
+}
+
+function filterWomenCategory(category, tabBtn) {
+  const tabs = document.querySelectorAll('.women-tab');
+  tabs.forEach(tab => tab.classList.remove('active'));
+  tabBtn.classList.add('active');
+
+  const products = document.querySelectorAll('.women-product');
+  let count = 0;
+
+  products.forEach(prod => {
+    const prodCat = prod.getAttribute('data-women-category');
+    if (category === 'all' || prodCat === category) {
+      prod.classList.remove('hidden-by-category');
+      count++;
+    } else {
+      prod.classList.add('hidden-by-category');
+    }
+  });
+
+  document.getElementById('womenCategoryCount').innerText = `Showing ${count} product(s)`;
+}
+</script>
+
+</body>
+</html>

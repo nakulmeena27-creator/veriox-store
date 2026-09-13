@@ -1845,7 +1845,7 @@ if (window.emailjs && EMAILJS_PUBLIC_KEY !== "8ZVUOqE-28jcEIOyK") {
 }
 
 function sendOrderEmail(orderData) {
-  if (!window.emailjs || EMAILJS_PUBLIC_KEY.startsWith("YOUR_")) {
+  if (!window.emailjs || EMAILJS_PUBLIC_KEY.startsWith("8ZVUOqE-28jcEIOyK")) {
     console.warn("EmailJS is not configured yet. Order is still saved in Firebase.");
     return Promise.resolve();
   }
